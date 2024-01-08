@@ -1,4 +1,4 @@
-![1704385877622](image/README/1704385877622.png)
+![Ingram Micro XVantage](assets/logo/black/IM_X_Horiz.png)
 
 # Ingram Micro
 
@@ -18,7 +18,7 @@ Xvantage Integration **XI** exposes various Application Programming Interfaces (
 
 # XI SDKs
 
-XI Sdks enables XI consumers to convinently use the XI API's in their custom built application and greately reduces the development time. 
+XI Sdks enables XI consumers to convinently use the XI API's in their custom built application and greately reduces the development time.
 
 Following **Server Side SDK's** are currently published for XI Consumers use
 
@@ -27,3 +27,5 @@ Following **Server Side SDK's** are currently published for XI Consumers use
 * [Node SDK](https://github.com/ingrammicro-xvantage/xi-sdk-node)
 * [Python SDK](https://github.com/ingrammicro-xvantage/xi-sdk-python)
 * [GO SDK](https://github.com/ingrammicro-xvantage/xi-sdk-go)
+
+[Sample Page](/pages/link.md)

@@ -24,6 +24,7 @@ jobs:
         run: |
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
           git config --local user.name ${{secrets.ORG_NAME}}
+          
 
       - name: Push C# SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
@@ -35,6 +36,7 @@ jobs:
           destination-repository-name: 'xi-sdk-csharp'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'
+          create-target-branch-if-needed: true
 
 
       - name: Generate Python SDK
@@ -56,6 +58,8 @@ jobs:
           destination-repository-name: 'xi-sdk-python'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'
+          create-target-branch-if-needed: true
+          
 
  
 
@@ -78,5 +82,5 @@ jobs:
           destination-repository-name: 'xi-sdk-node'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'
-
+          create-target-branch-if-needed: true
       

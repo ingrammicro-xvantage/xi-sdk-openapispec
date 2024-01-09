@@ -18,7 +18,7 @@ jobs:
           npm install -g @openapitools/openapi-generator-cli@latest
       - name: Generate C# SDK
         run: |
-          openapi-generator-cli generate -i XI-API-Spec.yml -g csharp -o ${{ github.workspace }}/csharpsdk --package-name xi-sdk-csharp
+          openapi-generator-cli generate -i openapispec/unified/XI-API-Spec.yaml -g csharp -o ${{ github.workspace }}/csharpsdk --package-name xi-sdk-csharp
 
       - name: Configure Git for C# SDK
         run: |
@@ -39,7 +39,7 @@ jobs:
 
       - name: Generate Python SDK
         run: |
-          openapi-generator-cli generate --verbose -i XI-API-Spec.yml -g python -o ${{ github.workspace }}/pythonsdk --package-name xi-sdk-python
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g python -o ${{ github.workspace }}/pythonsdk --package-name xi-sdk-python
 
       - name: Configure Git for Python SDK
         run: |
@@ -61,7 +61,7 @@ jobs:
 
       - name: Generate Node.Js SDK
         run: |
-          openapi-generator-cli generate --verbose -i XI-API-Spec.yml -g javascript -o ${{ github.workspace }}/javascriptsdk --package-name xi-sdk-node
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g javascript -o ${{ github.workspace }}/javascriptsdk --package-name xi-sdk-node
 
       - name: Configure Git for Node.Js SDK
         run: |

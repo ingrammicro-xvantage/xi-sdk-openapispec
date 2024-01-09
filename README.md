@@ -1,4 +1,4 @@
-![Ingram Micro XVantage](assets/logo/black/IM_X_Horiz.png)
+![Ingram Micro XVantage](assets/logo/blue/IM_X_Horiz.png)
 
 # Ingram Micro
 

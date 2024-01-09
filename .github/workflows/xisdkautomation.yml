@@ -1,0 +1,86 @@
+name: Push to Another Repository
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  push_to_another_repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install OpenAPI Generator
+        run: |
+          npm install -g @openapitools/openapi-generator-cli@latest
+      - name: Generate C# SDK
+        run: |
+          openapi-generator-cli generate -i openapispec/unified/XI-API-Spec.yaml -g csharp -o ${{ github.workspace }}/csharpsdk --package-name xi-sdk-csharp
+
+      - name: Configure Git for C# SDK
+        run: |
+          git config --local user.email ${{secrets.ADMIN_EMAIL}}
+          git config --local user.name ${{secrets.ORG_NAME}}
+          
+
+      - name: Push C# SDK to Another Repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
+        with:
+          source-directory: 'csharpsdk'
+          destination-github-username: ${{secrets.ORG_NAME}}
+          destination-repository-name: 'xi-sdk-csharp'
+          user-email: ${{secrets.ADMIN_EMAIL}}
+          target-branch: 'feature'
+          create-target-branch-if-needed: true
+
+
+      - name: Generate Python SDK
+        run: |
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g python -o ${{ github.workspace }}/pythonsdk --package-name xi-sdk-python
+
+      - name: Configure Git for Python SDK
+        run: |
+            git config --local user.email ${{secrets.ADMIN_EMAIL}}
+            git config --local user.name ${{secrets.ORG_NAME}}
+
+      - name: Push Python SDK to Another Repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
+        with:
+          source-directory: 'pythonsdk'
+          destination-github-username: ${{secrets.ORG_NAME}}
+          destination-repository-name: 'xi-sdk-python'
+          user-email: ${{secrets.ADMIN_EMAIL}}
+          target-branch: 'feature'
+          create-target-branch-if-needed: true
+          
+
+ 
+
+      - name: Generate Node.Js SDK
+        run: |
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g javascript -o ${{ github.workspace }}/javascriptsdk --package-name xi-sdk-node
+
+      - name: Configure Git for Node.Js SDK
+        run: |
+          git config --local user.email ${{secrets.ADMIN_EMAIL}}
+          git config --local user.name ${{secrets.ORG_NAME}}
+
+      - name: Push Node.Js SDK to Another Repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
+        with:
+          source-directory: 'javascriptsdk'
+          destination-github-username: ${{secrets.ORG_NAME}}
+          destination-repository-name: 'xi-sdk-node'
+          user-email: ${{secrets.ADMIN_EMAIL}}
+          target-branch: 'feature'
+          create-target-branch-if-needed: true
+      

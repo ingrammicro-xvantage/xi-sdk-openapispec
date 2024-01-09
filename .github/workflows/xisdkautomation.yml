@@ -23,7 +23,7 @@ jobs:
       - name: Configure Git for C# SDK
         run: |
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
-          git config --local user.name ${{secrets.ADMIN_USER}}
+          git config --local user.name ${{secrets.ORG_NAME}}
 
       - name: Push C# SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
@@ -31,7 +31,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
         with:
           source-directory: 'csharpsdk'
-          destination-github-username: ${{secrets.ADMIN_USER}}
+          destination-github-username: ${{secrets.ORG_NAME}}
           destination-repository-name: 'xi-sdk-csharp'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'
@@ -44,7 +44,7 @@ jobs:
       - name: Configure Git for Python SDK
         run: |
             git config --local user.email ${{secrets.ADMIN_EMAIL}}
-            git config --local user.name ${{secrets.ADMIN_USER}}
+            git config --local user.name ${{secrets.ORG_NAME}}
 
       - name: Push Python SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
@@ -52,7 +52,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
         with:
           source-directory: 'pythonsdk'
-          destination-github-username: ${{secrets.ADMIN_USER}}
+          destination-github-username: ${{secrets.ORG_NAME}}
           destination-repository-name: 'xi-sdk-python'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'
@@ -66,7 +66,7 @@ jobs:
       - name: Configure Git for Node.Js SDK
         run: |
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
-          git config --local user.name ${{secrets.ADMIN_USER}}
+          git config --local user.name ${{secrets.ORG_NAME}}
 
       - name: Push Node.Js SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
@@ -74,7 +74,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
         with:
           source-directory: 'javascriptsdk'
-          destination-github-username: ${{secrets.ADMIN_USER}}
+          destination-github-username: ${{secrets.ORG_NAME}}
           destination-repository-name: 'xi-sdk-node'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'

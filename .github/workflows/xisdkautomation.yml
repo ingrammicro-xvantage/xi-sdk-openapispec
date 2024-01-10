@@ -2,8 +2,8 @@ name: Push to Another Repository
 
 on:
   pull_request:
-    branches:
-      - main
+    types:
+      - closed
 
 jobs:
   push_to_another_repo:

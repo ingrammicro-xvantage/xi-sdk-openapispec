@@ -2,8 +2,8 @@ name: Push to Another Repository
 
 on:
   pull_request:
-    branches:
-      - main
+    types:
+      - closed
 
 jobs:
   push_to_another_repo:
@@ -80,6 +80,50 @@ jobs:
           source-directory: 'javascriptsdk'
           destination-github-username: ${{secrets.ORG_NAME}}
           destination-repository-name: 'xi-sdk-node'
+          user-email: ${{secrets.ADMIN_EMAIL}}
+          target-branch: 'feature'
+          create-target-branch-if-needed: true
+          
+
+      - name: Generate Java SDK
+        run: |
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g java -o ${{ github.workspace }}/javasdk --package-name xi-sdk-java
+  
+      - name: Configure Git for Java SDK
+        run: |
+          git config --local user.email ${{secrets.ADMIN_EMAIL}}
+          git config --local user.name ${{secrets.ORG_NAME}}
+  
+      - name: Push Java SDK to Another Repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
+        with:
+          source-directory: 'javasdk'
+          destination-github-username: ${{secrets.ORG_NAME}}
+          destination-repository-name: 'xi-sdk-java'
+          user-email: ${{secrets.ADMIN_EMAIL}}
+          target-branch: 'feature'
+          create-target-branch-if-needed: true
+
+
+      - name: Generate Go SDK
+        run: |
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g go -o ${{ github.workspace }}/gosdk --package-name xi-sdk-go
+    
+      - name: Configure Git for Go SDK
+        run: |
+          git config --local user.email ${{secrets.ADMIN_EMAIL}}
+          git config --local user.name ${{secrets.ORG_NAME}}
+    
+      - name: Push Go SDK to Another Repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
+        with:
+          source-directory: 'gosdk'
+          destination-github-username: ${{secrets.ORG_NAME}}
+          destination-repository-name: 'xi-sdk-go'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'
           create-target-branch-if-needed: true

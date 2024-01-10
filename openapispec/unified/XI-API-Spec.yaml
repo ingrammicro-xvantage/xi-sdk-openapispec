@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: '6.0'
-  title: Reseller API Documentation - United States
+  title: Reseller API Documentation
   description: |-
     For Resellers. <br>
     Who are looking to Innovate with Ingram Micro's API SolutionsAutomate your eCommerce with our offering of APIs and Webhooks to create a seamless experience for your customers.

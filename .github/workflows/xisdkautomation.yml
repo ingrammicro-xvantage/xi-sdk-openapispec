@@ -18,7 +18,10 @@ jobs:
           npm install -g @openapitools/openapi-generator-cli@latest
       - name: Generate C# SDK
         run: |
-          openapi-generator-cli generate -i openapispec/unified/XI-API-Spec.yaml -g csharp -o ${{ github.workspace }}/csharpsdk --package-name xi-sdk-csharp --package-version 1.0.0
+
+          openapi-generator-cli generate -i openapispec/unified/XI-API-Spec.yaml -g csharp -o ${{ github.workspace }}/csharpsdk --package-name xi-sdk-resellers-csharp
+
+
 
       - name: Configure Git for C# SDK
         run: |
@@ -33,7 +36,7 @@ jobs:
         with:
           source-directory: 'csharpsdk'
           destination-github-username: ${{secrets.ORG_NAME}}
-          destination-repository-name: 'xi-sdk-csharp'
+          destination-repository-name: 'xi-sdk-resellers-csharp'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'
           create-target-branch-if-needed: true
@@ -41,7 +44,10 @@ jobs:
 
       - name: Generate Python SDK
         run: |
-          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g python -o ${{ github.workspace }}/pythonsdk --package-name xi-sdk-python --package-version 1.0.0
+
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g python -o ${{ github.workspace }}/pythonsdk --package-name xi-sdk-resellers-python
+
+
 
       - name: Configure Git for Python SDK
         run: |
@@ -55,7 +61,7 @@ jobs:
         with:
           source-directory: 'pythonsdk'
           destination-github-username: ${{secrets.ORG_NAME}}
-          destination-repository-name: 'xi-sdk-python'
+          destination-repository-name: 'xi-sdk-resellers-python'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'
           create-target-branch-if-needed: true
@@ -65,7 +71,8 @@ jobs:
 
       - name: Generate Node.Js SDK
         run: |
-          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g javascript -o ${{ github.workspace }}/javascriptsdk --package-name xi-sdk-node --package-version 1.0.0
+
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g javascript -o ${{ github.workspace }}/javascriptsdk --package-name xi-sdk-resellers-node
 
       - name: Configure Git for Node.Js SDK
         run: |
@@ -79,7 +86,7 @@ jobs:
         with:
           source-directory: 'javascriptsdk'
           destination-github-username: ${{secrets.ORG_NAME}}
-          destination-repository-name: 'xi-sdk-node'
+          destination-repository-name: 'xi-sdk-resellers-node'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'
           create-target-branch-if-needed: true
@@ -87,7 +94,7 @@ jobs:
 
       - name: Generate Java SDK
         run: |
-          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g java -o ${{ github.workspace }}/javasdk --package-name xi-sdk-java
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g java -o ${{ github.workspace }}/javasdk --package-name xi-sdk-resellers-java
   
       - name: Configure Git for Java SDK
         run: |
@@ -101,7 +108,7 @@ jobs:
         with:
           source-directory: 'javasdk'
           destination-github-username: ${{secrets.ORG_NAME}}
-          destination-repository-name: 'xi-sdk-java'
+          destination-repository-name: 'xi-sdk-resellers-java'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'
           create-target-branch-if-needed: true
@@ -109,7 +116,7 @@ jobs:
 
       - name: Generate Go SDK
         run: |
-          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g go -o ${{ github.workspace }}/gosdk --package-name xi-sdk-go
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-API-Spec.yaml -g go -o ${{ github.workspace }}/gosdk --package-name xi-sdk-resellers-go
     
       - name: Configure Git for Go SDK
         run: |
@@ -123,7 +130,7 @@ jobs:
         with:
           source-directory: 'gosdk'
           destination-github-username: ${{secrets.ORG_NAME}}
-          destination-repository-name: 'xi-sdk-go'
+          destination-repository-name: 'xi-sdk-resellers-go'
           user-email: ${{secrets.ADMIN_EMAIL}}
           target-branch: 'feature'
           create-target-branch-if-needed: true

@@ -87,7 +87,7 @@ jobs:
 
       - name: Generate Java SDK
         run: |
-          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g java -o ${{ github.workspace }}/javasdk --artifact-id xi.sdk.resellers.java --group-id xi.sdk.resellers --group-id xi.sdk.resellers -api-package xi.sdk.resellers.client.api --model-package xi.sdk.resellers.client.model
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g java -o ${{ github.workspace }}/javasdk --artifact-id xi.sdk.resellers.java --group-id xi.sdk.resellers --group-id xi.sdk.resellers -api-package xi_resellers.client.api --model-package xi_resellers.client.model
   
       - name: Configure Git for Java SDK
         run: |

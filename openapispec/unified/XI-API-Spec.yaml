@@ -1,7 +1,9 @@
 openapi: 3.0.0
 info:
   version: '6.0'
-  title: Reseller API Documentation - United States
+
+  title: Reseller API Documentation 
+
   description: |-
     For Resellers. <br>
     Who are looking to Innovate with Ingram Micro's API SolutionsAutomate your eCommerce with our offering of APIs and Webhooks to create a seamless experience for your customers.
@@ -5639,7 +5641,6 @@ paths:
           required: false
           schema:
             type: string
-            format: date
             example: '2021-04-23'
         - name: invoiceDate
           in: query
@@ -5647,7 +5648,6 @@ paths:
           required: false
           schema:
             type: string
-            format: date
             example: '2021-04-23'
         - name: invoiceDueDate
           in: query
@@ -5655,7 +5655,6 @@ paths:
           required: false
           schema:
             type: string
-            format: date
             example: '2021-04-23'
         - name: orderDate
           in: query
@@ -5684,7 +5683,6 @@ paths:
           required: false
           schema:
             type: string
-            format: date
             example: '2021-04-23'
         - name: DeliveryNumber
           in: query
@@ -5736,7 +5734,6 @@ paths:
           required: false
           schema:
             type: string
-            format: date
             example: '2021-04-23'
         - name: invoiceToDueDate
           in: query
@@ -5744,7 +5741,6 @@ paths:
           required: false
           schema:
             type: string
-            format: date
             example: '2021-04-23'
         - name: invoiceFromDate
           in: query
@@ -5754,7 +5750,6 @@ paths:
             type: string
             items:
               type: string
-              format: date
               example: '2021-04-23'
         - name: invoiceToDate
           in: query
@@ -5764,7 +5759,6 @@ paths:
             type: string
             items:
               type: string
-              format: date
               example: '2021-04-23'
         - name: pageSize
           in: query
@@ -10321,12 +10315,10 @@ components:
                         properties:
                           dateofPurchase:
                             type: string
-                          
                             format: date
                             description: Date of purchase of the hardware.
                           shipDate:
                             type: string
-                            
                             format: date
                             description: Vendor specific mandatory field, date of hardware/product shipment from vendor.
                           primarySerialNumber:
@@ -10420,7 +10412,6 @@ components:
                  E = ship complete across all distributions. 
             requestedDeliveryDate:
               type: string
-              
               format: date
               description: The reseller-requested delivery date in UTC format. Delivery date is not guaranteed.
             signatureRequired:

@@ -8030,7 +8030,6 @@
             "required": false,
             "schema": {
               "type": "string",
-              "format": "date",
               "example": "2021-04-23"
             }
           },
@@ -8041,7 +8040,6 @@
             "required": false,
             "schema": {
               "type": "string",
-              "format": "date",
               "example": "2021-04-23"
             }
           },
@@ -8052,7 +8050,6 @@
             "required": false,
             "schema": {
               "type": "string",
-              "format": "date",
               "example": "2021-04-23"
             }
           },
@@ -8093,7 +8090,6 @@
             "required": false,
             "schema": {
               "type": "string",
-              "format": "date",
               "example": "2021-04-23"
             }
           },
@@ -8169,7 +8165,6 @@
             "required": false,
             "schema": {
               "type": "string",
-              "format": "date",
               "example": "2021-04-23"
             }
           },
@@ -8180,7 +8175,6 @@
             "required": false,
             "schema": {
               "type": "string",
-              "format": "date",
               "example": "2021-04-23"
             }
           },
@@ -8193,7 +8187,6 @@
               "type": "string",
               "items": {
                 "type": "string",
-                "format": "date",
                 "example": "2021-04-23"
               }
             }
@@ -8207,7 +8200,6 @@
               "type": "string",
               "items": {
                 "type": "string",
-                "format": "date",
                 "example": "2021-04-23"
               }
             }

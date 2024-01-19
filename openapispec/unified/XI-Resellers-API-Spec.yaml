@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   version: '6.0'
 
-  title: Reseller API Documentation 
+  title: Reseller API 
 
   description: |-
     For Resellers. <br>

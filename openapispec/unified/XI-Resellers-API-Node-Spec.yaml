@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   version: '6.0'
 
-  title: XI SDK Resellers Node 
+  title: XI SDK Resellers
 
   description: |-
     For Resellers. <br>

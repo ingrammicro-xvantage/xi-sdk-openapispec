@@ -16,7 +16,7 @@ jobs:
           npm install -g @openapitools/openapi-generator-cli@latest
       - name: Generate C# SDK
         run: |
-          openapi-generator-cli generate -i openapispec/unified/XI-Resellers-API-Spec.yaml -g csharp -o ${{ github.workspace }}/csharpsdk --package-name xi.sdk.resellers.csharp --library httpclient
+          openapi-generator-cli generate -i openapispec/unified/XI-Resellers-API-Spec.yaml -g csharp -o ${{ github.workspace }}/csharpsdk --package-name xi.sdk.resellers --library httpclient
 
       - name: Configure Git for C# SDK
         run: |
@@ -39,7 +39,7 @@ jobs:
 
       - name: Generate Python SDK
         run: |
-          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g python -o ${{ github.workspace }}/pythonsdk --package-name xi.sdk.resellers.python
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g python -o ${{ github.workspace }}/pythonsdk --package-name xi.sdk.resellers
 
 
       - name: Configure Git for Python SDK
@@ -64,7 +64,7 @@ jobs:
 
       - name: Generate Node.Js SDK
         run: |
-          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Node-Spec.yaml -g javascript -o ${{ github.workspace }}/javascriptsdk --package-name xi.sdk.resellers.node
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Node-Spec.yaml -g javascript -o ${{ github.workspace }}/javascriptsdk --package-name xi.sdk.resellers
 
       - name: Configure Git for Node.Js SDK
         run: |
@@ -86,7 +86,7 @@ jobs:
 
       - name: Generate Java SDK
         run: |
-          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g java -o ${{ github.workspace }}/javasdk --artifact-id xi.sdk.resellers.java --group-id xi.sdk.resellers --api-package xiresellers.client.api --model-package xiresellers.client.model
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g java -o ${{ github.workspace }}/javasdk --artifact-id xi.sdk.resellers --group-id xi.sdk.resellers --api-package xiresellers.client.api --model-package xiresellers.client.model
 
       - name: Configure Git for Java SDK
         run: |
@@ -108,7 +108,7 @@ jobs:
 
       - name: Generate Go SDK
         run: |
-          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g go -o ${{ github.workspace }}/gosdk --package-name xi.sdk.resellers.go
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g go -o ${{ github.workspace }}/gosdk --package-name xi.sdk.resellers
     
       - name: Configure Git for Go SDK
         run: |

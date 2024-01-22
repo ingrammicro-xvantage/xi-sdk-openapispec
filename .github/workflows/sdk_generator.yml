@@ -66,6 +66,7 @@ jobs:
         run: |
           openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g javascript -o ${{ github.workspace }}/javascriptsdk --package-name xi.sdk.resellers
 
+
       - name: Configure Git for Node.Js SDK
         run: |
           git config --local user.email ${{secrets.ADMIN_EMAIL}}

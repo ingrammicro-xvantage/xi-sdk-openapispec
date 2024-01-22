@@ -64,7 +64,7 @@ jobs:
 
       - name: Generate Node.Js SDK
         run: |
-          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Node-Spec.yaml -g javascript -o ${{ github.workspace }}/javascriptsdk --package-name xi.sdk.resellers
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g javascript -o ${{ github.workspace }}/javascriptsdk --package-name xi.sdk.resellers
 
       - name: Configure Git for Node.Js SDK
         run: |
@@ -108,7 +108,7 @@ jobs:
 
       - name: Generate Go SDK
         run: |
-          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g go -o ${{ github.workspace }}/gosdk --package-name xi.sdk.resellers
+          openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g go -o ${{ github.workspace }}/gosdk --package-name xi_sdk_resellers
     
       - name: Configure Git for Go SDK
         run: |

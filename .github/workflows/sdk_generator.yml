@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - openapispec/unified/XI-Resellers-API-Spec.yaml
 jobs:
   push_to_another_repo:
     runs-on: ubuntu-latest

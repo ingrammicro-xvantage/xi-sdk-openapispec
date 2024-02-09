@@ -24,6 +24,18 @@ jobs:
         run: |
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
           git config --local user.name ${{secrets.ORG_NAME}}
+
+      - name: Clone Destination Repository
+        uses: actions/checkout@v2
+        with:
+          repository: ingrammicro-xvantage/xi-sdk-resellers-csharp
+          path: destination-repo
+
+      - name: Copy workflow and Cs.proj files to generated CSharp SDK 
+        run: |
+          cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/csharp/.github/workflows
+          cp -r destination-repo/src/xi.sdk.resellers/xi.sdk.resellers.csproj ${{ github.workspace }}/csharpsdk/src/xi.sdk.resellers/
+          cp -r destination-repo/src/xi.sdk.resellers.Test/xi.sdk.resellers.Test.csproj ${{ github.workspace }}/csharpsdk/src/xi.sdk.resellers.Test/
           
 
       - name: Push C# SDK to Another Repository
@@ -48,6 +60,17 @@ jobs:
         run: |
             git config --local user.email ${{secrets.ADMIN_EMAIL}}
             git config --local user.name ${{secrets.ORG_NAME}}
+
+      - name: Clone Destination Repository
+        uses: actions/checkout@v2
+        with:
+          repository: ingrammicro-xvantage/xi-sdk-resellers-python
+          path: destination-repo
+
+      - name: Copy worflow and setup.py files to generated Python SDK
+        run: |
+          cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/pythonsdk/.github/workflows
+          cp -r destination-repo/setup.py ${{ github.workspace }}/pythonsdk/
 
       - name: Push Python SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
@@ -74,6 +97,17 @@ jobs:
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
           git config --local user.name ${{secrets.ORG_NAME}}
 
+      - name: Clone Destination Repository
+        uses: actions/checkout@v2
+        with:
+          repository: ingrammicro-xvantage/xi-sdk-resellers-node
+          path: destination-repo
+
+      - name: Copy workflow and package.json files to generated Javascript SDK
+        run: |
+          cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/javascriptsdk/.github/workflows
+          cp -r destination-repo/package.json ${{ github.workspace }}/javascriptsdk/
+
       - name: Push Node.Js SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
@@ -95,6 +129,17 @@ jobs:
         run: |
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
           git config --local user.name ${{secrets.ORG_NAME}}
+
+      - name: Clone Destination Repository
+        uses: actions/checkout@v2
+        with:
+          repository: ingrammicro-xvantage/xi-sdk-resellers-java
+          path: destination-repo
+
+      - name: Copy workflow and pom.xml files to generated Java SDK
+        run: |
+          cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/javasdk/.github/workflows
+          cp -r destination-repo/pom.xml ${{ github.workspace }}/javasdk/
   
       - name: Push Java SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
@@ -117,6 +162,18 @@ jobs:
         run: |
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
           git config --local user.name ${{secrets.ORG_NAME}}
+
+      - name: Clone Destination Repository
+        uses: actions/checkout@v2
+        with:
+          repository: ingrammicro-xvantage/xi-sdk-resellers-go
+          path: destination-repo
+
+      - name: Copy worflow and go.mod files to generated Go SDK
+        run: |
+          cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/gosdk/.github/workflows
+          cp -r destination-repo/go.mod ${{ github.workspace }}/gosdk/
+  
     
       - name: Push Go SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main

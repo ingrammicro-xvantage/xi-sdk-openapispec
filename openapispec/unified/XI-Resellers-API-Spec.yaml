@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: '6.0'
+  version: 1.0.0
 
   title: Reseller API 
 
@@ -179,9 +179,6 @@ paths:
           required: true
           schema:
             type: boolean
-            items:
-              type: boolean
-              uniqueItems: false
         - name: includePricing
           in: query
           description: Pass boolean value as input, if true the response will contain Pricing details of the Product, if false the response will not hold Pricing details.
@@ -5591,7 +5588,7 @@ paths:
                       - traceid: '123456'
                         type: /errors/system-errors
                         message: Some unexpected error occured, please contact support team for more details
-  /resellers/v6/invoices/:
+  /resellers/v6/invoices:
     get:
       summary: Search your invoice
       tags:
@@ -5602,7 +5599,7 @@ paths:
         - application:
             - read
       parameters:
-        - name: 'IM-ApplicationID '
+        - name: IM-ApplicationID
           in: header
           description: 'Unique value used to identify the sender of the transaction. Example: MyCompany'
           required: true
@@ -6792,6 +6789,7 @@ paths:
             type: string
             maxLength: 32
             example: fbac82ba-cf0a-4bcf-fc03-0c5084
+        
         - name: IM-SenderID
           in: header
           description: 'Unique value used to identify the sender of the transaction. Example: MyCompany'
@@ -6960,14 +6958,23 @@ paths:
             type: string
             maxLength: 32
             example: fbac82ba-cf0a-4bcf-fc03-0c5084
-        - name: IM-SenderID
+        - name: IM-ApplicationId
           in: header
           description: 'Unique value used to identify the sender of the transaction. Example: MyCompany'
-          required: false
+          required: true
           schema:
             type: string
             maxLength: 32
             example: MyCompany
+        - name: IM-Environment
+          in: header
+          description: Environment name.
+          example: prodChicago
+          required: true
+          schema:
+            type: string
+            example: 20-222222
+            maxLength: 32
         - name: dealId
           in: path
           description: Unique deal ID.
@@ -10049,7 +10056,7 @@ paths:
         - Quotes v4
     parameters: []
 servers:
-  - url: https://api.ingrammicro.com:443/sandbox
+  - url: https://api.ingrammicro.com:443/
     description: Sandbox
 components:
   schemas:
@@ -12010,6 +12017,9 @@ components:
         vendorPartNumber:
           type: string
           description: Vendor’s part number for the product.
+        customerPartNumber:
+          type: string
+          description: Reseller / end-user’s part number for the product.
         productAuthorized:
           type: boolean
           description: Boolean that indicates whether a product is authorized.
@@ -12040,15 +12050,10 @@ components:
         productClass:
           type: string
           description: Indicates whether the product is directly shipped from the vendor’s warehouse or if the product ships from Ingram Micro’s warehouse. Class Codes are Ingram classifications on how skus are stocked A = Product that is stocked usually in all IM warehouses and replenished on a regular basis. B = Product that is stocked in limited IM warehouses and replenished on a regular basis C = Product that is stocked in fewer IM warehouses and replenished on a regular basis. D = Product that Ingram Micro has elected to discontinue. E = Product that will be phased out later, according to the vendor. You may not want to replenish this product, but instead sell down what is in stock. F = Product that we carry for a specific customer or supplier under a contractual agreement. N = New Sku. Classification before first receipt O = Discontinued product to be liquidated S= Order for Specialized Demand (Order to backorder) X= direct ship from Vendor V = product that vendor has elected to discontinue.
-        customerPartNumber:
-          type: string
-          description: Reseller / end-user’s part number for the product.
         indicators:
-          type: array
+          type: object
           description: Indicators of the Product
-          items:
-            type: object
-            properties:
+          properties:
               hasWarranty:
                 type: boolean
                 description: Boolean that indicates whether product has a warranty.
@@ -12143,11 +12148,9 @@ components:
                 type: boolean
                 description: Boolean that indicates whether product is configurable.
         ciscoFields:
-          type: array
+          type: object
           description: Cisco product related information.
-          items:
-            type: object
-            properties:
+          properties:
               productSubGroup:
                 type: string
                 description: Cisco product sub-group
@@ -12536,11 +12539,8 @@ components:
                 description: The vendor's name.
               dealExpiryDate:
                 type: string
-                format: date
                 description: Expiration date of the deal/Special bid.
               links:
-                type: array
-                items:
                   type: object
                   properties:
                     topic:
@@ -12593,8 +12593,6 @@ components:
           type: string
           description: Country specific currency code.
         endUserInfo:
-          type: array
-          items:
             type: object
             properties:
               contact:
@@ -12716,7 +12714,6 @@ components:
                 description: A unique return request number.
               createdOn:
                 type: string
-                format: date
                 description: 'The date on which the return request was created. '
               type:
                 type: string
@@ -12728,8 +12725,8 @@ components:
                 type: string
                 description: The reference number for the return.
               estimatedTotalValue:
-                type: string
-                format: date
+                type: number
+                format: double
                 description: The estimated total value of the return.
               credit:
                 type: number
@@ -12817,13 +12814,14 @@ components:
                 type: string
                 description: Ingram micro Invoice number.
               customerOrderNumber:
-                type: integer
+                type: string
                 description: The reseller's order number for reference in their system.
               requestDetails:
-                type: integer
+                type: string
                 description: Request details.
               quantity:
-                type: integer
+                type: number
+                format: decimal
                 description: The quantity of the line item.
               unitPrice:
                 type: number

@@ -30,6 +30,11 @@ jobs:
         with:
           repository: ingrammicro-xvantage/xi-sdk-resellers-csharp
           path: destination-repo
+        
+      - name: Create .github/workflows directory if not exists
+        run: |
+          mkdir -p ${{ github.workspace }}/csharpsdk/.github/workflows
+
 
       - name: Copy workflow and Cs.proj files to generated CSharp SDK 
         run: |
@@ -103,6 +108,11 @@ jobs:
           repository: ingrammicro-xvantage/xi-sdk-resellers-node
           path: destination-repo
 
+      - name: Create .github/workflows directory if not exists
+        run: |
+          mkdir -p ${{ github.workspace }}/javascriptsdk/.github/workflows
+
+
       - name: Copy workflow and package.json files to generated Javascript SDK
         run: |
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/javascriptsdk/.github/workflows
@@ -163,11 +173,15 @@ jobs:
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
           git config --local user.name ${{secrets.ORG_NAME}}
 
+
       - name: Clone Destination Repository
         uses: actions/checkout@v2
         with:
           repository: ingrammicro-xvantage/xi-sdk-resellers-go
           path: destination-repo
+      - name: Create .github/workflows directory if not exists
+        run: |
+          mkdir -p ${{ github.workspace }}/gosdk/.github/workflows
 
       - name: Copy worflow and go.mod files to generated Go SDK
         run: |

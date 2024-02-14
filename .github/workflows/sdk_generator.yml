@@ -33,7 +33,7 @@ jobs:
 
       - name: Copy workflow and Cs.proj files to generated CSharp SDK 
         run: |
-          cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/csharp/.github/workflows
+          cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/csharpsdk/.github/workflows
           cp -r destination-repo/src/xi.sdk.resellers/xi.sdk.resellers.csproj ${{ github.workspace }}/csharpsdk/src/xi.sdk.resellers/
           cp -r destination-repo/src/xi.sdk.resellers.Test/xi.sdk.resellers.Test.csproj ${{ github.workspace }}/csharpsdk/src/xi.sdk.resellers.Test/
           

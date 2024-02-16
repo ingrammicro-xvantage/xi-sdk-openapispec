@@ -41,6 +41,7 @@ jobs:
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/csharpsdk/.github/workflows
           cp -r destination-repo/src/xi.sdk.resellers/xi.sdk.resellers.csproj ${{ github.workspace }}/csharpsdk/src/xi.sdk.resellers/
           cp -r destination-repo/src/xi.sdk.resellers.Test/xi.sdk.resellers.Test.csproj ${{ github.workspace }}/csharpsdk/src/xi.sdk.resellers.Test/
+          cp -r destination-repo/LICENCE ${{ github.workspace }}/csharpsdk/
           
 
       - name: Push C# SDK to Another Repository
@@ -76,6 +77,7 @@ jobs:
         run: |
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/pythonsdk/.github/workflows
           cp -r destination-repo/setup.py ${{ github.workspace }}/pythonsdk/
+          cp -r destination-repo/LICENCE ${{ github.workspace }}/pythonsdk/
 
       - name: Push Python SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
@@ -117,6 +119,7 @@ jobs:
         run: |
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/javascriptsdk/.github/workflows
           cp -r destination-repo/package.json ${{ github.workspace }}/javascriptsdk/
+          cp -r destination-repo/LICENCE ${{ github.workspace }}/javascriptsdk/
 
       - name: Push Node.Js SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main

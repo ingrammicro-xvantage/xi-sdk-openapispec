@@ -9749,11 +9749,9 @@ components:
           description: The date on which the deal starts.
         dealExpiryDate:
           type: string
-          format: date
           description: Expiration date of the deal/Special bid.
         priceProtectionEndDate:
           type: string
-          format: date
           description: The date on which the price protection will end.
         currencyCode:
           type: string
@@ -9958,7 +9956,7 @@ components:
             type: object
             properties:
               ingramLineNumber:
-                type: string
+                type: integer
                 description: Unique Ingram Micro line number.
               description:
                 type: string
@@ -10001,10 +9999,10 @@ components:
                 type: string
                 description: The status of the line item.
               returnBranch:
-                type: integer
+                type: string
                 description: The code of the return branch.
               shipFromBranch:
-                type: integer
+                type: string
                 description: The code of the ship from branch.
         subTotal:
           type: number
@@ -10835,7 +10833,8 @@ components:
                 type: string
                 description: Invoice Due Date.
               invoicedAmountDue:
-                type: string
+                type: number
+                format: decimal
                 description: Invoice Amount.
               customerOrderNumber:
                 type: string
@@ -10847,7 +10846,8 @@ components:
                 type: string
                 description: End Customer Order number.
               invoiceAmountInclTax:
-                type: string
+                type: number
+                format: decimal
                 description: Invoice Amount Inclusive of Taxes
         nextPage:
           type: string
@@ -11015,7 +11015,8 @@ components:
                 type: string
                 description: Description of the product.
               unitWeight:
-                type: string
+                type: number
+                format: decimal
                 description: Weight of the product.
               quantity:
                 type: integer

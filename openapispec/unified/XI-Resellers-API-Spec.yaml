@@ -8937,6 +8937,9 @@ components:
                     quantityBackorderedEta:
                       type: string
                       description: The estimated time of arrival of a product that has been backordered in a given warehouse.
+                    quantityOnOrder:
+                      type: integer
+                      description: The quantity of the product on order.
                     backOrderInfo:
                       type: array
                       description: '*Currently, this feature is not available in these countries (Mexico, Turkey, New Zealand, Colombia, Chile, Brazil, Peru, Western Sahara).'
@@ -9745,7 +9748,6 @@ components:
           description: The vendor's name.
         dealReceivedOn:
           type: string
-          format: date
           description: The date on which the deal starts.
         dealExpiryDate:
           type: string
@@ -9936,7 +9938,6 @@ components:
           description: A unique return request number.
         createdOn:
           type: string
-          format: date
           description: The date on which the return request was created.
         returnReason:
           type: string
@@ -10361,6 +10362,8 @@ components:
           description: The quote details for the requested criteria.
           items:
             properties:
+              quoteGuid:
+                type: string
               quoteName:
                 type: string
                 description: Quote Name given to quote by sales team or system generated.  Generally used as a reference to identify the quote.
@@ -10392,12 +10395,28 @@ components:
               ingramQuoteExpiryDate:
                 type: string
                 description: Date when the Quote Expires.
+              endUserName:
+                type: string
+                description: End User Name
               vendor:
                 type: string
                 description: Name of the vendor.
               createdBy:
                 type: string
                 description: Name of the end user/customer who created a quote.
+              quoteType:
+                type: string
+                description: Type of quote
+              links:
+                type: object
+                items:
+                  properties:
+                    topic:
+                      type: string
+                    href:
+                      type: string
+                    type:
+                      type: string
     QuoteDetailsResponse:
       type: object
       properties:
@@ -10422,6 +10441,9 @@ components:
         currencyCode:
           type: string
           description: Three letter currency code.
+        closingReason:
+          type: string
+          description: Closing Reason for quote.
         specialBidId:
           type: string
           description: Price discount identifyer to specify  a pricing discount that has been applied to the quote. If present - the priceDeviationStartDate and priceDeviationExpiryDate must be presented. Cisco refers to this as a Dart
@@ -10874,7 +10896,10 @@ components:
         endCustomerOrderNumber:
           type: string
           description: The end customer's order number for reference in their system.
-        OrderDate:
+        orderNumber:
+          type: string
+          description: The end customer's order number for reference in their system.
+        orderDate:
           type: string
           format: date
           description: The date and time in UTC format that the order was created.
@@ -11313,6 +11338,10 @@ components:
           type: number
           format: double
           description: Total tax on the orders placed.
+        totalFees:
+          type: number
+          format: double
+          description: Total fees on the orders placed.
         paymentTerms:
           type: string
           description: The payment terms of the order. (Ex- Net 30 days).

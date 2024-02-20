@@ -10888,7 +10888,6 @@ components:
           description: Status of the invoice.
         invoiceDate:
           type: string
-          format: date
           description: Date of an Invoice.
         customerOrderNumber:
           type: string

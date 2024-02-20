@@ -5908,13 +5908,6 @@ paths:
             type: string
             maxLength: 32
             example: MyCompany
-        - name: Content Type
-          in: header
-          description: The media type for JSON Request.
-          required: true
-          schema:
-            type: string
-            example: application/json
         - name: customerOrderNumber
           in: query
           description: The reseller's unique PO/Order number.
@@ -8043,6 +8036,15 @@ components:
                     attributeDescription:
                       type: string
                       description: The description of the line level field.
+        quoteType:
+          type: integer
+        vendorGroupName:
+          type: string
+        vendorQuoteNumber:
+          type: string
+        vendorMasterNumber:
+          type: string
+          
     OrderCreateResponse:
       type: object
       properties:
@@ -9204,7 +9206,7 @@ components:
         productCategory:
           type: string
           description: The category of the product.
-        productSubcategory:
+        productSubCategory:
           type: string
           description: The sub-category of the product.
         vendorName:
@@ -9846,11 +9848,9 @@ components:
                 description: Special conditions of the deal.
               startDate:
                 type: string
-                format: date
                 description: Start Date.
               expirationDate:
                 type: string
-                format: date
                 description: Expiration date.
               daysRemaining:
                 type: integer
@@ -9973,7 +9973,6 @@ components:
                 description: The UPC code of a product.
               invoiceDate:
                 type: string
-                format: date
                 description: The date of the invoice.
               invoiceNumber:
                 type: string
@@ -9981,9 +9980,6 @@ components:
               customerOrderNumber:
                 type: string
                 description: The reseller's order number for reference in their system.
-              requestDetails:
-                type: string
-                description: Request details.
               quantity:
                 type: number
                 format: decimal
@@ -10005,6 +10001,11 @@ components:
               shipFromBranch:
                 type: string
                 description: The code of the ship from branch.
+              requestDetails:
+                type: string
+                description: Request details.
+              additionalDetails:
+                type: string
         subTotal:
           type: number
           format: decimal
@@ -10361,6 +10362,7 @@ components:
           type: array
           description: The quote details for the requested criteria.
           items:
+            type: object
             properties:
               quoteGuid:
                 type: string
@@ -10471,6 +10473,8 @@ components:
         legalTerms:
           type: string
           description: Legal terms -  Legally required - must be included when presenting the quote details.
+        quoteType:
+          type: string
         leaseInfo:
           type: string
           description: Lease information.
@@ -11538,6 +11542,9 @@ components:
               promisedDeliveryDate:
                 type: string
                 description: The delivery date promised by IngramMicro.
+              backOrderETAData:
+                type: string
+                description: Backorder ETA date
               lineNotes:
                 type: string
                 description: Line-level notes for the order.

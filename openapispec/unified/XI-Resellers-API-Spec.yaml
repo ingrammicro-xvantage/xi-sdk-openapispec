@@ -5908,7 +5908,7 @@ paths:
             type: string
             maxLength: 32
             example: MyCompany
-        - name: Content type
+        - name: Content Type
           in: header
           description: The media type for JSON Request.
           required: true
@@ -9422,7 +9422,7 @@ components:
                 subStatus:
                   type: string
                   description: The sub-status of Opportunity status. Possible sub-status values for Open opportunity status are Ready to order, Quote pending, Notification sent, Future, and Quote requested. Possible sub-status values for Closed opportunity status are All, Ordered, Quote closed-contract sales desk, Expired, Transition to new/upsell, Lost to competitior, Consolidated, Transitioned to cloud, Renewal went direct, EOL, End user out of business, Void, Other, and Cancelled.
-        dataType:
+        dateType:
           type: object
           properties:
             startDate:
@@ -10901,7 +10901,6 @@ components:
           description: The end customer's order number for reference in their system.
         orderDate:
           type: string
-          format: date
           description: The date and time in UTC format that the order was created.
         billToID:
           type: string

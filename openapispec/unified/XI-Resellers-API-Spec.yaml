@@ -9534,7 +9534,7 @@ components:
       type: object
       properties:
         renewalId:
-          type: string
+          type: integer
           description: Unique Ingram renewal ID.
         ingramOrderNumber:
           type: string
@@ -9558,7 +9558,7 @@ components:
           description: The end customer's order number for reference in their system.
         renewalValue:
           type: number
-          format: decimal
+          format: double
           description: The value of the renewal.
         endUser:
           type: string
@@ -10865,16 +10865,23 @@ components:
               customerOrderNumber:
                 type: string
                 description: Customer Order No.
-              orderCreateDate:
-                type: string
-                description: Order Create Date.
               endCustomerOrderNumber:
                 type: string
                 description: End Customer Order number.
+              orderCreateDate:
+                type: string
+                description: Order Create Date.
               invoiceAmountInclTax:
                 type: number
                 format: decimal
                 description: Invoice Amount Inclusive of Taxes
+              forgntotalamount:
+                type: number
+                format: decimal
+              gstInvoiceNumber:
+                type: string
+              isfeccenabled: 
+                type: boolean
         nextPage:
           type: string
           description: Next page of the pagination.

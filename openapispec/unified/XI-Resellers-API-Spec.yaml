@@ -9487,7 +9487,7 @@ components:
             type: object
             properties:
               renewalId:
-                type: string
+                type: integer
                 description: Unique renewal ID.
               customerOrderNumber:
                 type: string
@@ -9505,7 +9505,8 @@ components:
                 type: string
                 description: Renewal expiration date.
               renewalValue:
-                type: string
+                type: number
+                format: double
                 description: The value of the renewal.
               status:
                 type: string
@@ -11549,7 +11550,7 @@ components:
               promisedDeliveryDate:
                 type: string
                 description: The delivery date promised by IngramMicro.
-              backOrderETAData:
+              backOrderETADate:
                 type: string
                 description: Backorder ETA date
               lineNotes:

@@ -9353,7 +9353,7 @@ components:
           items:
             type: object
             properties:
-              headername:
+              headerName:
                 type: string
                 description: 'Example : ''Basic'''
               attributevalue:

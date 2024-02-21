@@ -9243,6 +9243,8 @@ components:
               isReplacementProduct:
                 type: boolean
                 description: Boolean that indicates whether product is a replacement product.
+              replacementType:
+                type: string
               isDirectship:
                 type: boolean
                 description: Boolean that indicates whether it’s a direct ship product.

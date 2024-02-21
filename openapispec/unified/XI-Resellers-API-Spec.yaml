@@ -9231,7 +9231,7 @@ components:
               isNewProduct:
                 type: boolean
                 description: 'Boolean that indicates whether it’s a new product. '
-              HasReturnLimits:
+              hasReturnLimits:
                 type: boolean
                 description: Boolean that indicates whether there is any limit to return the product.
               IsBackOrderAllowed:
@@ -9535,18 +9535,16 @@ components:
       type: object
       properties:
         renewalId:
-          type: integer
+          type: string
           description: Unique Ingram renewal ID.
         ingramOrderNumber:
           type: string
           description: The IngramMicro sales order number.
         ingramOrderDate:
           type: string
-          format: date
           description: The IngramMicro sales order date.
         expirationDate:
           type: string
-          format: date
           description: Renewal expiration date.
         ingramPurchaseOrderNumber:
           type: string
@@ -9558,8 +9556,7 @@ components:
           type: string
           description: The end customer's order number for reference in their system.
         renewalValue:
-          type: number
-          format: double
+          type: string
           description: The value of the renewal.
         endUser:
           type: string
@@ -9571,93 +9568,87 @@ components:
           type: string
           description: The status of the renewal.
         endUserInfo:
-          type: array
-          items:
-            type: object
-            properties:
-              contact:
-                type: string
-                description: The contact name for the end user/customer.
-              name1:
-                type: string
-                description: The name1 for the end user/customer.
-              name2:
-                type: string
-                description: The name2 for the end user/customer.
-              companyName:
-                type: string
-                description: The company name for the end user/customer.
-              addressLine1:
-                type: string
-                description: The address line 1 for the end user/customer.
-              addressLine2:
-                type: string
-                description: The address line 2 for the end user/customer.
-              addressLine3:
-                type: string
-                description: The address line 3 for the end user/customer.
-              addressLine4:
-                type: string
-                description: The address line 4 for the end user/customer.
-              city:
-                type: string
-                description: The end user/customer's city.
-              state:
-                type: string
-                description: The end user/customer's state.
-              postalCode:
-                type: string
-                description: The end user/customer's zip or postal code.
-              countryCode:
-                type: string
-                description: The end user/customer's two character ISO country code.
-              phoneNumber:
-                type: string
-                description: The end user/customer's phone number.
-              email:
-                type: string
-                description: The end user/customer's email.
+          type: object
+          properties:
+            contact:
+              type: string
+              description: The contact name for the end user/customer.
+            name1:
+              type: string
+              description: The name1 for the end user/customer.
+            name2:
+              type: string
+              description: The name2 for the end user/customer.
+            companyName:
+              type: string
+              description: The company name for the end user/customer.
+            addressLine1:
+              type: string
+              description: The address line 1 for the end user/customer.
+            addressLine2:
+              type: string
+              description: The address line 2 for the end user/customer.
+            addressLine3:
+              type: string
+              description: The address line 3 for the end user/customer.
+            addressLine4:
+              type: string
+              description: The address line 4 for the end user/customer.
+            city:
+              type: string
+              description: The end user/customer's city.
+            state:
+              type: string
+              description: The end user/customer's state.
+            postalCode:
+              type: string
+              description: The end user/customer's zip or postal code.
+            countryCode:
+              type: string
+              description: The end user/customer's two character ISO country code.
+            phoneNumber:
+              type: string
+              description: The end user/customer's phone number.
+            email:
+              type: string
+              description: The end user/customer's email.
         referenceNumber:
-          type: array
-          items:
-            type: object
-            properties:
-              notificationId:
-                type: string
-                description: Notification id of the communication sent from Ingram.
-              quoteNumber:
-                type: string
-                description: Quote number for the renewal.
+          type: object
+          properties:
+            notificationId:
+              type: string
+              description: Notification id of the communication sent from Ingram.
+            quoteNumber:
+              type: string
+              description: Quote number for the renewal.
         products:
-          type: array
-          items:
-            type: object
-            properties:
-              ingramLineNumber:
-                type: string
-                description: Unique Ingram Micro line number.
-              productDescription:
-                type: string
-                description: The description of the product.
-              vendorPartNumber:
-                type: string
-                description: The vendor's part number for the line item.
-              ingramPartNumber:
-                type: string
-                description: Unique IngramMicro part number.
-              manufacturerPartNumber:
-                type: string
-                description: The manufacturer's part number for the line item.
-              quantity:
-                type: string
-                description: The quantity of the line item.
-              unitPrice:
-                type: number
-                format: decimal
-                description: The unit price of the line item.
-              isConsolidated:
-                type: string
-                description: Is the line item consolidated? Yes or No.
+          type: object
+          properties:
+            ingramLineNumber:
+              type: string
+              description: Unique Ingram Micro line number.
+            productDescription:
+              type: string
+              description: The description of the product.
+            vendorPartNumber:
+              type: string
+              description: The vendor's part number for the line item.
+            ingramPartNumber:
+              type: string
+              description: Unique IngramMicro part number.
+            manufacturerPartNumber:
+              type: string
+              description: The manufacturer's part number for the line item.
+            unitPrice:
+              type: number
+              format: decimal
+              description: The unit price of the line item.
+            quantity:
+              type: integer
+              description: The quantity of the line item.
+            isConsolidated:
+              type: string
+              description: Is the line item consolidated? Yes or No.
         additionalAttributes:
           type: array
           items:
@@ -10412,8 +10403,7 @@ components:
                 description: Type of quote
               links:
                 type: object
-                items:
-                  properties:
+                properties:
                     topic:
                       type: string
                     href:
@@ -10482,6 +10472,8 @@ components:
         leasingInstructions:
           type: string
           description: Leasing information
+        quoteSybType:
+          type: string
         resellerInfo:
           type: object
           properties:
@@ -10881,7 +10873,7 @@ components:
                 format: decimal
               gstInvoiceNumber:
                 type: string
-              isfeccenabled: 
+              isfseccenabled: 
                 type: boolean
         nextPage:
           type: string
@@ -11572,6 +11564,10 @@ components:
                     estimatedShipDate:
                       type: string
                       description: The date the line item is expected to be shipped.
+                    shippedDate:
+                      type: string
+                    estimatedDeliveryDate:
+                      type: string
                     shipFromWarehouseId:
                       type: string
                       description: The ID of the warehouse the product will ship from.

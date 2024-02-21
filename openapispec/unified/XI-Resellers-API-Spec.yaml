@@ -9622,33 +9622,35 @@ components:
               type: string
               description: Quote number for the renewal.
         products:
-          type: object
-          properties:
-            ingramLineNumber:
-              type: string
-              description: Unique Ingram Micro line number.
-            productDescription:
-              type: string
-              description: The description of the product.
-            vendorPartNumber:
-              type: string
-              description: The vendor's part number for the line item.
-            ingramPartNumber:
-              type: string
-              description: Unique IngramMicro part number.
-            manufacturerPartNumber:
-              type: string
-              description: The manufacturer's part number for the line item.
-            unitPrice:
-              type: number
-              format: decimal
-              description: The unit price of the line item.
-            quantity:
-              type: integer
-              description: The quantity of the line item.
-            isConsolidated:
-              type: string
-              description: Is the line item consolidated? Yes or No.
+          type: array
+          items:
+            type: object
+            properties:
+              ingramLineNumber:
+                type: string
+                description: Unique Ingram Micro line number.
+              productDescription:
+                type: string
+                description: The description of the product.
+              vendorPartNumber:
+                type: string
+                description: The vendor's part number for the line item.
+              ingramPartNumber:
+                type: string
+                description: Unique IngramMicro part number.
+              manufacturerPartNumber:
+                type: string
+                description: The manufacturer's part number for the line item.
+              quantity:
+                type: string
+                description: The quantity of the line item.
+              unitPrice:
+                type: number
+                format: decimal
+                description: The unit price of the line item.
+              isConsolidated:
+                type: string
+                description: Is the line item consolidated? Yes or No.
         additionalAttributes:
           type: array
           items:

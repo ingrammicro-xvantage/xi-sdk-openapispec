@@ -9356,15 +9356,15 @@ components:
               headerName:
                 type: string
                 description: 'Example : ''Basic'''
-              attributevalue:
-                type: string
-                description: 'Example : ''LCD Monitor'''
-              attributedisplay:
-                type: string
-                description: 'Example : ''Basic|Product Type|LCD Monitor'''
-              attributename:
+              attributeName:
                 type: string
                 description: 'Example : ''Product Type'''
+              attributeDisplay:
+                type: string
+                description: 'Example : ''Basic|Product Type|LCD Monitor'''
+              attributeValue:
+                type: string
+                description: 'Example : ''LCD Monitor'''
         warrantyInformation:
           type: array
           description: Warranty information related to the product.

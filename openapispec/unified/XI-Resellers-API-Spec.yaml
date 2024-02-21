@@ -9668,7 +9668,6 @@ components:
                 description: The value of the additional attribute.
               startDate:
                 type: string
-                format: date
                 description: The attribute start date.
               expirationDate:
                 type: string

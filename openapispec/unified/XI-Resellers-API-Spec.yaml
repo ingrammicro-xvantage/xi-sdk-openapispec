@@ -9672,7 +9672,6 @@ components:
                 description: The attribute start date.
               expirationDate:
                 type: string
-                format: date
                 description: The attribute expiration date.
               isConsolidated:
                 type: string
@@ -10440,9 +10439,6 @@ components:
         currencyCode:
           type: string
           description: Three letter currency code.
-        closingReason:
-          type: string
-          description: Closing Reason for quote.
         specialBidId:
           type: string
           description: Price discount identifyer to specify  a pricing discount that has been applied to the quote. If present - the priceDeviationStartDate and priceDeviationExpiryDate must be presented. Cisco refers to this as a Dart
@@ -10455,6 +10451,11 @@ components:
         status:
           type: string
           description: This refers to the primary status of the quote.  API responses will return
+        closingReason:
+          type: string
+          description: Closing Reason for quote.
+        dateClosed:
+          type: string
         customerNeed:
           type: string
           description: Details related to the customer's request for the quote entered by the sales representative or system generated.
@@ -10478,7 +10479,7 @@ components:
         leasingInstructions:
           type: string
           description: Leasing information
-        quoteSybType:
+        quoteSubType:
           type: string
         resellerInfo:
           type: object
@@ -11833,12 +11834,12 @@ components:
                       type: string
                       description: Line number.
                     requestedQuantity:
-                      type: string
+                      type: integer
                       description: Requested quantity.
                     confirmedQuantity:
-                      type: string
+                      type: integer
                       description: Confirmed quantity.
-                    dataType:
+                    dateType:
                       type: string
                       description: Date type. Example Single or multiple dates.
                     dateRange:

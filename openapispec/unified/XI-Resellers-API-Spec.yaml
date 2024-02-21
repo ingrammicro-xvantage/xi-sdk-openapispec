@@ -11296,7 +11296,6 @@ components:
           description: The IngramMicro sales order number.
         ingramOrderDate:
           type: string
-          format: date-time
           description: The IngramMicro sales order date.
         orderType:
           type: string

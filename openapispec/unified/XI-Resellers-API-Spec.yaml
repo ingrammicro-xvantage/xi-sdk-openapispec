@@ -9234,7 +9234,7 @@ components:
               hasReturnLimits:
                 type: boolean
                 description: Boolean that indicates whether there is any limit to return the product.
-              IsBackOrderAllowed:
+              isBackOrderAllowed:
                 type: boolean
                 description: Boolean that indicates whether back order is allowed for the product.
               isShippedFromPartner:

@@ -10547,10 +10547,10 @@ components:
               notes:
                 type: string
                 description: Product line item comments.
-              EAN:
+              ean:
                 type: string
                 description: EANUPC
-              CoO:
+              coo:
                 type: string
                 description: Country of Origin.
               ingramPartNumber:
@@ -11176,7 +11176,7 @@ components:
                   type: number
                   format: double
                   description: Total Tax amount.
-                invoicedAmountDue:
+                invoicesAmountDue:
                   type: number
                   format: double
                   description: Total amount due for the invoice.

@@ -7837,85 +7837,81 @@ components:
           description: Suffix used to identify billing address. Created during onboarding. Resellers are provided with one or more address IDs depending on how many bill to addresses they need for various flooring companies they are using for credit.
           nullable: true
         endUserInfo:
-          type: array
+          type: object
           description: The contact information for the end user/customer provided by the reseller. Used to determine pricing and discounts.
-          items:
-            type: object
-            properties:
-              companyName:
-                type: string
-                description: The company name for the end user/customer.
-              contact:
-                type: string
-                description: The contact name for the end user/customer.
-              addressLine1:
-                type: string
-                description: The address line 1 for the end user/customer.
-              addressLine2:
-                type: string
-                description: The address line 2 for the end user/customer.
-              addressLine3:
-                type: string
-                description: The address line 3 for the end user/customer.
-              city:
-                type: string
-                description: The end user/customer's city.
-              state:
-                type: string
-                description: The end user/customer's state.
-              postalCode:
-                type: string
-                description: The end user/customer's zip or postal code.
-              countryCode:
-                type: string
-                description: The end user/customer's two character ISO country code.
-              email:
-                type: string
-                description: The end user/customer's phone number.
-              phoneNumber:
-                type: string
-                description: The end user/customer's phone number.
+          properties:
+            companyName:
+              type: string
+              description: The company name for the end user/customer.
+            contact:
+              type: string
+              description: The contact name for the end user/customer.
+            addressLine1:
+              type: string
+              description: The address line 1 for the end user/customer.
+            addressLine2:
+              type: string
+              description: The address line 2 for the end user/customer.
+            addressLine3:
+              type: string
+              description: The address line 3 for the end user/customer.
+            city:
+              type: string
+              description: The end user/customer's city.
+            state:
+              type: string
+              description: The end user/customer's state.
+            postalCode:
+              type: string
+              description: The end user/customer's zip or postal code.
+            countryCode:
+              type: string
+              description: The end user/customer's two character ISO country code.
+            email:
+              type: string
+              description: The end user/customer's phone number.
+            phoneNumber:
+              type: string
+              description: The end user/customer's phone number.
         shipToInfo:
-          type: array
+          type: object
           description: The shipping information provided by the reseller for order delivery.
-          items:
-            type: object
-            properties:
-              addressId:
-                type: string
-                description: The company contact provided by the reseller.
-              companyName:
-                type: string
-                description: The name of the company the order will be shipped to.
-              contact:
-                type: string
-                description: The contact name for the order will be shipped to.
-              addressLine1:
-                type: string
-                description: The address line 1 the order will be shipped to.
-              addressLine2:
-                type: string
-                description: The address line 2 the order will be shipped to.
-              addressLine3:
-                type: string
-                description: The address line 3 the order will be shipped to.
-                nullable: true
-              city:
-                type: string
-                description: The city the order will be shipped to.
-              state:
-                type: string
-                description: The state the order will be shipped to.
-              postalCode:
-                type: string
-                description: The zip or postal code the order will be shipped to.
-              countryCode:
-                type: string
-                description: The two-character ISO country code the order will be shipped to.
-              email:
-                type: string
-                description: The company contact email address.
-                nullable: true
+          properties:
+            addressId:
+              type: string
+              description: The company contact provided by the reseller.
+            companyName:
+              type: string
+              description: The name of the company the order will be shipped to.
+            contact:
+              type: string
+              description: The contact name for the order will be shipped to.
+            addressLine1:
+              type: string
+              description: The address line 1 the order will be shipped to.
+            addressLine2:
+              type: string
+              description: The address line 2 the order will be shipped to.
+            addressLine3:
+              type: string
+              description: The address line 3 the order will be shipped to.
+              nullable: true
+            city:
+              type: string
+              description: The city the order will be shipped to.
+            state:
+              type: string
+              description: The state the order will be shipped to.
+            postalCode:
+              type: string
+              description: The zip or postal code the order will be shipped to.
+            countryCode:
+              type: string
+              description: The two-character ISO country code the order will be shipped to.
+            email:
+              type: string
+              description: The company contact email address.
+              nullable: true
         additionalAttributes:
           type: array
           description: Additional order create attributes.
@@ -10618,6 +10614,8 @@ components:
         extendedQuotePriceTotal:
           type: integer
           description: Total amount of quoted price for all products in the quote including both solution products and suggested products.
+        totalQuoteAmount:
+          type: string
         additionalAttributes:
           type: array
           items:
@@ -11035,6 +11033,8 @@ components:
               ingramPartNumber:
                 type: string
                 description: Ingram Micro SKU (stock keeping unit). An identification, usually alphanumeric, of a particular product that allows it to be tracked for inventory purposes.
+              upc:
+                type: string
               vendorPartNumber:
                 type: string
                 description: Vendor Part Number.
@@ -11906,4 +11906,3 @@ components:
           scopes:
             write: allows modifying resources
             read: allows reading resources
-      description: ''

@@ -72,62 +72,6 @@ tags:
     description: ' '
   - name: Freight Estimate
     description: ' '
-  - name: Orders v5
-    description: |
-
-      Ingram Micro’s Orders v5 API endpoints support both standard products and direct-ship products, including licensing and warranties SKUs. Users can:
-        - Search existing orders by Ingram Micro sales order number.
-        - View order details.
-        - Create and place new orders.
-        - Cancel orders, as permitted by order status.
-
-
-      *Host Production URL - https://api.ingrammicro.com:443/resellers/v5*
-  - name: Product Catalog v5
-    description: |
-
-      The Ingram Micro Product Catalog v6 API endpoints enable users to:
-        - Search products by SKU or additional criteria.
-        - Find price and availability for up to 50 SKUs at one time.
-        - View inventory by location in the product catalog.
-
-
-      *Host Production URL - https://api.ingrammicro.com:443/resellers/v5*
-  - name: Quotes v5
-    description: |
-
-      The Ingram Micro Quotes v5 API endpoints enable users to:
-        - Obtain a list of all quotes.
-        - View details for each quote, including: quote name, quote number, expiration date, product quantity and product price.
-        - Ingram Micro does not currently offer an API to create a quote.
-
-
-      *Host Production URL - https://api.ingrammicro.com:443/resellers/v5*
-  - name: Invoices V5
-    description: |
-
-      The Ingram Micro Invoice v5 API endpoint provide real-time information for invoices and corresponding orders. Users can:
-        - Get invoice information for an open order or shipped order.
-        - View invoice information is available for orders placed in the last 9 months, by providing a sales order number.
-
-
-      *Host Production URL - https://api.ingrammicro.com:443/resellers/v5*
-  - name: Invoices v4
-    description: |-
-
-      All our archived API endpoints, these APIs will be deprecated in 2021. We recommend using the latest version 6.0 endpoints.
-  - name: Orders v4
-    description: |-
-
-      All our archived API endpoints, these APIs will be deprecated in 2021. We recommend using the latest version 6.0 endpoints.
-  - name: Product Catalog v4
-    description: |-
-
-      All our archived API endpoints, these APIs will be deprecated in 2021. We recommend using the latest version 6.0 endpoints.
-  - name: Quotes v4
-    description: |-
-
-      All our archived API endpoints, these APIs will be deprecated in 2021. We recommend using the latest version 6.0 endpoints.
 x-tagGroups:
   - name: Reseller API (Version 6)
     tags:
@@ -148,19 +92,68 @@ x-tagGroups:
     tags:
       - Orders v6
       - Invoices v6
-  - name: Legacy APIs (Version 5)
+  - name: Accesstoken
     tags:
-      - Product Catalog v5
-      - Orders v5
-      - Quotes v5
-      - Invoices V5
-  - name: Legacy APIs (Version 4)
-    tags:
-      - Product Catalog v4
-      - Orders v4
-      - Quotes v4
-      - Invoices v4
+      - Accesstoken
 paths:
+  /oauth/oauth20/token:
+    get:
+      summary: Accesstoken
+      tags:
+        - Accesstoken
+      description: "The Authentication endpoint will provide an access token to access the API."
+      operationId: get-accesstoken
+      parameters:
+        - name: grant_type
+          in: query
+          description: 'Keep grant_type as client_credentials only.'
+          schema:
+            type: string
+            example: client_credentials
+          required: true  # Making grant_type parameter required
+        - name: client_id
+          in: query
+          schema:
+            type: string
+          required: true  # Making client_id parameter required
+        - name: client_secret
+          in: query
+          schema:
+            type: string
+          required: true  # Making client_secret parameter required
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccesstokenResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fault:
+                    type: object
+                    properties:
+                      faultstring:
+                        type: string
+                      detail:
+                        type: object
+                        properties:
+                          errorcode:
+                            type: string
   /resellers/v6/catalog/priceandavailability:
     post:
       summary: Price and Availability
@@ -7393,6 +7386,15 @@ servers:
     description: Sandbox
 components:
   schemas:
+    AccesstokenResponse:
+      type: object  
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+        expires_in:
+          type: string
     OrderCreateRequest:
       type: object
       required:
@@ -10583,6 +10585,10 @@ components:
               terms:
                 type: string
                 description: Terms of the quote
+              isSubscription:
+                type: boolean
+              resellerMargin:
+                type: string
               price:
                 type: object
                 properties:
@@ -10599,9 +10605,20 @@ components:
                     type: integer
                     description: Extended reseller quoted price (cost to reseller) X Quantity
                   discountOffList:
+                    type: string
+                    description: Discount off list percentage extended 
+                  vendorprice:
                     type: number
                     format: decimal
-                    description: Discount off list percentage
+                  extendedvendorprice:
+                    type: number
+                    format: decimal
+                  totalVisibleReserveQuantity:
+                    type: integer
+                  type: 
+                    type: string
+                  recurringPriceModel:
+                    type: string
         productsCount:
           type: integer
           description: Total number of products included in the quote
@@ -11246,7 +11263,7 @@ components:
           description: Unique identifier generated by Ingram Micro's CRM specific to each quote.
           example: QUO-14551943-D2Y9L9
         confirmationNumber:
-          type: number
+          type: string
           example: 987654322
           description: A unique confirmation number for tracking purposes.
         message:
@@ -11906,3 +11923,4 @@ components:
           scopes:
             write: allows modifying resources
             read: allows reading resources
+            description: ''

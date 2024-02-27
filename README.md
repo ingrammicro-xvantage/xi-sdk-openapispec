@@ -1,5 +1,3 @@
-![Ingram Micro XVantage](assets/logo/blue/IM_X_Horiz.png)
-
 # Ingram Micro
 
 [Ingram Micro](https://www.ingrammicro.com/) is the business behind the world's brand's - maximizing the value of the technology they make, sell or use.
@@ -29,7 +27,6 @@ Following **Server Side SDK's** are currently published for XI Consumers use
 | ![Node](assets/icons/nodejs/nodejs-original-wordmark.svg)   | [Node SDK Repo](https://github.com/ingrammicro-xvantage/xi-sdk-node)                                                   | ![NPM](assets/icons/npm/npm-original-wordmark.svg)       | [https://www.npmjs.com/package/xi_sdk_resellers](https://www.npmjs.com/package/xi_sdk_resellers) <br /><br />`npm i xi_sdk_resellers`                                                                                 |
 | ![Python](assets/icons/python/python-original-wordmark.svg) | [Python SDK Repo](https://github.com/ingrammicro-xvantage/xi-sdk-python)                                               | ![PyPi](assets/icons/pypi/pypi-original-wordmark.svg)    | [https://pypi.org/project/xi.sdk.resellers<br /><br />`pip install xi.sdk.resellers`](https://www.npmjs.com/package/xi_sdk_resellers)                                                                                 |
 | ![Go](assets/icons/go/go-original-wordmark.svg)             | [GO SDK Repo](https://github.com/ingrammicro-xvantage/xi-sdk-go)                                                       | ![Go Modules](assets/icons/github/github-original.svg)   | [https://github.com/ingrammicro-xvantage/xi-sdk-resellers-go<br /><br />`import xi_sdk_resellers "github.com/ingrammicro-xvantage/xi-sdk-resellers-go"`](https://github.com/ingrammicro-xvantage/xi-sdk-resellers-go) |
-
 
 # XI Reseller API List
 
@@ -62,3 +59,12 @@ Following **Server Side SDK's** are currently published for XI Consumers use
 | Freight Estimate    | Freight Estimate             | `POST` [https://api.ingrammicro.com:443/resellers/v6/freightestimate](https://api.ingrammicro.com:443/sandbox/resellers/v6/freightestimate)                                    |
 | Order StatusWebhook | Order Status                 | `POST` [https://api.ingrammicro.com:443/resellers/v1/webhooks/orderstatusevent](https://api.ingrammicro.com:443/sandbox/resellers/v1/webhooks/orderstatusevent)                |
 | Stock UpdateWebhook | Stock Update                 | `POST` [https://api.ingrammicro.com:443/resellers/v1/webhooks/availabilityupdate](https://api.ingrammicro.com:443/sandbox/resellers/v1/webhooks/availabilityupdate)            |
+
+# Important Links
+
+* [Developer Portal](https://developer.ingrammicro.com)
+* [Getting Started](https://developer.ingrammicro.com/reseller/getting-started/api-overview)
+* [API Documentation](https://developer.ingrammicro.com/reseller/api-documentation)
+* [FAQ](https://developer.ingrammicro.com/reseller/faq)
+* [Open API Spec](https://github.com/ingrammicro-xvantage/xi-sdk-openapispec)
+* [Support &amp; Discussions](https://github.com/orgs/ingrammicro-xvantage/discussions)

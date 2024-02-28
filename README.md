@@ -18,7 +18,7 @@ Xvantage Integration **XI** exposes various Application Programming Interfaces (
 
 XI Sdks enables XI consumers to convinently use the XI API's in their custom built application and greately reduces the development time.
 
-Following **Server Side SDK's** are currently published for XI Consumers use
+Following **Server Side SDK's** are currently published for XI Resellers use
 
 | Language                                                  | Github Repo Path                                                                                                    | Package Manager                                        | SDK Installation                                                                                                                                                                                                     |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

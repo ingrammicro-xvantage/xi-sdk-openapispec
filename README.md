@@ -35,6 +35,7 @@ Following **Server Side SDK's** are currently published for XI Resellers use
 
 | **API Group** | **API**                | **API Url**                                                                                                                                                              |
 | ------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Authentication      | Get AccessToken              | `GET` [https://api.ingrammicro.com:443/oauth/oauth20/token](https://api.ingrammicro.com:443/oauth/oauth20/token)       |
 | Product Catalog     | Price And Availability (PNA) | `POST` [https://api.ingrammicro.com:443/resellers/v6/catalog/priceandavailability](https://api.ingrammicro.com:443/sandbox/resellers/v6/catalog/priceandavailability)          |
 |                     | Search Products              | `GET` [https://api.ingrammicro.com:443/resellers/v6/catalog](https://api.ingrammicro.com:443/sandbox/resellers/v6/catalog)                                                     |
 |                     | Product Details              | `GET`[https://api.ingrammicro.com:443/resellers/v6/catalog/details/{ingramPartNumber}](https://api.ingrammicro.com:443/sandbox/resellers/v6/catalog/details/{ingramPartNumber}) |

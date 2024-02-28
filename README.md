@@ -12,7 +12,7 @@ Ingram Micro's digital experience platform Xvantage, connects thousands of techn
 
 # Xvantage Integration (XI)
 
-Xvantage Integration **XI** exposes various Application Programming Interfaces (API's) for vendors and resellers to connect and consume Xvantage data into their custom built applications and workflows. For more infromation refer [Developer Portal](https://developer.ingrammicro.com/ "Developer Portal").
+Xvantage Integration **XI** exposes various Application Programming Interfaces (API's) for resellers to connect and consume Xvantage data into their custom built applications and workflows. For more infromation refer [Developer Portal](https://developer.ingrammicro.com/ "Developer Portal").
 
 # XI SDKs
 

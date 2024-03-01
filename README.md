@@ -1,3 +1,8 @@
+![IM Banner](assets/logo/blue/IM_X_Horiz.png)
+---
+
+### [Corp](https://www.ingrammicro.com/)  |  [Developer Portal](https://developer.ingrammicro.com/)  |  [Getting Started](https://www.ingrammicro.com/en-us/partner/become-a-reseller)  |  [Become a Reseller](https://www.ingrammicro.com/en-us/partner/become-a-reseller)  |  [About](https://www.ingrammicro.com/en-us/company/about-us) ###
+
 # Ingram Micro
 
 [Ingram Micro](https://www.ingrammicro.com/) is the business behind the world's brand's - maximizing the value of the technology they make, sell or use.

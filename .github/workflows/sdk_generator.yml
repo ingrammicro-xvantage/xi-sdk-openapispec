@@ -214,13 +214,13 @@ jobs:
         run: |
           mkdir -p ${{ github.workspace }}/gosdk/assets/images
 
-          - name: Copy workflow and go.mod files to generated Go SDK
-          run: |
-            cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/gosdk/.github/workflows
-            cp -r destination-repo/go.mod ${{ github.workspace }}/gosdk/
-            cp -r destination-repo/LICENSE ${{ github.workspace }}/gosdk/
-            cp -r destination-repo/assets/images* ${{ github.workspace }}/gosdk/assets/
-            cp -r destination-repo/getting-started.md ${{ github.workspace }}/gosdk/
+      - name: Copy workflow and go.mod files to generated Go SDK
+        run: |
+          cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/gosdk/.github/workflows
+          cp -r destination-repo/go.mod ${{ github.workspace }}/gosdk/
+          cp -r destination-repo/LICENSE ${{ github.workspace }}/gosdk/
+          cp -r destination-repo/assets/images* ${{ github.workspace }}/gosdk/assets/
+          cp -r destination-repo/getting-started.md ${{ github.workspace }}/gosdk/
         
   
     

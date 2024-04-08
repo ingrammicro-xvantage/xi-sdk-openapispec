@@ -35,6 +35,10 @@ jobs:
         run: |
           mkdir -p ${{ github.workspace }}/csharpsdk/.github/workflows
 
+      - name: Create assets/images directory if not exists
+        run: |
+          mkdir -p ${{ github.workspace }}/csharpsdk/assets/images
+
 
       - name: Copy workflow and Cs.proj files to generated CSharp SDK 
         run: |
@@ -74,6 +78,10 @@ jobs:
         with:
           repository: ingrammicro-xvantage/xi-sdk-resellers-python
           path: destination-repo
+
+      - name: Create assets/images directory if not exists
+        run: |
+          mkdir -p ${{ github.workspace }}/pythonsdk/assets/images
 
       - name: Copy worflow and setup.py files to generated Python SDK
         run: |
@@ -117,6 +125,10 @@ jobs:
       - name: Create .github/workflows directory if not exists
         run: |
           mkdir -p ${{ github.workspace }}/javascriptsdk/.github/workflows
+      
+      - name: Create assets/images directory if not exists
+        run: |
+          mkdir -p ${{ github.workspace }}/javascriptsdk/assets/images
 
 
       - name: Copy workflow and package.json files to generated Javascript SDK
@@ -154,6 +166,10 @@ jobs:
         with:
           repository: ingrammicro-xvantage/xi-sdk-resellers-java
           path: destination-repo
+
+      - name: Create assets/images directory if not exists
+        run: |
+          mkdir -p ${{ github.workspace }}/javasdk/assets/images
 
       - name: Copy workflow and pom.xml files to generated Java SDK
         run: |
@@ -194,6 +210,9 @@ jobs:
       - name: Create .github/workflows directory if not exists
         run: |
           mkdir -p ${{ github.workspace }}/gosdk/.github/workflows
+      - name: Create assets/images directory if not exists
+        run: |
+          mkdir -p ${{ github.workspace }}/gosdk/assets/images
 
       - name: Copy worflow and go.mod files to generated Go SDK
         run: |

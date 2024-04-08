@@ -175,7 +175,6 @@ jobs:
         run: |
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/javasdk/.github/workflows
           cp -r destination-repo/pom.xml ${{ github.workspace }}/javasdk/
-          cp -r destination-repo/LICENCE ${{ github.workspace }}/javasdk/
           cp -r destination-repo/assets/images* ${{ github.workspace }}/javasdk/assets/images
           cp -r destination-repo/getting-started.md ${{ github.workspace }}/javasdk/
   

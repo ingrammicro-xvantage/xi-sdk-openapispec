@@ -42,6 +42,8 @@ jobs:
           cp -r destination-repo/src/xi.sdk.resellers/xi.sdk.resellers.csproj ${{ github.workspace }}/csharpsdk/src/xi.sdk.resellers/
           cp -r destination-repo/src/xi.sdk.resellers.Test/xi.sdk.resellers.Test.csproj ${{ github.workspace }}/csharpsdk/src/xi.sdk.resellers.Test/
           cp -r destination-repo/LICENCE ${{ github.workspace }}/csharpsdk/
+          cp -r destination-repo/getting-started.md ${{ github.workspace }}/csharpsdk/
+          cp -r destination-repo/assets/images* ${{ github.workspace }}/csharpsdk/assets/images
           
 
       - name: Push C# SDK to Another Repository
@@ -78,6 +80,8 @@ jobs:
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/pythonsdk/.github/workflows
           cp -r destination-repo/setup.py ${{ github.workspace }}/pythonsdk/
           cp -r destination-repo/LICENCE ${{ github.workspace }}/pythonsdk/
+          cp -r destination-repo/assets/images* ${{ github.workspace }}/pythonsdk/assets/images
+          cp -r destination-repo/getting-started.md ${{ github.workspace }}/pythonsdk/
 
       - name: Push Python SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
@@ -120,6 +124,8 @@ jobs:
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/javascriptsdk/.github/workflows
           cp -r destination-repo/package.json ${{ github.workspace }}/javascriptsdk/
           cp -r destination-repo/LICENCE ${{ github.workspace }}/javascriptsdk/
+          cp -r destination-repo/assets/images* ${{ github.workspace }}/javascriptsdk/assets/images
+          cp -r destination-repo/getting-started.md ${{ github.workspace }}/javascriptsdk/
 
       - name: Push Node.Js SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
@@ -153,6 +159,9 @@ jobs:
         run: |
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/javasdk/.github/workflows
           cp -r destination-repo/pom.xml ${{ github.workspace }}/javasdk/
+          cp -r destination-repo/LICENCE ${{ github.workspace }}/javasdk/
+          cp -r destination-repo/assets/images* ${{ github.workspace }}/javasdk/assets/images
+          cp -r destination-repo/getting-started.md ${{ github.workspace }}/javasdk/
   
       - name: Push Java SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
@@ -190,6 +199,9 @@ jobs:
         run: |
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/gosdk/.github/workflows
           cp -r destination-repo/go.mod ${{ github.workspace }}/gosdk/
+          cp -r destination-repo/LICENCE ${{ github.workspace }}/gosdk/
+          cp -r destination-repo/assets/images* ${{ github.workspace }}/gosdk/assets/images
+          cp -r destination-repo/getting-started.md ${{ github.workspace }}/gosdk/
   
     
       - name: Push Go SDK to Another Repository

@@ -39,8 +39,12 @@ tags:
         - Quotes that are in draft and closed states are excluded, and are not accessible through this API.
         
       *Host Production URL - https://api.ingrammicro.com:443/resellers/v6*  
-  - name: Quote To Order
-    description: ' '
+  - name: AsyncOrderCreate
+    description: |
+      This API will allow customers to perform both standard ordering and quote to order functionality via a single API enabling them to have a single endpoint to cater to all types of orders.
+
+      This approach will standardize the ordering flow for customers where they will get the response for all orders on to their webhooks.
+      It provides the much-awaited async ordering flow for Reseller API where large orders can also be placed via a single API with guaranteed delivery.
   - name: Invoices
     description: |
 
@@ -73,12 +77,14 @@ tags:
   - name: Freight Estimate
     description: ' '
 x-tagGroups:
+  - name: Reseller API (Version 7)
+    tags:
+      - AyncOrderCreate
   - name: Reseller API (Version 6)
     tags:
       - Product Catalog
       - Orders
       - Quotes
-      - Quote To Order
       - Invoices
       - Renewals
       - Deals
@@ -5170,13 +5176,18 @@ paths:
                       - traceid: '123456'
                         type: /errors/system-errors
                         message: Some unexpected error occured, please contact support team for more details
-  /resellers/v6/q2o/orders:
+  /b2b.webapi.asyncordercreate/AsyncOrderCreate/v1/AsyncOrderCreate:
     post:
-      summary: Quote To Order
+      summary: Async Order Create
       tags:
-        - Quote To Order
-      description: The “Quote to Order” (QTO) endpoint allows a customer to create an order using the existing quote which is in “Ready to Order” status. A customer can create an order using Configure to order (CTO) quote or a non-configure to order (Non-CTO) quote. Upon successful submission of the order create request, a confirmation message will be returned as an API response. <br > <br >Ingram Micro offers webhooks as a method to send notifications to Resellers once the order creation request is received. All the updates related to Order creation will be pushed as a notification to the customer via a pre-defined callback URL as an HTTP post. <br > <br > **Prerequisite:** Pre-defined callback URL <br > <br > Before creating an order using the quote, it’s recommended to validate the quote using the “Validate Quote” endpoint. Validate Quote endpoint will not only validate the quote but also outline all the mandatory fields required by the vendor at a header level and at the line level which a customer need to pass to the Quote To Order endpoint request.  For a detailed understanding of the “Validate Quote” endpoint, review the “Validate Quote” endpoint documentation. <br ><br > **How it works:** <br ><br > - The customer validates the quote with a quote number from Validate Quote endpoint. <br > - The customer copies all the mandatory fields required by the vendor and adds them to the QTO request body. <br > - The customer provides all the values for Vendor mandatory fields along with other required information for QTO to create an order. <br > - After the order creation request receipt acknowledgment from the QTO endpoint, all further order creation updates will be provided via webhook push notification.
-      operationId: post-QuoteToOrder_v6
+        - AsyncOrderCreate
+      description:  |
+        This API will allow customers to perform both standard ordering and quote to order functionality via a single API enabling them to have a single endpoint to cater to all types of orders.
+
+        This approach will standardize the ordering flow for customers where they will get the response for all orders on to their webhooks.
+
+        It provides the much-awaited async ordering flow for Reseller API where large orders can also be placed via a single API with guaranteed delivery.
+      operationId: post-AsyncOrderCreate_v7
       security:
         - application:
             - read
@@ -5218,7 +5229,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/QuoteToOrderDetailsDTO'
+              $ref: '#/components/schemas/AsyncOrderCreateDTO'
             examples:
               Sample:
                 value:
@@ -5272,7 +5283,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuoteToOrderResponse'
+                $ref: '#/components/schemas/AsyncOrderCreateResponse'
               examples:
                 '200':
                   description: OK
@@ -6315,6 +6326,22 @@ paths:
           schema:
             type: string
             example: '12345678'
+        - name: Size
+          in: query
+          description: The number of records required in the call - max records 100 per page.
+          required: false
+          schema:
+            type: integer
+            default: '25'
+            format: int32
+        - name: Page
+          in: query
+          description: The page number reference.
+          required: false
+          schema:
+            type: integer
+            default: '1'
+            format: int32
       responses:
         '200':
           description: OK
@@ -7816,7 +7843,7 @@ components:
               attributeValue:
                 type: string
                 description: attributefield data
-    QuoteToOrderDetailsDTO:
+    AsyncOrderCreateDTO:
       type: object
       properties:
         quoteNumber:
@@ -7829,25 +7856,93 @@ components:
           maxLength: 35
           description: The reseller's order number for reference in their system.
           nullable: true
-        enduserOrderNumber:
+        endcustomerOrderNumber:
           type: string
           maxLength: 35
           description: The end customer's order number for reference in their system.
           nullable: true
+        notes:
+          type: string
+          description: Order header level notes. 
         billToAddressId:
           type: string
           description: Suffix used to identify billing address. Created during onboarding. Resellers are provided with one or more address IDs depending on how many bill to addresses they need for various flooring companies they are using for credit.
           nullable: true
+        specialBidNumber:
+          type: string
+          description: The bid number is provided to the reseller by the vendor for special pricing and discounts. Line-level bid numbers take precedence over header-level bid numbers. 
+        internalComments:
+          type: string
+          description: need to replace with actual description
+        acceptBackOrder:
+          type: boolean
+          description: ENUM ["true","false"] - accept order if this item is backordered. This field along with shipComplete field decides the value of backorderflag. The value of this field is ignored when shipComplete field is present. 
+        vendAuthNumber:
+          type: string
+          description: Authorization number provided by vendor to Ingram's reseller. Orders will be placed on hold without this value, vendor specific mandatory field - please reach out Ingram Sales team for list of vendor for whom this is mandatory. 
+        resellerInfo:
+          type: object
+          description: The address and contact information provided by the reseller. 
+          properties:
+            resellerId:
+              type: string
+              description: The reseller's Id. 
+            companyName:
+              type: string
+              description: The reseller's company name. 
+            contact:
+              type: string
+              description: The reseller's contact name. 
+            addressLine1:
+              type: string
+              description: The reseller's address line 1.
+            addressLine2:
+              type: string
+              description: The reseller's address line 2.
+            addressLine3:
+              type: string
+              description: The reseller's address line 3.
+            addressLine4:
+              type: string
+              description: The reseller's address line 4.
+            city:
+              type: string
+              description: The reseller's city. 
+            state:
+              type: string
+              description: The reseller's state.
+            postalCode:
+              type: string
+              description: The reseller's zip or postal code.
+            countryCode:
+              type: string
+              description: The reseller's two-character ISO country code. 
+            phoneNumber:
+              type: string
+              description: The reseller's phone number.
+            email:
+              type: string
+              description: The reseller's Email Address.
         endUserInfo:
           type: object
           description: The contact information for the end user/customer provided by the reseller. Used to determine pricing and discounts.
           properties:
+            endUserId:
+              type: string
+              description: ID for the end user/customer in Ingram Micro's system. 
+            endUserType: 
+              type: string
+              description: End user type
             companyName:
               type: string
               description: The company name for the end user/customer.
-            contact:
+            name1:
               type: string
-              description: The contact name for the end user/customer.
+            name2:
+              type: string
+            contactId:
+              type: string
+              description: The contact Id for the end user/customer.
             addressLine1:
               type: string
               description: The address line 1 for the end user/customer.
@@ -7857,6 +7952,9 @@ components:
             addressLine3:
               type: string
               description: The address line 3 for the end user/customer.
+            contact:
+              type: string
+              description: The contact name for the end user/customer.
             city:
               type: string
               description: The end user/customer's city.
@@ -7866,13 +7964,16 @@ components:
             postalCode:
               type: string
               description: The end user/customer's zip or postal code.
+            addressLine4:
+              type: string
+              description: The address line 4 for the end user/customer.
             countryCode:
               type: string
               description: The end user/customer's two character ISO country code.
-            email:
+            phoneNumber:
               type: string
               description: The end user/customer's phone number.
-            phoneNumber:
+            email:
               type: string
               description: The end user/customer's phone number.
         shipToInfo:
@@ -7882,12 +7983,12 @@ components:
             addressId:
               type: string
               description: The company contact provided by the reseller.
+            contact:
+              type: string
+              description: The contact name for the order will be shipped to.  
             companyName:
               type: string
               description: The name of the company the order will be shipped to.
-            contact:
-              type: string
-              description: The contact name for the order will be shipped to.
             addressLine1:
               type: string
               description: The address line 1 the order will be shipped to.
@@ -7898,6 +7999,16 @@ components:
               type: string
               description: The address line 3 the order will be shipped to.
               nullable: true
+            addressLine4:
+              type: string
+              description: The address line 4 the order will be shipped to.
+              nullable: true
+            name1:
+              type: string
+              description: Need description
+            name2:
+              type: string
+              description: Need description
             city:
               type: string
               description: The city the order will be shipped to.
@@ -7914,6 +8025,34 @@ components:
               type: string
               description: The company contact email address.
               nullable: true
+            shippingNotes:
+              type: string
+              description: Shipping Notes
+            phoneNumber:
+              type: string
+              description: Phone number for shipping
+        shipmentDetails:
+          type: object
+          description: Shipping details for the order provided by the customer. 
+          properties:
+            carrierCode:
+              type: string
+              description: The code for the shipping carrier for the line item. 
+            requestedDeliveryDate:
+              type: string
+              description: The reseller-requested delivery date in UTC format. Delivery date is not guaranteed. 
+            shipComplete:
+              type: string
+              description: Specifies whether the shipment will be shipped only when all products are fulfilled. The value of this field along with acceptBackOrder field decides the value of backorderflag. If this field is set, acceptBackOrder field is ignored. Possible values for this field are true, C, P, E. 
+            shippingInstructions:
+              type: string
+              description: Any special shipping instructions for the order. 
+            freightAccountNumber:
+              type: string
+              description: The reseller 's shipping account number with carrier. Used to bill the shipping carrier directly from the reseller's account with the carrier. 
+            signatureRequired:
+              type: boolean
+              description: Specifies whether a signature is required for delivery. Default is False. 
         additionalAttributes:
           type: array
           description: Additional order create attributes.
@@ -7937,10 +8076,6 @@ components:
               attributeValue:
                 type: string
                 description: The value of the header level field.
-              attributeDescription:
-                type: string
-                description: The description of the header level field.
-            additionalProperties: false
         lines:
           type: array
           description: The object containing the lines that require vendor mandatory fields.
@@ -7956,6 +8091,95 @@ components:
               quantity:
                 type: string
                 description: The quantity of the line item.
+              unitPrice:
+                type: string
+                description: Unit Price of Item
+              specialBidNumber:
+                type: string
+              endUserPrice:
+                type: string
+              notes: 
+                type: string
+              endUserInfo:
+                type: array
+                description: The contact information for the end user/customer provided by the reseller. Used to determine pricing and discounts.
+                items:
+                  type: object
+                  properties:
+                    endUserId:
+                      type: string
+                      description: ID for the end user/customer in Ingram Micro's system. 
+                    endUserType: 
+                      type: string
+                      description: End user type
+                    companyName:
+                      type: string
+                      description: The company name for the end user/customer.
+                    name1:
+                      type: string
+                    name2:
+                      type: string
+                    contactId:
+                      type: string
+                      description: The contact Id for the end user/customer.
+                    addressLine1:
+                      type: string
+                      description: The address line 1 for the end user/customer.
+                    addressLine2:
+                      type: string
+                      description: The address line 2 for the end user/customer.
+                    addressLine3:
+                      type: string
+                      description: The address line 3 for the end user/customer.
+                    contact:
+                      type: string
+                      description: The contact name for the end user/customer.
+                    city:
+                      type: string
+                      description: The end user/customer's city.
+                    state:
+                      type: string
+                      description: The end user/customer's state.
+                    postalCode:
+                      type: string
+                      description: The end user/customer's zip or postal code.
+                    addressLine4:
+                      type: string
+                      description: The address line 4 for the end user/customer.
+                    countryCode:
+                      type: string
+                      description: The end user/customer's two character ISO country code.
+                    phoneNumber:
+                      type: string
+                      description: The end user/customer's phone number.
+                    email:
+                      type: string
+                      description: The end user/customer's phone number.
+        warrantyInfo:
+          type: array
+          description: Warranty Information
+          items:
+            type: object
+            properties:
+              hardwareLineLink:
+                type: string
+              warrantyLineLink:
+                type: string
+              directLineLink:
+                type: string
+              serialInfo:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    dateOfPurchase:
+                      type: string
+                    shipDate:
+                      type: string
+                    primarySerialNumber:
+                      type: string
+                    secondarySerialNumber:
+                      type: string
               vmfAdditionalAttributesLines:
                 type: array
                 description: The object containing the list of fields required at a line level by the vendor.
@@ -7968,10 +8192,7 @@ components:
                     attributeValue:
                       type: string
                       description: The value of the line level field.
-                    attributeDescription:
-                      type: string
-                      description: The description of the line level field.
-      additionalProperties: false
+                
     ValidateQuoteResponse:
       type: object
       properties:
@@ -8016,7 +8237,7 @@ components:
                 description: Unique Ingram Micro part number.
                 example: YN6551
               quantity:
-                type: string
+                type: integer
                 description: The quantity of the line item.
                 example: '1'
               vmfAdditionalAttributesLines:
@@ -10309,11 +10530,10 @@ components:
                           type: string
                           description: Mode of the carrier.
                         estimatedFreightCharge:
-                          type: number
-                          format: decimal
+                          type: string
                           description: Estimated freight charge.
                         daysInTransit:
-                          type: integer
+                          type: string
                           description: Number of transit days.
             lines:
               type: array
@@ -10593,16 +10813,20 @@ components:
                 type: object
                 properties:
                   quotePrice:
-                    type: integer
+                    type: number
+                    format: decimal
                     description: Ingram Micro quoted price specific to the reseller and quote.
                   msrp:
-                    type: integer
+                    type: number
+                    format: decimal
                     description: Manufacturer Suggested Retail Price
                   extendedMsrp:
-                    type: integer
+                    type: number
+                    format: decimal
                     description: Extended MSRP - Manufacturer Suggested Retail Price X Quantity
                   extendedQuotePrice:
-                    type: integer
+                    type: number
+                    format: decimal
                     description: Extended reseller quoted price (cost to reseller) X Quantity
                   discountOffList:
                     type: string
@@ -10623,13 +10847,15 @@ components:
           type: integer
           description: Total number of products included in the quote
         extendedMsrpTotal:
-          type: integer
+          type: number
+          format: decimal
           description: Total extended MSRP for all products included in the quote
         quantityTotal:
           type: integer
           description: Total quantity of all items in the quote.
         extendedQuotePriceTotal:
-          type: integer
+          type: number
+          format: decimal
           description: Total amount of quoted price for all products in the quote including both solution products and suggested products.
         totalQuoteAmount:
           type: string
@@ -11193,7 +11419,7 @@ components:
                   type: number
                   format: double
                   description: Total Tax amount.
-                invoicesAmountDue:
+                invoicedAmountDue:
                   type: number
                   format: double
                   description: Total amount due for the invoice.
@@ -11255,7 +11481,7 @@ components:
                     message:
                       type: string
                       description: Gives the description of the field message.
-    QuoteToOrderResponse:
+    AsyncOrderCreateResponse:
       type: object
       properties:
         quoteNumber:
@@ -11818,7 +12044,7 @@ components:
                         deliveryDescription:
                           type: string
                           description: Delivery description.
-                        deliveredDate:
+                        deliveryDate:
                           type: string
                           description: Delivery date.
               scheduleLines:
@@ -11879,6 +12105,9 @@ components:
                     deliveryDate:
                       type: string
                       description: Delivery date.
+              defaultCarrierName:
+                type: string
+                example: FEDEX GROUND    
             additionalProperties: false
           nullable: true
         miscellaneousCharges:

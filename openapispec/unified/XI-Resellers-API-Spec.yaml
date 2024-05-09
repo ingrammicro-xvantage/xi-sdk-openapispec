@@ -39,12 +39,7 @@ tags:
         - Quotes that are in draft and closed states are excluded, and are not accessible through this API.
         
       *Host Production URL - https://api.ingrammicro.com:443/resellers/v6*  
-  - name: AsyncOrderCreate
-    description: |
-      This API will allow customers to perform both standard ordering and quote to order functionality via a single API enabling them to have a single endpoint to cater to all types of orders.
 
-      This approach will standardize the ordering flow for customers where they will get the response for all orders on to their webhooks.
-      It provides the much-awaited async ordering flow for Reseller API where large orders can also be placed via a single API with guaranteed delivery.
   - name: Invoices
     description: |
 
@@ -1405,6 +1400,191 @@ paths:
           description: OK
         '500':
           description: Internal Server Error
+  /resellers/v7/orders:
+    post:
+      summary: Async Order Create
+      tags:
+        - Orders
+      description:  |
+        This API will allow customers to perform both standard ordering and quote to order functionality via a single API enabling them to have a single endpoint to cater to all types of orders.
+
+        This approach will standardize the ordering flow for customers where they will get the response for all orders on to their webhooks.
+
+        It provides the much-awaited async ordering flow for Reseller API where large orders can also be placed via a single API with guaranteed delivery.
+      operationId: post-AsyncOrderCreate_v7
+      security:
+        - application:
+            - read
+      parameters:
+        - name: IM-CustomerNumber
+          in: header
+          description: Your unique Ingram Micro customer number.
+          required: true
+          schema:
+            type: string
+            maxLength: 10
+            example: 20-222222
+        - name: IM-CountryCode
+          in: header
+          description: Two-character ISO country code.
+          required: true
+          schema:
+            type: string
+            maxLength: 2
+            minLength: 2
+            example: US
+        - name: IM-SenderID
+          in: header
+          description: Unique value used to identify the sender of the transaction.
+          required: false
+          schema:
+            type: string
+            maxLength: 32
+            example: MyCompany
+        - name: IM-CorrelationID
+          in: header
+          description: Unique transaction number to identify each transaction accross all the systems.
+          required: true
+          schema:
+            type: string
+            maxLength: 32
+            example: fbac82ba-cf0a-4bcf-fc03-0c5084
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncOrderCreateDTO'
+            examples:
+              Sample:
+                value:
+                  quoteNumber: QUO-14551943-D2Y9L9
+                  customerOrderNumber: '12345'
+                  enduserOrderNumber: ''
+                  billToAddressId: XYZ
+                  endUserInfo:
+                    companyName: ABC TECH
+                    contact: '44045678'
+                    addressLine1: Texas
+                    addressLine2: '4'
+                    addressLine3: ''
+                    city: ''
+                    state: ''
+                    postalCode: ''
+                    countryCode: US
+                    email: abc@gmail.com
+                    phoneNumber: '445678901'
+                  shipToInfo:
+                    addressId: '12345'
+                    companyName: ''
+                    contact: ''
+                    addressLine1: Texas
+                    addressLine2: '4'
+                    addressLine3: ''
+                    city: ''
+                    state: ''
+                    postalCode: ''
+                    countryCode: US
+                    email: abc@gmail.com
+                  additionalAttributes:
+                    - attributeName: VEND_AUTH_NBR_FLG
+                      attributeValue: ABC1234
+                  vmfAdditionalAttributes:
+                    - attributeName: ''
+                      attributeValue: ''
+                      attributeDescription: ''
+                  lines:
+                    - customerLineNumber: '12'
+                      ingramPartNumber: YN6231
+                      quantity: '2'
+                      vmfAdditionalAttributesLines:
+                        - attributeName: ''
+                          attributeValue: ''
+                          attributeDescription: ''
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncOrderCreateResponse'
+              examples:
+                '200':
+                  description: OK
+                  value:
+                    quoteNumber: QUO-148378-R0M3Z6
+                    confirmationNumber: 1669783293
+                    message: Thank you for submitting the order request, it’s currently under process.We will notify you of the status via the Order Status webhook.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  traceid:
+                    type: string
+                    description: A unique trace id to identify the issue.
+                  type:
+                    type: string
+                    description: Type of the error message.
+                  message:
+                    type: string
+                    description: A detailed error message.
+                  fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        field:
+                          type: string
+                          description: Name of the field.
+                        message:
+                          type: string
+                          description: A filed level error message.
+                        value:
+                          type: string
+                          description: Value of the message.
+              examples:
+                '400':
+                  description: Bad Request
+                  value:
+                    errors:
+                      - traceid: '123456'
+                        type: /errors/validation-failed
+                        message: customer validation failed
+                        fields:
+                          - field: IM-CountryCode
+                            message: Required field is missing
+                            value: null
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  traceid:
+                    type: string
+                    description: Unique Id to identify error.
+                  type:
+                    type: string
+                    description: Describes the type of the error.
+                  message:
+                    type: string
+                    description: Describes the error message.
+                  fields:
+                    type: array
+                    items:
+                      type: object
+              examples:
+                '500':
+                  description: Internal Server Error
+                  value:
+                    errors:
+                      - traceid: '123456'
+                        type: /errors/system-errors
+                        message: Some unexpected error occured, please contact support team for more details
   /resellers/v6/orders:
     post:
       summary: Create your Order
@@ -5150,191 +5330,6 @@ paths:
                             value: null
         '500':
           description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  traceid:
-                    type: string
-                    description: Unique Id to identify error.
-                  type:
-                    type: string
-                    description: Describes the type of the error.
-                  message:
-                    type: string
-                    description: Describes the error message.
-                  fields:
-                    type: array
-                    items:
-                      type: object
-              examples:
-                '500':
-                  description: Internal Server Error
-                  value:
-                    errors:
-                      - traceid: '123456'
-                        type: /errors/system-errors
-                        message: Some unexpected error occured, please contact support team for more details
-  /resellers/v7/orders:
-    post:
-      summary: Async Order Create
-      tags:
-        - AsyncOrderCreate
-      description:  |
-        This API will allow customers to perform both standard ordering and quote to order functionality via a single API enabling them to have a single endpoint to cater to all types of orders.
-
-        This approach will standardize the ordering flow for customers where they will get the response for all orders on to their webhooks.
-
-        It provides the much-awaited async ordering flow for Reseller API where large orders can also be placed via a single API with guaranteed delivery.
-      operationId: post-AsyncOrderCreate_v7
-      security:
-        - application:
-            - read
-      parameters:
-        - name: IM-CustomerNumber
-          in: header
-          description: Your unique Ingram Micro customer number.
-          required: true
-          schema:
-            type: string
-            maxLength: 10
-            example: 20-222222
-        - name: IM-CountryCode
-          in: header
-          description: Two-character ISO country code.
-          required: true
-          schema:
-            type: string
-            maxLength: 2
-            minLength: 2
-            example: US
-        - name: IM-SenderID
-          in: header
-          description: Unique value used to identify the sender of the transaction.
-          required: false
-          schema:
-            type: string
-            maxLength: 32
-            example: MyCompany
-        - name: IM-CorrelationID
-          in: header
-          description: Unique transaction number to identify each transaction accross all the systems.
-          required: true
-          schema:
-            type: string
-            maxLength: 32
-            example: fbac82ba-cf0a-4bcf-fc03-0c5084
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AsyncOrderCreateDTO'
-            examples:
-              Sample:
-                value:
-                  quoteNumber: QUO-14551943-D2Y9L9
-                  customerOrderNumber: '12345'
-                  enduserOrderNumber: ''
-                  billToAddressId: XYZ
-                  endUserInfo:
-                    companyName: ABC TECH
-                    contact: '44045678'
-                    addressLine1: Texas
-                    addressLine2: '4'
-                    addressLine3: ''
-                    city: ''
-                    state: ''
-                    postalCode: ''
-                    countryCode: US
-                    email: abc@gmail.com
-                    phoneNumber: '445678901'
-                  shipToInfo:
-                    addressId: '12345'
-                    companyName: ''
-                    contact: ''
-                    addressLine1: Texas
-                    addressLine2: '4'
-                    addressLine3: ''
-                    city: ''
-                    state: ''
-                    postalCode: ''
-                    countryCode: US
-                    email: abc@gmail.com
-                  additionalAttributes:
-                    - attributeName: VEND_AUTH_NBR_FLG
-                      attributeValue: ABC1234
-                  vmfAdditionalAttributes:
-                    - attributeName: ''
-                      attributeValue: ''
-                      attributeDescription: ''
-                  lines:
-                    - customerLineNumber: '12'
-                      ingramPartNumber: YN6231
-                      quantity: '2'
-                      vmfAdditionalAttributesLines:
-                        - attributeName: ''
-                          attributeValue: ''
-                          attributeDescription: ''
-        required: true
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AsyncOrderCreateResponse'
-              examples:
-                '200':
-                  description: OK
-                  value:
-                    quoteNumber: QUO-148378-R0M3Z6
-                    confirmationNumber: 1669783293
-                    message: Thank you for submitting the order request, it’s currently under process.We will notify you of the status via the Order Status webhook.
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  traceid:
-                    type: string
-                    description: A unique trace id to identify the issue.
-                  type:
-                    type: string
-                    description: Type of the error message.
-                  message:
-                    type: string
-                    description: A detailed error message.
-                  fields:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        field:
-                          type: string
-                          description: Name of the field.
-                        message:
-                          type: string
-                          description: A filed level error message.
-                        value:
-                          type: string
-                          description: Value of the message.
-              examples:
-                '400':
-                  description: Bad Request
-                  value:
-                    errors:
-                      - traceid: '123456'
-                        type: /errors/validation-failed
-                        message: customer validation failed
-                        fields:
-                          - field: IM-CountryCode
-                            message: Required field is missing
-                            value: null
-        '500':
-          description: Server Error
           content:
             application/json:
               schema:
@@ -11083,6 +11078,11 @@ components:
               paymentTermsDueDate:
                 type: string
                 description: Payment Terms Due date.
+              specialBidNumbers:
+                type: array
+                items:
+                  type: string
+                  description: List of Ingram Micro Special Bid Number
               erpOrderNumber:
                 type: string
                 description: Order number

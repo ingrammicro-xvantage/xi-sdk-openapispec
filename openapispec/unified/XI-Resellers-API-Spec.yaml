@@ -7609,7 +7609,7 @@ components:
               maxLength: 10
               description: The end user/customer's two-character ISO country code.
             phoneNumber:
-              type: integer
+              type: string
               description: The end user/customer's phone number.
             email:
               type: string

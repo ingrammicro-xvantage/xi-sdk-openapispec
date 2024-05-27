@@ -6327,7 +6327,6 @@ paths:
           required: false
           schema:
             type: integer
-            default: '25'
             format: int32
         - name: Page
           in: query
@@ -6335,7 +6334,6 @@ paths:
           required: false
           schema:
             type: integer
-            default: '1'
             format: int32
       responses:
         '200':

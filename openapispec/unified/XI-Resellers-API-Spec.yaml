@@ -10823,7 +10823,8 @@ components:
                 type: string
                 description: Product description.  Note - The quote view api returns only the product short description as maintained in Ingram Micro's crm system.  For long descriptions, please refer to alternative information sources.
               weight:
-                type: integer
+                type: number
+                format: decimal
                 description: Weight is provided based on country standard.  For countries following Imperial standards - weight is presented as pounds with decimal.  In countries following metric standards, weight is provided as kilograms with decimal.
               weightUom:
                 type: string
@@ -10886,7 +10887,8 @@ components:
                   unitOfMeasure:
                     type: string
                   tax:
-                    type: string
+                    type: number
+                    format: decimal
                   extrafees:
                     type: number
                     format: decimal

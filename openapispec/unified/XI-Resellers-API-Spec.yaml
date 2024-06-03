@@ -10887,9 +10887,11 @@ components:
                   tax:
                     type: number
                     format: decimal
+                    nullable: true
                   extrafees:
                     type: number
                     format: decimal
+                    nullable: true
                   extraFeesDetails:
                     type: array
                     items:
@@ -10969,6 +10971,7 @@ components:
         taxTotal:
           type: number
           format: decimal
+          nullable: true
         extendedQuotePriceTotal:
           type: number
           format: decimal
@@ -10976,6 +10979,7 @@ components:
         freightAmount:
           type: number
           format: decimal
+          nullable: true
         totalQuoteAmount:
           type: string
         additionalAttributes:

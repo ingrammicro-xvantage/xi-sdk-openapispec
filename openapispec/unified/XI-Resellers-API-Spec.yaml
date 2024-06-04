@@ -10581,6 +10581,9 @@ components:
               revision:
                 type: string
                 description: When a quote has been revised and updated, the quote number remains the same throughout the lifecycle of the quote, however, a Revision number is updated for each revision of the quote.  The revision numbers is associated with the Unique Quote Number.
+              currencyCode:
+                type: string
+                description: The country-specific three digit ISO 4217 currency code for the order.
               endUserContact:
                 type: string
                 description: End User Name is the end customer name that is associated with a quote in Ingram Micros CRM.
@@ -10624,6 +10627,10 @@ components:
                       type: string
                     type:
                       type: string
+        nextPage:
+          type: string
+        prevPage:
+          type: string
     QuoteDetailsResponse:
       type: object
       properties:

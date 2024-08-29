@@ -9408,9 +9408,6 @@ components:
         description:
           type: string
           description: The description given for the product.
-        productDetailDescription:
-          type: string
-          description: The detailed description given for the product.
         upc:
           type: string
           description: The UPC code for the product. Consists of 12 numeric digits that are uniquely assigned to each trade item.
@@ -9558,24 +9555,6 @@ components:
               globalListPrice:
                 type: string
                 description: Cisco global list price
-        technicalSpecifications:
-          type: array
-          description: Technical specifications of the product.
-          items:
-            type: object
-            properties:
-              headerName:
-                type: string
-                description: 'Example : ''Basic'''
-              attributeName:
-                type: string
-                description: 'Example : ''Product Type'''
-              attributeDisplay:
-                type: string
-                description: 'Example : ''Basic|Product Type|LCD Monitor'''
-              attributeValue:
-                type: string
-                description: 'Example : ''LCD Monitor'''
         warrantyInformation:
           type: array
           description: Warranty information related to the product.

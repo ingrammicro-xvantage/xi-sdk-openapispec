@@ -11935,7 +11935,6 @@ components:
               shipmentDetails:
                 type: array
                 description: Shipping details for the line item.
-                nullable: true
                 items:
                   type: object
                   properties:

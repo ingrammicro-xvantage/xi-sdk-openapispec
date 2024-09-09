@@ -10647,6 +10647,9 @@ components:
           description: If a price discount has been applied to the quote - The date the discount expires and will no longer be applicable.
         vendorQuoteNumber:
           type: string
+        isPartialOrderAllowed:
+          type: boolean
+          nullable: true
         status:
           type: string
           description: This refers to the primary status of the quote.  API responses will return
@@ -10788,6 +10791,12 @@ components:
               quantity:
                 type: integer
                 description: Quantity of product line item quoted.
+              remainingQuoteQty :
+                type: integer
+                nullable: true
+              minimumOrderAllowedQty:
+                type: integer
+                nullable: true
               notes:
                 type: string
                 description: Product line item comments.
@@ -10848,21 +10857,34 @@ components:
                   quotePrice:
                     type: number
                     format: decimal
+                    nullable: true
                     description: Ingram Micro quoted price specific to the reseller and quote.
                   msrp:
                     type: number
                     format: decimal
+                    nullable: true
                     description: Manufacturer Suggested Retail Price
                   extendedMsrp:
                     type: number
                     format: decimal
+                    nullable: true
                     description: Extended MSRP - Manufacturer Suggested Retail Price X Quantity
                   extendedQuotePrice:
                     type: number
                     format: decimal
+                    nullable: true
                     description: Extended reseller quoted price (cost to reseller) X Quantity
+                  remainingQuantityExtendedMsrp:
+                    type: number
+                    format: decimal
+                    nullable: true
+                  remainingQuantityExtendedQuotePrice:
+                    type: number
+                    format: decimal
+                    nullable: true
                   discountOffList:
                     type: string
+                    nullable: true
                     description: Discount off list percentage extended 
                   type: 
                     type: string

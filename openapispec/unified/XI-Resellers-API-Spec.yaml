@@ -11935,12 +11935,14 @@ components:
               shipmentDetails:
                 type: array
                 description: Shipping details for the line item.
+                nullable: true
                 items:
                   type: object
                   properties:
                     quantity:
                       type: integer
                       format: int32
+                      nullable: true
                       description: The quantity shipped of the line item.
                     deliveryNumber:
                       type: string

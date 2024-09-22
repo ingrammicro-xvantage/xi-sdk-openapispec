@@ -6482,15 +6482,6 @@ paths:
             type: string
             maxLength: 32
             example: MyCompany
-        - name: IM-Environment
-          in: header
-          description: Environment name.
-          example: prodChicago
-          required: true
-          schema:
-            type: string
-            example: 20-222222
-            maxLength: 32
         - name: dealId
           in: path
           description: Unique deal ID.

@@ -8982,7 +8982,9 @@ components:
             type: object
             properties:
               availabilityByWarehouseId:
-                type: string
+                oneOf:
+                - type: string
+                - type: integer
                 description: Plant/warehouse Id of a particular location in order to get just the inventory of that location.
               availabilityForAllLocation:
                 type: boolean
@@ -8994,19 +8996,32 @@ components:
             properties:
               ingramPartNumber:
                 type: string
+                nullable: true
                 description: Ingram Micro unique part number for the product.
               vendorPartNumber:
                 type: string
+                nullable: true
                 description: Vendor’s part number for the product.
               customerPartNumber:
                 type: string
+                nullable: true
                 description: Reseller/end-user’s part number for the product.
               upc:
                 type: string
+                nullable: true
                 description: The UPC code for the product. Consists of 12 numeric digits that are uniquely assigned to each trade item.
               quantityRequested:
-                type: string
+                oneOf:
+                - type: string
+                - type: integer
+                nullable: true
                 description: Number of quantity of the Product.
+              planID:
+                oneOf:
+                - type: string
+                - type: integer
+                nullable: true
+                description: Id of the plan
               additionalAttributes:
                 type: array
                 items:
@@ -9048,30 +9063,38 @@ components:
             description: Ingram Micro unique part number for the product.
           vendorPartNumber:
             type: string
+            nullable: true
             description: Vendor’s part number for the product.
           extendedVendorPartNumber:
             type: string
+            nullable: true
             description: Extended Vendor Part Number. *Currently, this feature is not available in these countries (Mexico, Turkey, New Zealand, Colombia, Chile, Brazil, Peru, Western Sahara).
           customerPartNumber:
             type: string
+            nullable: true
             description: Reseller / end-user’s part number for the product.
           upc:
             type: string
             description: The UPC code for the product. Consists of 12 numeric digits that are uniquely assigned to each trade item.
           partNumberType:
             type: string
+            nullable: true
             description: Number type of the part.
           vendorNumber:
             type: string
+            nullable: true
             description: Vendor number that identifies the product.
           vendorName:
             type: string
+            nullable: true
             description: Vendor name for the order.
           description:
             type: string
+            nullable: true
             description: The description given for the product.
           productClass:
             type: string
+            nullable: true
             description: |-
               Indicates whether the product is directly shipped from the vendor’s warehouse or if the product ships from Ingram Micro’s warehouse. Class Codes are Ingram classifications on how skus are stocked
               A = Product that is stocked usually in all IM warehouses and replenished on a regular basis.
@@ -9087,33 +9110,43 @@ components:
               V = product that vendor has elected to discontinue.
           uom:
             type: string
+            nullable: true
             description: The description given for the product.
           productStatus:
             type: string
+            nullable: true
             description: Status that gives whether the product is Active.
           acceptBackOrder:
             type: boolean
+            nullable: true
             description: Boolean that indicates if the product accepts backorder.
           productAuthorized:
             type: boolean
+            nullable: true
             description: Boolean that indicates whether a product is authorized.
           returnableProduct:
             type: boolean
+            nullable: true
             description: Boolean that indicates if the product can be returned.
           endUserInfoRequired:
             type: boolean
+            nullable: true
             description: Boolean that indicates  if end user information is required.
           govtSpecialPriceAvailable:
             type: boolean
+            nullable: true
             description: Boolean that indicates if special pricing is available for the product.
           govtProgramType:
             type: string
+            nullable: true
             description: Program type, “PA” for government orders, “ED” for education order.
           govtEndUserType:
             type: string
+            nullable: true
             description: Type of end user of the program. F = Federal, S = State, E = Local, K = K-12 school, and H = Higher Education.
           availability:
             type: object
+            nullable: true
             properties:
               available:
                 type: boolean
@@ -9123,6 +9156,7 @@ components:
                 description: The total amount of available products
               availabilityByWarehouse:
                 type: array
+                nullable: true
                 items:
                   type: object
                   properties:
@@ -9159,6 +9193,7 @@ components:
                             format: Date
           reserveInventoryDetails:
             type: array
+            nullable: true
             items:
               type: object
               properties:
@@ -9178,6 +9213,7 @@ components:
                   format: Date
           pricing:
             type: object
+            nullable: true
             properties:
               currencyCode:
                 type: string
@@ -9202,6 +9238,7 @@ components:
                 description: Boolean values specifies whether web Discounts are available for the product.
           discounts:
             type: array
+            nullable: true
             items:
               type: object
               properties:
@@ -9244,6 +9281,7 @@ components:
                         description: Government Discounted Customer Price. *Currently, this discount is only available in the USA.
                 quantityDiscounts:
                   type: array
+                  nullable: true
                   items:
                     type: object
                     properties:
@@ -9266,9 +9304,11 @@ components:
                         description: The total price of all the discounts applied.
           bundlePartIndicator:
             type: boolean
+            nullable: true
             description: True of false value to indicate whether it’s bundle part. *Currently, this feature is not available in these countries (Mexico, Turkey, New Zealand, Colombia, Chile, Brazil, Peru, Western Sahara).
           serviceFees:
             type: array
+            nullable: true
             description: '*Currently, this feature is not available in these countries (Mexico, Turkey, New Zealand, Colombia, Chile, Brazil, Peru, Western Sahara).'
             items:
               type: object

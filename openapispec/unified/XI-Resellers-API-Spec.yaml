@@ -603,7 +603,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductSearch_Response'
               examples:
-                Success - 200:
+                TSProductSuccessResponse:
                   value:
                     recordsFound: 1180
                     pageSize: 25
@@ -633,13 +633,47 @@ paths:
                             type: GET
                     nextPage: /resellers/v6/catalog?keyword=mobilepageSize=25&pageNumber=3
                     previousPage: /resellers/v6/catalog?keyword=mobilepageSize=25&pageNumber=1
+                SubscriptionSuccessResponse:
+                  value:
+                    recordsFound: 1180
+                    pageSize: 25
+                    pageNumber: 2
+                    subscriptionCatalog:
+                      - plans:
+                          - planId: '438323'
+                            planName: Office 365 E5 OVG (NCE COM MTH)
+                            planDescription: The Office suite, plus email, instant messaging, HD video conferencing, 1 TB personal file storage and sharing, and advanced security, analytics and Audio conferencing.
+                            subscriptionPeriodSummary:
+                              - subscriptionPeriodUnit: MONTHS
+                                subscriptionPeriod: '1'
+                            links:
+                              - topic: catalog
+                                href: /resellers/v6/catalog/priceandavailability
+                                type: POST
+                              - topic: catalog
+                                href: /resellers/v6/catalog/details?planId=438323
+                                type: GET
+                    nextPage: /resellers/v6/catalog?pageSize=25&pageNumber=3&type=IM::subscription&showGroupInfo=False
+                    previousPage: /resellers/v6/catalog?pageSize=25&pageNumber=3&type=IM::subscription&showGroupInfo=False
+                SubscriptionWithGroupInfoSuccessResponse:
+                  value:
+                    recordsFound: 1180
+                    pageSize: 25
+                    pageNumber: 2
+                    subscriptionCatalog:
+                      - groupName: NCE Microsoft 365 (Commercial)
+                        groupDescription: The Microsoft 365 and Office 365 families are cloud-based services, designed to help meet your organization’s needs for robust security, reliability, and user productivity. They deliver the power of cloud productivity to businesses of all sizes, helping save time, money, and free up valued resources.
+                        numberOfPlans: '1'
+                        link: /resellers/v6/catalog?pageSize=25&pageNumber=1&groupName=NCE Microsoft 365 (Commercial)&showGroupInfo=false&planId=438323
+                    nextPage: /resellers/v6/catalog?pageSize=10&pageNumber=3&type=IM::subscription&showGroupInfo=True
+                    previousPage: /resellers/v6/catalog?pageSize=10&pageNumber=1&type=IM::subscription&showGroupInfo=True
         '400':
           description: Bad Request
           headers:
             IM-CorrelationID:
               schema:
                 type: string
-              description: Unique transaction number to identify each transaction accross all the systems.
+              description: Unique transaction number to identify each transaction across all the systems.
             IM-SenderID:
               schema:
                 type: string
@@ -681,7 +715,7 @@ paths:
             IM-CorrelationID:
               schema:
                 type: string
-              description: Unique transaction number to identify each transaction accross all the systems.
+              description: Unique transaction number to identify each transaction across all the systems.
             IM-SenderID:
               schema:
                 type: string
@@ -698,7 +732,266 @@ paths:
                     errors:
                       - id: C123-bw0a10u3-2021-03-18T11:12:26.436-08:00
                         type: /errors/system-errors
-                        message: Some unexpected error occured, please contact support team for more details
+                        message: Some unexpected error occurred, please contact support team for more details
+  /resellers/v6/catalog/details:
+    get:
+      summary: Product Details
+      tags:
+        - Product Catalog
+      description: Search all the product-related details using a unique Ingram Part Number.
+      operationId: get-reseller-v6-productdetail-cmp
+      security:
+        - application:
+            - read
+      parameters:
+        - name: IM-CustomerNumber
+          in: header
+          description: Your unique Ingram Micro customer number
+          required: true
+          schema:
+            type: string
+            maxLength: 10
+            example: 20-222222
+        - name: IM-CountryCode
+          in: header
+          description: Two-character ISO country code.
+          required: true
+          schema:
+            type: string
+            maxLength: 2
+            minLength: 2
+            example: US
+        - name: IM-SenderID
+          in: header
+          description: Sender Identification text
+          required: false
+          schema:
+            type: string
+            maxLength: 32
+            example: MyCompany
+        - name: IM-CorrelationID
+          in: header
+          description: Unique transaction number to identify each transaction across all the systems
+          required: true
+          schema:
+            type: string
+            maxLength: 32
+            example: fbac82ba-cf0a-4bcf-fc03-0c5084
+        - name: vendorPartNumber
+          in: query
+          description: Vendor’s part number for the product.
+          required: false
+          schema:
+            type: string
+        - name: planName
+          in: query
+          description: Name of the subscription plan
+          required: false
+          schema:
+            type: string
+        - name: planId
+          in: query
+          description: |-
+            Id of the subscription plan.
+
+             <span style='color:red'>To search for details of subscription products, customer must pass either vendorPartNumber, planName or planId.</span>
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetailResponse'
+              examples:
+                SuccessResponseTsProduct:
+                  description: OK
+                  value:
+                    ingramPartNumber: '5348387'
+                    vendorPartNumber: 20VE0117MH
+                    productAuthorized: 'True'
+                    description: TB 15 G2 CI5-1135G7 8/256GB 15.6 W11P
+                    upc: '196119831243'
+                    productCategory: Computers Test Duplicate
+                    productSubcategory: Notebooks & Tablets
+                    vendorName: Lenovo
+                    vendorNumber: '0000500082'
+                    productStatusCode: null
+                    productClass: null
+                    indicators:
+                      hasWarranty: true
+                      isNewProduct: false
+                      hasReturnLimits: false
+                      isBackOrderAllowed: false
+                      isShippedFromPartner: false
+                      isReplacementProduct: false
+                      replacementType: null
+                      isDirectship: false
+                      isDownloadable: false
+                      isDigitalType: false
+                      skuType: M
+                      hasStdSpecialPrice: false
+                      hasAcopSpecialPrice: false
+                      hasAcopQuantityBreak: false
+                      hasStdWebDiscount: false
+                      hasAcopWebDiscount: false
+                      hasSpecialBid: false
+                      isExportableToCountry: false
+                      isDiscontinuedProduct: true
+                      isRefurbished: false
+                      isReturnableProduct: false
+                      isIngramShip: true
+                      isEnduserRequired: false
+                      isHeavyWeight: false
+                      hasLtl: false
+                      isClearanceProduct: false
+                      hasBundle: false
+                      isOversizeProduct: false
+                      isPreorderProduct: false
+                      isLicenseProduct: false
+                      isDirectshipOrderable: true
+                      isServiceSku: false
+                      isConfigurable: false
+                    ciscoFields:
+                      productSubGroup: null
+                      serviceProgramName: null
+                      itemCatalogCategory: null
+                      configurationIndicator: null
+                      internalBusinessEntity: null
+                      itemType: null
+                      globalListPrice: null
+                    warrantyInformation: []
+                    additionalInformation:
+                      productWeight:
+                        - plantId: NL01
+                          weight: 2.6
+                          weightUnit: KG
+                      isBulkFreight: false
+                      height: '8'
+                      width: '31'
+                      length: '50'
+                      netWeight: null
+                      dimensionUnit: CM
+                SuccessResponseCloudProduct:
+                  description: OK
+                  value:
+                    ingramPartNumber: null
+                    vendorPartNumber: null
+                    customerPartNumber: null
+                    productAuthorized: null
+                    description: null
+                    upc: null
+                    productCategory: null
+                    productSubCategory: null
+                    vendorName: null
+                    vendorNumber: null
+                    productStatusCode: null
+                    productClass: null
+                    indicators: null
+                    ciscoFields: null
+                    warrantyInformation: null
+                    additionalInformation: null
+                    subscriptionDetails:
+                      - planId: '438292'
+                        planName: Microsoft 365 Business Standard (NCE COM ANN)
+                        planDescription: Best for businesses that need Office apps across devices plus professional email, cloud file storage, and online meetings & chat. For businesses with up to 300 employees.
+                        groups:
+                          - groupName: NCE Microsoft 365 (Commercial)
+                            groupDescription: The Microsoft 365 and Office 365 families are cloud-based services, designed to help meet your organization’s needs for robust security, reliability, and user productivity. They deliver the power of cloud productivity to businesses of all sizes, helping save time, money, and free up valued resources.
+                        subscriptionPeriod:
+                          - subscriptionPeriodUnit: YEAR
+                            subscriptionPeriod: '1'
+                        billingPeriod:
+                          billingPeriod: '1'
+                          billingPeriodUnit: YEAR
+                        options:
+                          - resourceId: '15613396'
+                            resourceName: Microsoft 365 Business Standard
+                            vendorPartNumber: CFQ7TTC0LDPB:0001
+                            minUnits: '1'
+                            maxUnits: '300'
+                            dependsOn: null
+                        links:
+                          - topic: catalog
+                            href: /resellers/v6/catalog/priceandavailability
+                            type: POST
+                        previousPage: ''
+                        nextPage: ''
+                      - planId: '438381'
+                        planName: Microsoft 365 Business Standard (NCE COM MTH)
+                        planDescription: Best for businesses that need Office apps across devices plus professional email, cloud file storage, and online meetings & chat. For businesses with up to 300 employees.
+                        groups:
+                          - groupName: NCE Microsoft 365 (Commercial)
+                            groupDescription: The Microsoft 365 and Office 365 families are cloud-based services, designed to help meet your organization’s needs for robust security, reliability, and user productivity. They deliver the power of cloud productivity to businesses of all sizes, helping save time, money, and free up valued resources.
+                        subscriptionPeriod:
+                          - subscriptionPeriodUnit: MONTH
+                            subscriptionPeriod: '1'
+                          - subscriptionPeriodUnit: YEAR
+                            subscriptionPeriod: '1'
+                        billingPeriod:
+                          billingPeriod: '1'
+                          billingPeriodUnit: MONTH
+                        options:
+                          - resourceId: '15612791'
+                            resourceName: Microsoft 365 Business Standard
+                            vendorPartNumber: CFQ7TTC0LDPB:0001
+                            minUnits: '1'
+                            maxUnits: '300'
+                            dependsOn: null
+                        links:
+                          - topic: catalog
+                            href: /resellers/v6/catalog/priceandavailability
+                            type: POST
+                        previousPage: ''
+                        nextPage: ''
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                '400':
+                  description: Bad Request
+                  value:
+                    errors:
+                      - traceid: '123'
+                        type: errors/bad-request
+                        message: Input passed is not in right or expected format. Model Binding Error Happens at Global Model Binding Exception Handler.
+                        fields:
+                          - field: IM-CustomerNumber
+                            message: The customerNumber field is required.
+                            value: ''
+        '404':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                404 - Not Found:
+                  value:
+                    errors:
+                      - id: 123
+                        type: Validation error
+                        message: No Records Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                '500':
+                  description: Internal Server Error
+                  value:
+                    errors:
+                      - id: C123-bw0a10u3-2021-02-19T11:12:26.436-08:00
+                        type: /errors/system-errors
+                        message: Some unexpected error occurred, please contact support team for more details
+          
   /resellers/v6/catalog/details/{ingramPartNumber}:
     get:
       summary: Product Details
@@ -9526,6 +9819,173 @@ components:
                 currencyCode:
                   type: string
                   description: Currency Code of the service fees.
+          subscriptionPrice:
+            type: array
+            items:
+              type: object
+              properties:
+                planId:
+                  type: string
+                  description: Id of the plan.
+                planName:
+                  type: string
+                  description: Name of the plan.
+                planDescription:
+                  type: number
+                  description: The description of the plan.
+                groups:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      groupName:
+                        type: string
+                        description: The name of the group
+                      groupDescription:
+                        type: string
+                        description: The description of the group.
+                billingPeriod:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      billingPeriodUnit:
+                        type: string
+                        description: The unit of the billing period.
+                      billingPeriod:
+                        type: string
+                        description: The billing period value.
+                subscriptionPeriod:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      subscriptionPeriodUnit:
+                        type: string
+                        description: The unit of the subscription period.
+                      subscriptionPeriod:
+                        type: string
+                        description: The subscription period value.
+                options:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      resourceId:
+                        type: string
+                        description: The resource id of the subscription product.
+                      resourceName:
+                        type: string
+                        description: The name of the resource of the subscription product.
+                      vendorPartNumber:
+                        type: string
+                        description: Vendor’s part number for the subscription product.
+                      minUnits:
+                        type: string
+                        description: Minimum unit needs to purchased.
+                      maxUnits:
+                        type: string
+                        description: Maximum unit available for a purchase.
+                      recurringpricemodel:
+                        type: string
+                        description: Recurring price model
+                      unitOfMeasure:
+                        type: string
+                        description: Unit of mesaure for a subscription product.
+                      resourcePricing:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: Name of the type of pricing.
+                            quantity:
+                              type: integer
+                              description: Quantity of the line item.
+                            msrp:
+                              type: number
+                              format: decimal
+                              description: Manufacturer Suggested Retail Price.
+                            unitPrice:
+                              type: number
+                              format: decimal
+                              description: The unit price of the line item.
+                            margin:
+                              type: number
+                              format: decimal
+                              description: Reseller’s margin percentage
+                            currencyCode:
+                              type: string
+                              description: The 3-digit ISO currency code.
+                            subscriptionPeriod:
+                              type: string
+                              description: The subscription period of the line item.
+                      discounts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            volumeDiscounts:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  currencyCode:
+                                    type: string
+                                    description: The 3-digit ISO currency code.
+                                  quantity:
+                                    type: integer
+                                    description: Quantity of the line item.
+                                  msrp:
+                                    type: number
+                                    format: decimal
+                                    description: Manufacturer Suggested Retail Price.
+                                  unitPrice:
+                                    type: number
+                                    format: decimal
+                                    description: The unit price of the line item.
+                                  margin:
+                                     type: number
+                                     format: decimal
+                                     description: Reseller’s margin percentage
+                            specialPricing:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  currencyCode:
+                                    type: string
+                                    description: The 3-digit ISO currency code.
+                                  discount:
+                                    type: number
+                                    format: decimal
+                                    description: The discount for the line item.
+                                  discountType:
+                                    type: string
+                                    description: The type of the discount
+                                  discountQtyLimit:
+                                    type: integer
+                                    description: The quantity available at the discounted price
+                                  discountExpiryDate:
+                                    type: string
+                                    description: The date when discount expires.
+                                  vendorProgramName:
+                                    type: string
+                                    description: The vendors discount program name.
+                      fees:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            price:
+                              type: number
+                              format: decimal
+                              description: Fee price of the line item.
+                            type:
+                              type: string
+                              description: The type of the fees.
+                  
     ProductSearch_Response:
       type: object
       properties:
@@ -9612,6 +10072,62 @@ components:
               authorizedToPurchase:
                 type: string
                 description: It is true when it exists in matched queries field of ealstic search API.
+        subscriptionCatalog:
+          type: array
+          items:
+            type: object
+            properties:
+              groupName:
+                type: string
+                description: The name of the group. (The info will shown if searched with showGroupInfo=true)
+              groupDescription:
+                type: string
+                description: The description of the group. (The info will shown if searched with showGroupInfo=true)
+              numberOfPlans:
+                type: string
+                description: The number of plans available for the group. (The info will shown if searched with showGroupInfo=true)
+              link:
+                type: string
+                description: URL to access more details about the group. (The info will shown if searched with showGroupInfo=true)
+              plans:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    planId:
+                      type: string
+                      description: ID of the Plan.
+                    planName:
+                      type: string
+                      description: Name of the Plan.
+                    planDescription:
+                      type: string
+                      description: The description of the Plan
+                    subscriptionPeriodSummary:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          subscriptionPeriodUnit:
+                            type: string
+                            description: Provides the details of the product.
+                          subscriptionPeriod:
+                            type: string
+                            description: The URL endpoint for accessing the relevant data..
+                    links:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          topic:
+                            type: string
+                            description: Provides the details of the product.
+                          href:
+                            type: string
+                            description: The URL endpoint for accessing the relevant data..
+                          type:
+                            type: string
+                            description: The type of call that can be made to the href link(GET)
         nextPage:
           type: string
           description: link/URL for accessing next page.
@@ -9627,11 +10143,8 @@ components:
         vendorPartNumber:
           type: string
           description: Vendor’s part number for the product.
-        customerPartNumber:
-          type: string
-          description: Reseller / end-user’s part number for the product.
         productAuthorized:
-          type: string
+          type: boolean
           description: Boolean that indicates whether a product is authorized.
         description:
           type: string
@@ -9642,7 +10155,7 @@ components:
         productCategory:
           type: string
           description: The category of the product.
-        productSubCategory:
+        productSubcategory:
           type: string
           description: The sub-category of the product.
         vendorName:
@@ -9657,20 +10170,25 @@ components:
         productClass:
           type: string
           description: Indicates whether the product is directly shipped from the vendor’s warehouse or if the product ships from Ingram Micro’s warehouse. Class Codes are Ingram classifications on how skus are stocked A = Product that is stocked usually in all IM warehouses and replenished on a regular basis. B = Product that is stocked in limited IM warehouses and replenished on a regular basis C = Product that is stocked in fewer IM warehouses and replenished on a regular basis. D = Product that Ingram Micro has elected to discontinue. E = Product that will be phased out later, according to the vendor. You may not want to replenish this product, but instead sell down what is in stock. F = Product that we carry for a specific customer or supplier under a contractual agreement. N = New Sku. Classification before first receipt O = Discontinued product to be liquidated S= Order for Specialized Demand (Order to backorder) X= direct ship from Vendor V = product that vendor has elected to discontinue.
+        customerPartNumber:
+          type: string
+          description: Reseller / end-user’s part number for the product.
         indicators:
-          type: object
+          type: array
           description: Indicators of the Product
-          properties:
+          items:
+            type: object
+            properties:
               hasWarranty:
                 type: boolean
                 description: Boolean that indicates whether product has a warranty.
               isNewProduct:
                 type: boolean
                 description: 'Boolean that indicates whether it’s a new product. '
-              hasReturnLimits:
+              HasReturnLimits:
                 type: boolean
                 description: Boolean that indicates whether there is any limit to return the product.
-              isBackOrderAllowed:
+              IsBackOrderAllowed:
                 type: boolean
                 description: Boolean that indicates whether back order is allowed for the product.
               isShippedFromPartner:
@@ -9679,8 +10197,6 @@ components:
               isReplacementProduct:
                 type: boolean
                 description: Boolean that indicates whether product is a replacement product.
-              replacementType:
-                type: string
               isDirectship:
                 type: boolean
                 description: Boolean that indicates whether it’s a direct ship product.
@@ -9705,8 +10221,6 @@ components:
               hasStdWebDiscount:
                 type: boolean
                 description: Boolean that indicates whether product has any standard web discount.
-              hasAcopWebDiscount:
-                type: boolean
               hasSpecialBid:
                 type: boolean
                 description: Boolean that indicates whether product has any special bid.
@@ -9716,7 +10230,7 @@ components:
               isDiscontinuedProduct:
                 type: boolean
                 description: Boolean that indicates whether it’s a discontinued product.
-              isRefurbished:
+              isRefurbishedProduct:
                 type: boolean
                 description: Boolean that indicates whether product is refurbished.
               isReturnableProduct:
@@ -9759,9 +10273,11 @@ components:
                 type: boolean
                 description: Boolean that indicates whether product is configurable.
         ciscoFields:
-          type: object
+          type: array
           description: Cisco product related information.
-          properties:
+          items:
+            type: object
+            properties:
               productSubGroup:
                 type: string
                 description: Cisco product sub-group
@@ -9831,6 +10347,99 @@ components:
             dimensionUnit:
               type: string
               description: 'Example : ''Unit value'''
+        subscriptionDetails:
+          type: array
+          description: Subscription product Details
+          items:
+            type: object
+            properties:
+              planId:
+                type: string
+                description: ID of the subscription plan.
+              planName:
+                type: string
+                description: Name of the subscription plan.
+              planDescription:
+                type: string
+                description: Description of the subscription plan.
+              groups:
+                type: array
+                description: Details of the groups subscription product part of.
+                items:
+                  type: object
+                  properties:
+                    groupName:
+                      type: string
+                      description: Name of the group.
+                    groupDescription:
+                      type: string
+                      description: Name of the subscription group.
+              subscriptionPeriod:
+                type: array
+                description: Details of the subscription period.
+                items:
+                  type: object
+                  properties:
+                    subscriptionPeriodUnit:
+                      type: string
+                      description: Unit period of the subscription. Example, Years, Months
+                    subscriptionPeriod:
+                      type: integer
+                      description: Length of the subscription. Example 1, 3
+              billingPeriod:
+                type: object
+                description: 'Details of the subscription billing period. '
+                properties:
+                  billingPeriodUnit:
+                    type: string
+                    description: Billing unit period of the subscription. Example, Years, Months
+                  billingPeriod:
+                    type: integer
+                    description: Billing period of the subscription. Example 1, 3
+              options:
+                type: array
+                description: Details of the resources available.
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                      description: ID of the subscription resource
+                    resourceName:
+                      type: string
+                      description: Name of the subscription resource
+                    vendorPartNumber:
+                      type: string
+                      description: Vendor’s part number for the product.
+                    minUnits:
+                      type: integer
+                      description: Minimum units must be purchased.
+                    maxUnits:
+                      type: integer
+                      description: Maximum units are available for purchase.
+                    dependsOn:
+                      type: string
+                      description: The name of the product must be purchased to purchase this product.
+              links:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    topic:
+                      type: string
+                      description: Provides the details of the product.
+                    href:
+                      type: string
+                      description: The URL endpoint for accessing the relevant data..
+                    type:
+                      type: string
+                      description: The type of call that can be made to the href link(GET)
+              nextPage:
+                type: string
+                description: link/URL for accessing next page.
+              previousPage:
+                type: string
+                description: link/URL for accessing previous page.
     renewalsSearchRequest:
       type: object
       properties:

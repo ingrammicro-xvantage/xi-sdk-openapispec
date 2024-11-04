@@ -738,8 +738,8 @@ paths:
       summary: Product Details
       tags:
         - Product Catalog
-      description: Search all the product-related details using a unique Ingram Part Number.
-      operationId: get-reseller-v6-productdetail-cmp
+      description: Search all the product-related details.
+      operationId: get-reseller-v6-productdetailcmp
       security:
         - application:
             - read
@@ -777,12 +777,6 @@ paths:
             type: string
             maxLength: 32
             example: fbac82ba-cf0a-4bcf-fc03-0c5084
-        - name: vendorPartNumber
-          in: query
-          description: Vendor’s part number for the product.
-          required: false
-          schema:
-            type: string
         - name: planName
           in: query
           description: Name of the subscription plan
@@ -795,6 +789,12 @@ paths:
             Id of the subscription plan.
 
              <span style='color:red'>To search for details of subscription products, customer must pass either vendorPartNumber, planName or planId.</span>
+          required: false
+          schema:
+            type: string
+        - name: vendorPartNumber
+          in: query
+          description: Vendor’s part number for the product.
           required: false
           schema:
             type: string

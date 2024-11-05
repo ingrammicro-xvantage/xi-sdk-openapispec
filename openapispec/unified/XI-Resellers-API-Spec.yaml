@@ -9543,6 +9543,8 @@ components:
       items:
         type: object
         properties:
+          index:
+            type: number
           productStatusCode:
             type: string
             description: Codes signifying whether the sku is active or not.
@@ -9684,7 +9686,6 @@ components:
                             format: Date
           reserveInventoryDetails:
             type: array
-            nullable: true
             items:
               type: object
               properties:
@@ -9825,6 +9826,8 @@ components:
             items:
               type: object
               properties:
+                index:
+                  type: number
                 planId:
                   type: string
                   description: Id of the plan.
@@ -9832,7 +9835,7 @@ components:
                   type: string
                   description: Name of the plan.
                 planDescription:
-                  type: number
+                  type: string
                   description: The description of the plan.
                 groups:
                   type: array
@@ -9854,7 +9857,7 @@ components:
                         type: string
                         description: The unit of the billing period.
                       billingPeriod:
-                        type: string
+                        type: number
                         description: The billing period value.
                 subscriptionPeriod:
                   type: array
@@ -9874,6 +9877,8 @@ components:
                     properties:
                       resourceId:
                         type: string
+                      resourceUId:
+                        type: string
                         description: The resource id of the subscription product.
                       resourceName:
                         type: string
@@ -9882,10 +9887,12 @@ components:
                         type: string
                         description: Vendor’s part number for the subscription product.
                       minUnits:
-                        type: string
+                        type: number
+                        format: decimal
                         description: Minimum unit needs to purchased.
                       maxUnits:
-                        type: string
+                        type: number
+                        format: decimal
                         description: Maximum unit available for a purchase.
                       recurringpricemodel:
                         type: string
@@ -9902,7 +9909,7 @@ components:
                               type: string
                               description: Name of the type of pricing.
                             quantity:
-                              type: integer
+                              type: string
                               description: Quantity of the line item.
                             msrp:
                               type: number
@@ -9986,6 +9993,11 @@ components:
                             type:
                               type: string
                               description: The type of the fees.
+                            msrp:
+                              type: number
+                              format: decimal
+                            code:
+                              type: string
                   
     ProductSearch_Response:
       type: object

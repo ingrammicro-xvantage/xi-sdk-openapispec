@@ -1089,8 +1089,8 @@
         "tags": [
           "Product Catalog"
         ],
-        "description": "Search all the product-related details using a unique Ingram Part Number.",
-        "operationId": "get-reseller-v6-productdetail-cmp",
+        "description": "Search all the product-related details.",
+        "operationId": "get-reseller-v6-productdetailcmp",
         "security": [
           {
             "application": [
@@ -1145,15 +1145,6 @@
             }
           },
           {
-            "name": "vendorPartNumber",
-            "in": "query",
-            "description": "Vendor’s part number for the product.",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "planName",
             "in": "query",
             "description": "Name of the subscription plan",
@@ -1166,6 +1157,15 @@
             "name": "planId",
             "in": "query",
             "description": "Id of the subscription plan.\n\n <span style='color:red'>To search for details of subscription products, customer must pass either vendorPartNumber, planName or planId.</span>",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vendorPartNumber",
+            "in": "query",
+            "description": "Vendor’s part number for the product.",
             "required": false,
             "schema": {
               "type": "string"
@@ -11860,6 +11860,7 @@
           },
           "endCustomerOrderNumber": {
             "type": "string",
+            "nullable": true,
             "description": "The end customer's order number for reference in their system.",
             "maxLength": 18
           },
@@ -14327,172 +14328,165 @@
             "description": "Reseller / end-user’s part number for the product."
           },
           "indicators": {
-            "type": "array",
-            "description": "Indicators of the Product",
-            "items": {
-              "type": "object",
-              "properties": {
-                "hasWarranty": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product has a warranty."
-                },
-                "isNewProduct": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it’s a new product. "
-                },
-                "HasReturnLimits": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether there is any limit to return the product."
-                },
-                "IsBackOrderAllowed": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether back order is allowed for the product."
-                },
-                "isShippedFromPartner": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product is shipped from the partner."
-                },
-                "isReplacementProduct": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product is a replacement product."
-                },
-                "isDirectship": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it’s a direct ship product."
-                },
-                "isDownloadable": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product is downloadable."
-                },
-                "isDigitalType": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it’s a digital product. "
-                },
-                "skuType": {
-                  "type": "string",
-                  "description": "skutype"
-                },
-                "hasStdSpecialPrice": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product has any standard special price."
-                },
-                "hasAcopSpecialPrice": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product has any ACOP special price."
-                },
-                "hasAcopQuantityBreak": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product has any ACOP quantity break."
-                },
-                "hasStdWebDiscount": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product has any standard web discount."
-                },
-                "hasSpecialBid": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product has any special bid."
-                },
-                "isExportableToCountry": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product is exportable."
-                },
-                "isDiscontinuedProduct": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it’s a discontinued product."
-                },
-                "isRefurbishedProduct": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product is refurbished."
-                },
-                "isReturnableProduct": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates if the product can be returned."
-                },
-                "isIngramShip": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it’s a Ingram shipped product."
-                },
-                "isEnduserRequired": {
-                  "type": "boolean",
-                  "description": "Do vendor requires Enduser name required to create an order."
-                },
-                "isHeavyWeight": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it’s  heavy weight product."
-                },
-                "hasLtl": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it hasLtl or not."
-                },
-                "isClearanceProduct": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it’s clearnce product."
-                },
-                "hasBundle": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it’s a bundled product."
-                },
-                "isOversizeProduct": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it’s oversized product."
-                },
-                "isPreorderProduct": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it’s a preorder product."
-                },
-                "isLicenseProduct": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether it’s a licened product."
-                },
-                "isDirectshipOrderable": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product is directship orderable."
-                },
-                "isServiceSku": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product is service SKU."
-                },
-                "isConfigurable": {
-                  "type": "boolean",
-                  "description": "Boolean that indicates whether product is configurable."
-                }
+            "type": "object",
+            "properties": {
+              "hasWarranty": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product has a warranty."
+              },
+              "isNewProduct": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it’s a new product. "
+              },
+              "HasReturnLimits": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether there is any limit to return the product."
+              },
+              "IsBackOrderAllowed": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether back order is allowed for the product."
+              },
+              "isShippedFromPartner": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product is shipped from the partner."
+              },
+              "isReplacementProduct": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product is a replacement product."
+              },
+              "isDirectship": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it’s a direct ship product."
+              },
+              "isDownloadable": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product is downloadable."
+              },
+              "isDigitalType": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it’s a digital product. "
+              },
+              "skuType": {
+                "type": "string",
+                "description": "skutype"
+              },
+              "hasStdSpecialPrice": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product has any standard special price."
+              },
+              "hasAcopSpecialPrice": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product has any ACOP special price."
+              },
+              "hasAcopQuantityBreak": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product has any ACOP quantity break."
+              },
+              "hasStdWebDiscount": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product has any standard web discount."
+              },
+              "hasSpecialBid": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product has any special bid."
+              },
+              "isExportableToCountry": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product is exportable."
+              },
+              "isDiscontinuedProduct": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it’s a discontinued product."
+              },
+              "isRefurbishedProduct": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product is refurbished."
+              },
+              "isReturnableProduct": {
+                "type": "boolean",
+                "description": "Boolean that indicates if the product can be returned."
+              },
+              "isIngramShip": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it’s a Ingram shipped product."
+              },
+              "isEnduserRequired": {
+                "type": "boolean",
+                "description": "Do vendor requires Enduser name required to create an order."
+              },
+              "isHeavyWeight": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it’s  heavy weight product."
+              },
+              "hasLtl": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it hasLtl or not."
+              },
+              "isClearanceProduct": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it’s clearnce product."
+              },
+              "hasBundle": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it’s a bundled product."
+              },
+              "isOversizeProduct": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it’s oversized product."
+              },
+              "isPreorderProduct": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it’s a preorder product."
+              },
+              "isLicenseProduct": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether it’s a licened product."
+              },
+              "isDirectshipOrderable": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product is directship orderable."
+              },
+              "isServiceSku": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product is service SKU."
+              },
+              "isConfigurable": {
+                "type": "boolean",
+                "description": "Boolean that indicates whether product is configurable."
               }
             }
           },
           "ciscoFields": {
-            "type": "array",
+            "type": "object",
             "description": "Cisco product related information.",
-            "items": {
-              "type": "object",
-              "properties": {
-                "productSubGroup": {
-                  "type": "string",
-                  "description": "Cisco product sub-group"
-                },
-                "serviceProgramName": {
-                  "type": "string",
-                  "description": "Cisco service program name"
-                },
-                "itemCatalogCategory": {
-                  "type": "string",
-                  "description": "Cisco item catalog category"
-                },
-                "configurationIndicator": {
-                  "type": "string",
-                  "description": "Cisco configuration indicator"
-                },
-                "internalBusinessEntity": {
-                  "type": "string",
-                  "description": "Cisco internal business entity"
-                },
-                "itemType": {
-                  "type": "string",
-                  "description": "Cisco item type"
-                },
-                "globalListPrice": {
-                  "type": "string",
-                  "description": "Cisco global list price"
-                }
+            "properties": {
+              "productSubGroup": {
+                "type": "string",
+                "description": "Cisco product sub-group"
+              },
+              "serviceProgramName": {
+                "type": "string",
+                "description": "Cisco service program name"
+              },
+              "itemCatalogCategory": {
+                "type": "string",
+                "description": "Cisco item catalog category"
+              },
+              "configurationIndicator": {
+                "type": "string",
+                "description": "Cisco configuration indicator"
+              },
+              "internalBusinessEntity": {
+                "type": "string",
+                "description": "Cisco internal business entity"
+              },
+              "itemType": {
+                "type": "string",
+                "description": "Cisco item type"
+              },
+              "globalListPrice": {
+                "type": "string",
+                "description": "Cisco global list price"
               }
             }
           },
@@ -17437,10 +17431,11 @@
         "properties": {
           "quoteNumber": {
             "type": "string",
+            "nullable": true,
             "description": "A unique identifier generated by Ingram Micro's CRM specific to each quote."
           },
           "confirmationNumber": {
-            "type": "number",
+            "type": "string",
             "example": 987654322,
             "description": "A unique confirmation number for tracking purposes."
           },

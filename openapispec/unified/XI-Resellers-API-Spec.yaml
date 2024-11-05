@@ -9831,6 +9831,8 @@ components:
                 planId:
                   type: string
                   description: Id of the plan.
+                planUId:
+                  type: string
                 planName:
                   type: string
                   description: Name of the plan.
@@ -9849,16 +9851,14 @@ components:
                         type: string
                         description: The description of the group.
                 billingPeriod:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      billingPeriodUnit:
-                        type: string
-                        description: The unit of the billing period.
-                      billingPeriod:
-                        type: number
-                        description: The billing period value.
+                  type: object
+                  properties:
+                    billingPeriodUnit:
+                      type: string
+                      description: The unit of the billing period.
+                    billingPeriod:
+                      type: number
+                      description: The billing period value.
                 subscriptionPeriod:
                   type: array
                   items:

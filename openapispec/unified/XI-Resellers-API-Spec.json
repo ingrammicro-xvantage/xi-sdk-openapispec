@@ -13484,6 +13484,9 @@
         "items": {
           "type": "object",
           "properties": {
+            "index": {
+              "type": "number"
+            },
             "productStatusCode": {
               "type": "string",
               "description": "Codes signifying whether the sku is active or not."
@@ -13652,7 +13655,6 @@
             },
             "reserveInventoryDetails": {
               "type": "array",
-              "nullable": true,
               "items": {
                 "type": "object",
                 "properties": {
@@ -13840,6 +13842,9 @@
               "items": {
                 "type": "object",
                 "properties": {
+                  "index": {
+                    "type": "number"
+                  },
                   "planId": {
                     "type": "string",
                     "description": "Id of the plan."
@@ -13849,7 +13854,7 @@
                     "description": "Name of the plan."
                   },
                   "planDescription": {
-                    "type": "number",
+                    "type": "string",
                     "description": "The description of the plan."
                   },
                   "groups": {
@@ -13878,7 +13883,7 @@
                           "description": "The unit of the billing period."
                         },
                         "billingPeriod": {
-                          "type": "string",
+                          "type": "number",
                           "description": "The billing period value."
                         }
                       }
@@ -13906,6 +13911,9 @@
                       "type": "object",
                       "properties": {
                         "resourceId": {
+                          "type": "string"
+                        },
+                        "resourceUId": {
                           "type": "string",
                           "description": "The resource id of the subscription product."
                         },
@@ -13918,11 +13926,13 @@
                           "description": "Vendor’s part number for the subscription product."
                         },
                         "minUnits": {
-                          "type": "string",
+                          "type": "number",
+                          "format": "decimal",
                           "description": "Minimum unit needs to purchased."
                         },
                         "maxUnits": {
-                          "type": "string",
+                          "type": "number",
+                          "format": "decimal",
                           "description": "Maximum unit available for a purchase."
                         },
                         "recurringpricemodel": {
@@ -13943,7 +13953,7 @@
                                 "description": "Name of the type of pricing."
                               },
                               "quantity": {
-                                "type": "integer",
+                                "type": "string",
                                 "description": "Quantity of the line item."
                               },
                               "msrp": {
@@ -14057,6 +14067,13 @@
                               "type": {
                                 "type": "string",
                                 "description": "The type of the fees."
+                              },
+                              "msrp": {
+                                "type": "number",
+                                "format": "decimal"
+                              },
+                              "code": {
+                                "type": "string"
                               }
                             }
                           }

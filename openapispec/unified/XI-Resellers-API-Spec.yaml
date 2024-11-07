@@ -10152,39 +10152,51 @@ components:
       properties:
         ingramPartNumber:
           type: string
+          nullable: true
           description: Ingram Micro unique part number for the product.
         vendorPartNumber:
           type: string
+          nullable: true
           description: Vendor’s part number for the product.
         productAuthorized:
           type: boolean
+          nullable: true
           description: Boolean that indicates whether a product is authorized.
         description:
           type: string
+          nullable: true
           description: The description given for the product.
         upc:
           type: string
+          nullable: true
           description: The UPC code for the product. Consists of 12 numeric digits that are uniquely assigned to each trade item.
         productCategory:
           type: string
+          nullable: true
           description: The category of the product.
         productSubcategory:
           type: string
+          nullable: true
           description: The sub-category of the product.
         vendorName:
           type: string
+          nullable: true
           description: Vendor name for the order.
         vendorNumber:
           type: string
+          nullable: true
           description: Vendor number that identifies the product.
         productStatusCode:
           type: string
+          nullable: true
           description: Status code of the product.
         productClass:
           type: string
+          nullable: true
           description: Indicates whether the product is directly shipped from the vendor’s warehouse or if the product ships from Ingram Micro’s warehouse. Class Codes are Ingram classifications on how skus are stocked A = Product that is stocked usually in all IM warehouses and replenished on a regular basis. B = Product that is stocked in limited IM warehouses and replenished on a regular basis C = Product that is stocked in fewer IM warehouses and replenished on a regular basis. D = Product that Ingram Micro has elected to discontinue. E = Product that will be phased out later, according to the vendor. You may not want to replenish this product, but instead sell down what is in stock. F = Product that we carry for a specific customer or supplier under a contractual agreement. N = New Sku. Classification before first receipt O = Discontinued product to be liquidated S= Order for Specialized Demand (Order to backorder) X= direct ship from Vendor V = product that vendor has elected to discontinue.
         customerPartNumber:
           type: string
+          nullable: true
           description: Reseller / end-user’s part number for the product.
         indicators:
           type: object

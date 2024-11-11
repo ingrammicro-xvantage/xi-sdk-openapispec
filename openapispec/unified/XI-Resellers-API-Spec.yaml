@@ -573,9 +573,7 @@ paths:
           description: ID of the plan
           required: false
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: string
             example: 471490
         - name: showGroupInfo
           in: query
@@ -9473,9 +9471,7 @@ components:
             type: object
             properties:
               availabilityByWarehouseId:
-                oneOf:
-                - type: string
-                - type: integer
+                type: string
                 description: Plant/warehouse Id of a particular location in order to get just the inventory of that location.
               availabilityForAllLocation:
                 type: boolean
@@ -9502,15 +9498,11 @@ components:
                 nullable: true
                 description: The UPC code for the product. Consists of 12 numeric digits that are uniquely assigned to each trade item.
               quantityRequested:
-                oneOf:
-                - type: string
-                - type: integer
+                type: string
                 nullable: true
                 description: Number of quantity of the Product.
               planID:
-                oneOf:
-                - type: string
-                - type: integer
+                type: string
                 nullable: true
                 description: Id of the plan
               additionalAttributes:

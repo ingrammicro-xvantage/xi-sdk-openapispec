@@ -9464,17 +9464,21 @@ components:
           description: Boolean value that will display reserve inventory details in the response when true.
         specialBidNumber:
           type: string
+          nullable: true
           description: Pre-approved special pricing/bid number provided to the reseller by the vendor for special pricing and discounts. Used to track the bid number where different line items have different bid numbers.
         availabilityByWarehouse:
           type: array
+          nullable: true
           items:
             type: object
             properties:
               availabilityByWarehouseId:
                 type: string
+                nullable: true
                 description: Plant/warehouse Id of a particular location in order to get just the inventory of that location.
               availabilityForAllLocation:
                 type: boolean
+                nullable: true
                 description: Pass boolean value as input, if true the response will contain warehouse location details, if false the response will not hold warehouse location details. By default value is true.
         products:
           type: array
@@ -9507,28 +9511,36 @@ components:
                 description: Id of the plan
               additionalAttributes:
                 type: array
+                nullable: true
                 items:
                   type: object
+                  nullable: true
                   properties:
                     attributeName:
                       type: string
+                      nullable: true
                       description: |-
                         governmentprogramcode: Special Discount details will be provided based on the governmentprogramcode if available.
                         shiptostatebrazil: Attribute Specific to Brazil.
                         shipfrombranchnumber: If provided, displays only the availability of the specified branch number.
                     attributeValue:
                       type: string
+                      nullable: true
                       description: key value pair -key value.
         additionalAttributes:
           type: array
+          nullable: true
           items:
             type: object
+            nullable: true
             properties:
               attributeName:
                 type: string
+                nullable: true
                 description: key value pair -key Name.
               attributeValue:
                 type: string
+                nullable: true
                 description: key value pair -key value.
     PriceAndAvailabilityResponse:
       type: array

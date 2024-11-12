@@ -248,6 +248,7 @@ paths:
                     - availabilityByWarehouseId: '40'
             schema:
               $ref: '#/components/schemas/PriceAndAvailabilityRequest'
+        required: true
       responses:
         '200':
           description: OK
@@ -9541,7 +9542,6 @@ components:
                 type: string
                 nullable: true
                 description: key value pair -key value.
-
     PriceAndAvailabilityResponse:
       type: array
       items:

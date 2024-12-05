@@ -11820,6 +11820,7 @@ components:
         extendedMsrpTotal:
           type: number
           format: decimal
+          nullable: true
           description: Total extended MSRP for all products included in the quote
         quantityTotal:
           type: integer

@@ -9457,9 +9457,11 @@ components:
       properties:
         showAvailableDiscounts:
           type: boolean
+          nullable: true
           description: Boolean value that will display Discount details in the response when true.
         showReserveInventoryDetails:
           type: boolean
+          nullable: true
           description: Boolean value that will display reserve inventory details in the response when true.
         specialBidNumber:
           type: string

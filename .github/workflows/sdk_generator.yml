@@ -18,7 +18,7 @@ jobs:
           npm install -g @openapitools/openapi-generator-cli@latest
       - name: Generate C# SDK
         run: |
-          openapi-generator-cli generate -i openapispec/unified/XI-Resellers-API-Spec.yaml -g csharp -o ${{ github.workspace }}/csharpsdk --package-name xi.sdk.resellers --library httpclient
+          openapi-generator-cli generate -i openapispec/unified/XI-Resellers-API-Spec.yaml -g csharp -o ${{ github.workspace }}/csharpsdk --package-name xi.sdk.resellers --library httpclient --additional-properties=nullableReferenceTypes=true
 
       - name: Configure Git for C# SDK
         run: |

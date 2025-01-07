@@ -5829,7 +5829,7 @@ paths:
         - name: IM-ApplicationID
           in: header
           description: 'Unique value used to identify the sender of the transaction. Example: MyCompany'
-          required: true
+          required: false
           schema:
             type: string
             maxLength: 32
@@ -6132,7 +6132,7 @@ paths:
         - name: IM-ApplicationID
           in: header
           description: 'Unique value used to identify the sender of the transaction. Example: MyCompany.'
-          required: true
+          required: false
           schema:
             type: string
             maxLength: 32
@@ -8435,7 +8435,6 @@ components:
           properties:
             addressId:
               type: string
-              nullable: true
               description: The ID references the resellers address in Ingram Micro's system for shipping. Provided to resellers during the onboarding process.
               maxLength: 10
             contact:

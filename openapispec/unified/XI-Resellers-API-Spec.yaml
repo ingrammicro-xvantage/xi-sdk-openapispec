@@ -8616,41 +8616,6 @@ components:
                     attributeValue:
                       type: string
                       description: TLine-level additional attributes.
-              warrantyInfo:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    hardwareLineLink:
-                      type: string
-                      description: Customer line number of the warranty product in this request for linkage, either hardwareLineLink or warrantyLineLink can be used in a line
-                    warrantyLineLink:
-                      type: string
-                      description: Customer line number of the hardware product in this request for linkage, either hardwareLineLink or warrantyLineLink can be used in a line.
-                    directLineLink:
-                      type: string
-                      description: Unique value to link hardware and warranty lines. Should be used only when products are purchased from both Ingram and/or vendor but the warranty is purchased through Ingram for them.
-                      maxLength: 25
-                    serialInfo:
-                      type: array
-                      items:
-                        type: object
-                        description: Serial information of the hardware to be associated with the warranty, applicable on post sale orders.
-                        properties:
-                          dateOfPurchase:
-                            type: string
-                            description: Date of purchase of the hardware.
-                            maxLength: 8
-                          shipDate:
-                            type: string
-                            description: Vendor specific mandatory field, date of hardware/product shipment from vendor.
-                            maxLength: 8
-                          primarySerialNumber:
-                            type: string
-                            description: Serial number of the hardware/product.
-                          secondarySerialNumber:
-                            type: string
-                            description: Serial number of accessory associated with the above hardware/product.
               vmfAdditionalAttributesLines:
                 type: array
                 items:

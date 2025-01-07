@@ -5829,7 +5829,7 @@ paths:
         - name: IM-ApplicationID
           in: header
           description: 'Unique value used to identify the sender of the transaction. Example: MyCompany'
-          required: false
+          required: true
           schema:
             type: string
             maxLength: 32
@@ -6132,7 +6132,7 @@ paths:
         - name: IM-ApplicationID
           in: header
           description: 'Unique value used to identify the sender of the transaction. Example: MyCompany.'
-          required: false
+          required: true
           schema:
             type: string
             maxLength: 32

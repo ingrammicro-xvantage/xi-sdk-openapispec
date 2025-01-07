@@ -10043,7 +10043,7 @@ components:
                                     nullable: true
                                     description: The 3-digit ISO currency code.
                                   quantity:
-                                    type: integer
+                                    type: string
                                     nullable: true
                                     description: Quantity of the line item.
                                   msrp:

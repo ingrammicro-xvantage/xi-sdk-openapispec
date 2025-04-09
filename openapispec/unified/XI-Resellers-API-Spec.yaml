@@ -12967,12 +12967,12 @@ components:
         lastname:
           type: string
           description: Logged in Users Lastname
-        CustomerContact:
+        customerContact:
           type: string
           description: Logged in Users email address contact.
           maxLength: 64
           example: MyCompany
-          required: true
+          nullable: false
         quoteExpiryDate:
           type: string
           description: The date on which a quote will expire.

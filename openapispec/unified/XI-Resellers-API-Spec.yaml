@@ -10273,7 +10273,7 @@ components:
           nullable: true
           description: Vendor’s part number for the product.
         productAuthorized:
-          type: boolean
+          type: string
           nullable: true
           description: Boolean that indicates whether a product is authorized.
         description:
@@ -10518,7 +10518,7 @@ components:
                       type: string
                       description: Unit period of the subscription. Example, Years, Months
                     subscriptionPeriod:
-                      type: integer
+                      type: string
                       description: Length of the subscription. Example 1, 3
               billingPeriod:
                 type: object
@@ -10528,7 +10528,7 @@ components:
                     type: string
                     description: Billing unit period of the subscription. Example, Years, Months
                   billingPeriod:
-                    type: integer
+                    type: string
                     description: Billing period of the subscription. Example 1, 3
               options:
                 type: array
@@ -10546,10 +10546,10 @@ components:
                       type: string
                       description: Vendor’s part number for the product.
                     minUnits:
-                      type: integer
+                      type: string
                       description: Minimum units must be purchased.
                     maxUnits:
-                      type: integer
+                      type: string
                       description: Maximum units are available for purchase.
                     dependsOn:
                       type: string
@@ -10807,7 +10807,7 @@ components:
                 type: string
                 description: The manufacturer's part number for the line item.
               quantity:
-                type: string
+                type: integer
                 description: The quantity of the line item.
               unitPrice:
                 type: number

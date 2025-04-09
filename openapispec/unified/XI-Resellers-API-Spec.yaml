@@ -13078,19 +13078,19 @@ components:
               type: string
               description: When a quote has been revised and updated, the quote number remains the same throughout the lifecycle of the quote, however, a Revision number is updated for each revision of the quote.  The revision numbers is associated with the Unique Quote Number.
             ingramQuoteDate:
-              type: date
+              type: string
               description: Date the Quote was initially Created.
             lastModifiedDate:
-              type: date
+              type: string
               description: Date the Quote was last updated or modified.
             ingramQuoteExpiryDate:
               type: string
               description: Date when the Quote Expires.
             specialBidExpirationDate:
-              type: date
+              type: string
               description: If a price discount has been applied to the quote - The date the discount expires and will no longer be applicable.
             status:
-              type: date
+              type: string
               description: This refers to the primary status of the quote.  API responses will return
             customerNeed:
               type: string

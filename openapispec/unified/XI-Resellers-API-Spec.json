@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.0",
     "title": "XI Sdk Resellers",
-    "description": "For resellers seeking to innovate with Ingram Micro's API solutions, automate your eCommerce experience with our array of API's and webhooks to craft a seamless journey for your customers."
+    "description": "For Resellers seeking to innovate with Ingram Micro's API solutions, automate your eCommerce experience with our array of API's and webhooks to craft a seamless journey for your customers."
   },
   "tags": [
     {
@@ -339,8 +339,7 @@
                 "$ref": "#/components/schemas/PriceAndAvailabilityRequest"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -825,14 +824,7 @@
             "description": "ID of the plan",
             "required": false,
             "schema": {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ],
+              "type": "string",
               "example": 471490
             }
           },
@@ -8071,6 +8063,182 @@
         }
       }
     },
+    "/resellers/v6/quotes/create": {
+      "post": {
+        "summary": "Quote Create",
+        "tags": [
+          "Quotes"
+        ],
+        "description": "The quote create endpoint will allow customers to create a quote using the Ingram Micro part number or Vendor Part number.  The customer can also create Configure to Order (CTO) quotes using the Special Bid number (Deal ID).  Upon successfully creating the quote with the product lines, the quote will be activated and placed in a 'Ready To Order' status.<ul><li>For CTO quote creation, we only support Cisco as a vendor at the moment.</li></ul>\n\n Once the quote is created and activated, you will receive an immediate 'confirmation'.  A webhook will be sent with the details of the quote.  In the event, we have an error creating a quote, an error message will be notified via webhook as well. The quote create webhook will send the notifications for all the quotes created via the Xvantage platform, APIs, associates, etc.",
+        "operationId": "quote_Create",
+        "security": [
+          {
+            "application": [
+              "read"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "IM-CustomerNumber",
+            "in": "header",
+            "description": "Your unique Ingram Micro customer number.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 10,
+              "example": "20-222222"
+            }
+          },
+          {
+            "name": "IM-CountryCode",
+            "in": "header",
+            "description": "Two-character ISO country code.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 2,
+              "example": "US"
+            }
+          },
+          {
+            "name": "IM-CorrelationID",
+            "in": "header",
+            "description": "Unique transaction number to identify each transaction across all the systems.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 32,
+              "example": "fbac82ba-cf0a-4bcf-fc03-0c5084"
+            }
+          },
+          {
+            "name": "IM-SenderID",
+            "in": "header",
+            "description": "Unique value used to identify the sender of the transaction. Example: MyCompany",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 32,
+              "example": "MyCompany"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "Quote Create With Deal": {
+                  "value": {
+                    "quoteName": "QuoteTest",
+                    "quoteExpiryDate": "04/30/2024",
+                    "customerNeed": "notes",
+                    "firstName": "User1",
+                    "lastName": "User name",
+                    "pricingType": "",
+                    "sendQuoteCopy": "",
+                    "customercontact": "kalimuthu.im@com",
+                    "dealId": "7499800",
+                    "endUserInfo": {
+                      "companyName": "Ingram Micro",
+                      "contact": "Test contact",
+                      "addressLine1": "Ratibor street",
+                      "addressLine2": "",
+                      "addressLine3": "",
+                      "city": "Ratibor",
+                      "state": "MI",
+                      "postalCode": "48502",
+                      "countryCode": "US",
+                      "email": "testcontact6@im.com",
+                      "phoneNumber": "64328753"
+                    },
+                    "products": []
+                  }
+                },
+                "Standard Quote Create(Without Deal)": {
+                  "value": {
+                    "quoteName": "QuoteCreateNoDeal",
+                    "quoteExpiryDate": "04/30/2024",
+                    "customerNeed": "Customers special requirements notes",
+                    "firstName": "Jane",
+                    "lastName": "Doe",
+                    "endUserInfo": {
+                      "companyName": "Example Inc",
+                      "contact": "John Doe",
+                      "addressLine1": "100 Marine Ln",
+                      "addressLine2": "",
+                      "city": "Flint",
+                      "state": "MI",
+                      "postalCode": "48502",
+                      "countryCode": "US",
+                      "phoneNumber": "8767567560",
+                      "email": "jdoe@example.com"
+                    },
+                    "pricingType": "y",
+                    "sendQuoteCopy": "y",
+                    "customercontact": "jane.doe@im.com",
+                    "products": [
+                      {
+                        "ingramPartNumber": "03WK88",
+                        "quantity": "2"
+                      }
+                    ]
+                  }
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/quote_create_request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/quote_create_response"
+                },
+                "examples": {
+                  "200": {
+                    "description": "",
+                    "value": {
+                      "quoteNumber": "QUO-2081293-G9X1K5",
+                      "message": "Thank you for submitting the quote request, it’s currently under process.We will notify you of the status via the Quote Status webhook."
+                    }
+                  },
+                  "Quote Create With Deal": {
+                    "value": {
+                      "quoteNumber": "QUO-19104665-K1B3Y6",
+                      "message": "Thank you for submitting the quote request, it’s currently under process.We will notify you of the status via the Quote Status webhook."
+                    }
+                  },
+                  "Standard Quote Create(Without Deal)": {
+                    "value": {
+                      "quoteNumber": "QUO-19108656-W8Q2M0",
+                      "message": "Thank you for submitting the quote request, it’s currently under process.We will notify you of the status via the Quote Status webhook."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Webhook Success Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/quote_create_webhook_response"
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
     "/resellers/v6/q2o/validatequote": {
       "get": {
         "summary": "Validate Quote",
@@ -11850,6 +12018,7 @@
         "properties": {
           "quoteNumber": {
             "type": "string",
+            "nullable": true,
             "description": "A unique identifier generated by Ingram Micro's CRM specific to each quote.",
             "maxLength": 35
           },
@@ -11874,65 +12043,80 @@
           },
           "specialBidNumber": {
             "type": "string",
+            "nullable": true,
             "description": "The bid number is provided to the reseller by the vendor for special pricing and discounts. Line-level bid numbers take precedence over header-level bid numbers."
           },
           "acceptBackOrder": {
             "type": "boolean",
+            "nullable": true,
             "description": "ENUM ['true','false'] - accept order if this item is backordered. This field along with shipComplete field decides the value of backorderflag. The value of this field is ignored when shipComplete field is present."
           },
           "vendAuthNumber": {
             "type": "string",
+            "nullable": true,
             "description": "Authorization number provided by vendor to Ingram's reseller. Orders will be placed on hold without this value, vendor specific mandatory field - please reach out Ingram Sales team for list of vendor for whom this is mandatory."
           },
           "resellerInfo": {
             "type": "object",
+            "nullable": true,
             "description": "The address and contact information provided by the reseller.",
             "properties": {
               "resellerId": {
                 "type": "string",
+                "nullable": true,
                 "description": "The reseller's Id."
               },
               "companyName": {
                 "type": "string",
+                "nullable": true,
                 "maxLength": 40,
                 "description": "The reseller's company name."
               },
               "contact": {
                 "type": "string",
+                "nullable": true,
                 "description": "The reseller's contact name."
               },
               "addressLine1": {
                 "type": "string",
+                "nullable": true,
                 "description": "The reseller's address line 1"
               },
               "addressLine2": {
                 "type": "string",
+                "nullable": true,
                 "description": "The reseller's address line 2."
               },
               "city": {
                 "type": "string",
+                "nullable": true,
                 "description": "The reseller's city."
               },
               "state": {
                 "type": "string",
+                "nullable": true,
                 "description": "The reseller's state."
               },
               "postalCode": {
                 "type": "string",
+                "nullable": true,
                 "maxLength": 10,
                 "description": "The reseller's zip or postal code."
               },
               "countryCode": {
                 "type": "string",
+                "nullable": true,
                 "maxLength": 10,
                 "description": "The reseller's two-character ISO country code."
               },
               "phoneNumber": {
-                "type": "integer",
+                "type": "string",
+                "nullable": true,
                 "description": "The reseller's phone number."
               },
               "email": {
                 "type": "string",
+                "nullable": true,
                 "description": "The reseller's email address."
               }
             }
@@ -11943,59 +12127,71 @@
             "properties": {
               "endUserId": {
                 "type": "string",
+                "nullable": true,
                 "description": "ID for the end user/customer in Ingram Micro's system."
               },
               "contact": {
                 "type": "string",
+                "nullable": true,
                 "description": "The contact name for the end user/customer."
               },
               "companyName": {
                 "type": "string",
+                "nullable": true,
                 "description": "The company name for the end user/customer. Required for Impulse countries.",
                 "maxLength": 40
               },
               "addressLine1": {
                 "type": "string",
+                "nullable": true,
                 "description": "The end user/customer's street address and building or house number. Required for Impulse countries.",
                 "maxLength": 70
               },
               "addressLine2": {
                 "type": "string",
+                "nullable": true,
                 "description": "The end user/customer's apartment number.",
                 "maxLength": 70
               },
               "city": {
                 "type": "string",
+                "nullable": true,
                 "description": "The end user/customer's city. Required for Impulse countries.",
                 "maxLength": 25
               },
               "state": {
                 "type": "string",
+                "nullable": true,
                 "description": "The end user/customer's state. Required for Impulse countries but optional for EMEA countries.",
                 "maxLength": 3
               },
               "postalCode": {
                 "type": "string",
+                "nullable": true,
                 "description": "The end user/customer's zip or postal code. Required for Impulse countries.",
                 "maxLength": 10
               },
               "countryCode": {
                 "type": "string",
+                "nullable": true,
                 "description": "The end user/customer's two-character ISO country code.",
                 "maxLength": 10
               },
               "phoneNumber": {
-                "type": "integer",
+                "type": "string",
+                "nullable": true,
                 "description": "The end user/customer's phone number."
               },
               "email": {
                 "type": "string",
+                "nullable": true,
                 "description": "The end user/customer's email."
               }
             }
           },
           "shipToInfo": {
             "type": "object",
+            "nullable": true,
             "description": "The shipping information provided by the reseller.",
             "properties": {
               "addressId": {
@@ -12005,103 +12201,125 @@
               },
               "contact": {
                 "type": "string",
+                "nullable": true,
                 "description": "The company contact provided by the reseller.",
                 "maxLength": 70
               },
               "companyName": {
                 "type": "string",
+                "nullable": true,
                 "description": "The reseller's company name or the End-User's Name",
                 "maxLength": 40
               },
               "addressLine1": {
                 "type": "string",
+                "nullable": true,
                 "description": "The street address and building or house number the order will be shipped to.",
                 "maxLength": 70
               },
               "addressLine2": {
                 "type": "string",
+                "nullable": true,
                 "description": "The apartment number the order will be shipped to.",
                 "maxLength": 70
               },
               "city": {
                 "type": "string",
+                "nullable": true,
                 "description": "The city the order will be shipped to.",
                 "maxLength": 25
               },
               "state": {
                 "type": "string",
+                "nullable": true,
                 "description": "The state the order will be shipped to.",
                 "maxLength": 3
               },
               "postalCode": {
                 "type": "string",
+                "nullable": true,
                 "description": "End User Name"
               },
               "countryCode": {
                 "type": "string",
+                "nullable": true,
                 "description": "The zip or postal code the order will be shipped to.",
                 "maxLength": 10
               },
               "email": {
                 "type": "string",
+                "nullable": true,
                 "description": "The company contact email address."
               },
               "shippingNotes": {
                 "type": "string",
+                "nullable": true,
                 "description": ""
               },
               "phoneNumber": {
                 "type": "string",
+                "nullable": true,
                 "description": "The company contact phone number."
               }
             }
           },
           "shipmentDetails": {
             "type": "object",
+            "nullable": true,
             "description": "Shipping details for the order provided by the customer.",
             "properties": {
               "carrierCode": {
                 "type": "string",
+                "nullable": true,
                 "description": "The code for the shipping carrier for the line item.",
                 "maxLength": 10
               },
               "requestedDeliveryDate": {
                 "type": "string",
+                "nullable": true,
                 "description": "The reseller-requested delivery date in UTC format. Delivery date is not guaranteed. Must be a future date.",
                 "maxLength": 8
               },
               "shipComplete": {
                 "type": "string",
+                "nullable": true,
                 "description": "Specifies whether the shipment will be shipped only when all products are fulfilled. The value of this field along with acceptBackOrder field decides the value of backorderflag. If this field is set, acceptBackOrder field is ignored. Possible values for this field are true, C, P, E.With value as true or C, backorderflag will be set as C.With value as P, or E, backorderflag will be set as P or E respectively.C = Ship complete at distribution level.P = ship complete at line level.E = ship complete across all distributions.",
                 "maxLength": 1
               },
               "shippingInstructions": {
                 "type": "string",
+                "nullable": true,
                 "description": "Any special shipping instructions for the order.",
                 "maxLength": 132
               },
               "freightAccountNumber": {
                 "type": "string",
+                "nullable": true,
                 "description": "The reseller 's shipping account number with carrier. Used to bill the shipping carrier directly from the reseller's account with the carrier."
               },
               "signatureRequired": {
                 "type": "boolean",
+                "nullable": true,
                 "description": "Specifies whether a signature is required for delivery. Default is False."
               }
             }
           },
           "additionalAttributes": {
             "type": "array",
+            "nullable": true,
             "description": "Shipment-level additional attributes.",
             "items": {
               "type": "object",
+              "nullable": true,
               "properties": {
                 "attributeName": {
                   "type": "string",
+                  "nullable": true,
                   "description": "**allowPartialOrder:** Allow orders with failed lines. \n\n\n**DpasRating:** DX rating by Department of Defense is the highest rating by the highest offices and meant to be top priority. DO any other gov offices at the federal level to priotize. \n\n **DpasProgramId:** Identifies the actual agency that signed off on the DPAS priority. \n\n **allowDuplicateCustomerOrderNumber:** Allow orders with duplicate customer PO numbers. Enables resellers to have the same PO number for multiple orders. \n \n **euDepId:** DEP ID would be the 'End User DEP/ABM Organization ID' up to 32 characters and is assigned by Apple.\n \n **depOrderNbr:** depordernbr is 'End User PO to reseller' Can appear in message lines or dedicated end user po#.\n \n **govtProgramType:** Program type, “PA” for government orders, “ED” for education order.\n \n **govtEndUserType:** Type of end user of the program. F = Federal, S = State, E = Local, K = K-12 school, and H = Higher Education\n \n **govtSolicitationNumber:** Education order’s contract number\n \n **govtPublicPrivateCode:** Determines TAX / NO TAX.   'P' PUBLIC SECTOR,   'R' PRIVATE SECTOR.  Value needs only to be provided for EDUCATION order.\n \n **govtEndUserData:** Name of the End user of the program. For example, STATE OF OHIO, CHICAGO SCHOOLDISTRICT etc.\n \n **govtEndUserPostalCode:** 9 CHAR FIELD / Zip Code of the End user of the order.\n \n **dynamicMessageLine1:** Custom Dynamic Message line 1.\n \n **allowOrderOnCustomerHold:** Boolean value flag which allows a customer to create an order with the hold status."
                 },
                 "attributeValue": {
                   "type": "string",
+                  "nullable": true,
                   "description": "The attribute field data."
                 }
               }
@@ -12109,16 +12327,20 @@
           },
           "vmfAdditionalAttributes": {
             "type": "array",
+            "nullable": true,
             "description": "The object containing the list of fields required at a header level by the vendor.",
             "items": {
               "type": "object",
+              "nullable": true,
               "properties": {
                 "attributeName": {
                   "type": "string",
+                  "nullable": true,
                   "description": "The name of the header level field."
                 },
                 "attributeValue": {
                   "type": "string",
+                  "nullable": true,
                   "description": "The value of the header level field."
                 }
               }
@@ -12136,11 +12358,13 @@
                 },
                 "ingramPartNumber": {
                   "type": "string",
+                  "nullable": true,
                   "description": "The unique IngramMicro part number.",
                   "maxLength": 18
                 },
                 "vendorPartNumber": {
                   "type": "string",
+                  "nullable": true,
                   "description": "The vendor's part number for the line item."
                 },
                 "quantity": {
@@ -12150,24 +12374,29 @@
                 "unitPrice": {
                   "type": "number",
                   "format": "decimal",
+                  "nullable": true,
                   "description": "The reseller-requested unit price for the line item. The unit price is not guaranteed."
                 },
                 "specialBidNumber": {
                   "type": "string",
+                  "nullable": true,
                   "description": "The line-level bid number provided to the reseller by the vendor for special pricing and discounts. Used to track the bid number in the case of split orders or where different line items have different bid numbers. Line-level bid number take precedence over header-level bid numbers.",
                   "maxLength": 36
                 },
                 "endUserPrice": {
                   "type": "number",
                   "format": "decimal",
+                  "nullable": true,
                   "description": "The end-user price. Required for Export Orders."
                 },
                 "notes": {
                   "type": "string",
+                  "nullable": true,
                   "description": "The attribute field data."
                 },
                 "endUserInfo": {
                   "type": "array",
+                  "nullable": true,
                   "items": {
                     "type": "object",
                     "properties": {
@@ -12237,54 +12466,6 @@
                       "attributeValue": {
                         "type": "string",
                         "description": "TLine-level additional attributes."
-                      }
-                    }
-                  }
-                },
-                "warrantyInfo": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "hardwareLineLink": {
-                        "type": "string",
-                        "description": "Customer line number of the warranty product in this request for linkage, either hardwareLineLink or warrantyLineLink can be used in a line"
-                      },
-                      "warrantyLineLink": {
-                        "type": "string",
-                        "description": "Customer line number of the hardware product in this request for linkage, either hardwareLineLink or warrantyLineLink can be used in a line."
-                      },
-                      "directLineLink": {
-                        "type": "string",
-                        "description": "Unique value to link hardware and warranty lines. Should be used only when products are purchased from both Ingram and/or vendor but the warranty is purchased through Ingram for them.",
-                        "maxLength": 25
-                      },
-                      "serialInfo": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "description": "Serial information of the hardware to be associated with the warranty, applicable on post sale orders.",
-                          "properties": {
-                            "dateOfPurchase": {
-                              "type": "string",
-                              "description": "Date of purchase of the hardware.",
-                              "maxLength": 8
-                            },
-                            "shipDate": {
-                              "type": "string",
-                              "description": "Vendor specific mandatory field, date of hardware/product shipment from vendor.",
-                              "maxLength": 8
-                            },
-                            "primarySerialNumber": {
-                              "type": "string",
-                              "description": "Serial number of the hardware/product."
-                            },
-                            "secondarySerialNumber": {
-                              "type": "string",
-                              "description": "Serial number of accessory associated with the above hardware/product."
-                            }
-                          }
-                        }
                       }
                     }
                   }
@@ -13360,34 +13541,33 @@
         "properties": {
           "showAvailableDiscounts": {
             "type": "boolean",
+            "nullable": true,
             "description": "Boolean value that will display Discount details in the response when true."
           },
           "showReserveInventoryDetails": {
             "type": "boolean",
+            "nullable": true,
             "description": "Boolean value that will display reserve inventory details in the response when true."
           },
           "specialBidNumber": {
             "type": "string",
+            "nullable": true,
             "description": "Pre-approved special pricing/bid number provided to the reseller by the vendor for special pricing and discounts. Used to track the bid number where different line items have different bid numbers."
           },
           "availabilityByWarehouse": {
             "type": "array",
+            "nullable": true,
             "items": {
               "type": "object",
               "properties": {
                 "availabilityByWarehouseId": {
-                  "oneOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "integer"
-                    }
-                  ],
+                  "type": "string",
+                  "nullable": true,
                   "description": "Plant/warehouse Id of a particular location in order to get just the inventory of that location."
                 },
                 "availabilityForAllLocation": {
                   "type": "boolean",
+                  "nullable": true,
                   "description": "Pass boolean value as input, if true the response will contain warehouse location details, if false the response will not hold warehouse location details. By default value is true."
                 }
               }
@@ -13419,40 +13599,30 @@
                   "description": "The UPC code for the product. Consists of 12 numeric digits that are uniquely assigned to each trade item."
                 },
                 "quantityRequested": {
-                  "oneOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "integer"
-                    }
-                  ],
+                  "type": "string",
                   "nullable": true,
                   "description": "Number of quantity of the Product."
                 },
                 "planID": {
-                  "oneOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "integer"
-                    }
-                  ],
+                  "type": "string",
                   "nullable": true,
                   "description": "Id of the plan"
                 },
                 "additionalAttributes": {
                   "type": "array",
+                  "nullable": true,
                   "items": {
                     "type": "object",
+                    "nullable": true,
                     "properties": {
                       "attributeName": {
                         "type": "string",
+                        "nullable": true,
                         "description": "governmentprogramcode: Special Discount details will be provided based on the governmentprogramcode if available.\nshiptostatebrazil: Attribute Specific to Brazil.\nshipfrombranchnumber: If provided, displays only the availability of the specified branch number."
                       },
                       "attributeValue": {
                         "type": "string",
+                        "nullable": true,
                         "description": "key value pair -key value."
                       }
                     }
@@ -13463,15 +13633,19 @@
           },
           "additionalAttributes": {
             "type": "array",
+            "nullable": true,
             "items": {
               "type": "object",
+              "nullable": true,
               "properties": {
                 "attributeName": {
                   "type": "string",
+                  "nullable": true,
                   "description": "key value pair -key Name."
                 },
                 "attributeValue": {
                   "type": "string",
+                  "nullable": true,
                   "description": "key value pair -key value."
                 }
               }
@@ -13489,14 +13663,17 @@
             },
             "productStatusCode": {
               "type": "string",
+              "nullable": true,
               "description": "Codes signifying whether the sku is active or not."
             },
             "productStatusMessage": {
               "type": "string",
+              "nullable": true,
               "description": "Message returned saying whether sku is active."
             },
             "ingramPartNumber": {
               "type": "string",
+              "nullable": true,
               "description": "Ingram Micro unique part number for the product."
             },
             "vendorPartNumber": {
@@ -13516,6 +13693,7 @@
             },
             "upc": {
               "type": "string",
+              "nullable": true,
               "description": "The UPC code for the product. Consists of 12 numeric digits that are uniquely assigned to each trade item."
             },
             "partNumberType": {
@@ -13598,6 +13776,7 @@
                 },
                 "totalAvailability": {
                   "type": "integer",
+                  "nullable": true,
                   "description": "The total amount of available products"
                 },
                 "availabilityByWarehouse": {
@@ -13608,26 +13787,32 @@
                     "properties": {
                       "location": {
                         "type": "string",
+                        "nullable": true,
                         "description": "Indicates where (location) the product is available."
                       },
                       "warehouseId": {
                         "type": "string",
+                        "nullable": true,
                         "description": "Indicates where (Ingram Warehouse Id) the product is available."
                       },
                       "quantityAvailable": {
                         "type": "integer",
+                        "nullable": true,
                         "description": "The quantity of the product available in a given warehouse."
                       },
                       "quantityBackordered": {
                         "type": "integer",
+                        "nullable": true,
                         "description": "The quantity of a product backordered in a given warehouse."
                       },
                       "quantityBackorderedEta": {
                         "type": "string",
+                        "nullable": true,
                         "description": "The estimated time of arrival of a product that has been backordered in a given warehouse."
                       },
                       "quantityOnOrder": {
                         "type": "integer",
+                        "nullable": true,
                         "description": "The quantity of the product on order."
                       },
                       "backOrderInfo": {
@@ -13638,10 +13823,12 @@
                           "properties": {
                             "quantity": {
                               "type": "integer",
+                              "nullable": true,
                               "description": "Quantity backordered."
                             },
                             "etaDate": {
                               "type": "string",
+                              "nullable": true,
                               "description": "Expected availability date.",
                               "format": "Date"
                             }
@@ -13660,19 +13847,23 @@
                 "properties": {
                   "quantityReserved": {
                     "type": "integer",
+                    "nullable": true,
                     "description": "The quantity of the product reserved for the customer."
                   },
                   "quantityAvailable": {
                     "type": "integer",
+                    "nullable": true,
                     "description": "The availability of the product reserved."
                   },
                   "effectivedate": {
                     "type": "string",
+                    "nullable": true,
                     "description": "The reservation date for the product in UTC format.",
                     "format": "Date"
                   },
                   "expirydate": {
                     "type": "string",
+                    "nullable": true,
                     "description": "The expiration date for the reservation of the product in UTC format.",
                     "format": "Date"
                   }
@@ -13690,24 +13881,29 @@
                 "retailPrice": {
                   "type": "number",
                   "format": "decimal",
+                  "nullable": true,
                   "description": "The retail price of the product."
                 },
                 "mapPrice": {
                   "type": "number",
                   "format": "decimal",
+                  "nullable": true,
                   "description": "Minimum Advertised Price (MAP). If required by the vendor, resellers can not sell below MAP price."
                 },
                 "customerPrice": {
                   "type": "number",
                   "format": "decimal",
+                  "nullable": true,
                   "description": "The price customer pays after all special pricing and discounts have been applied."
                 },
                 "specialBidPricingAvailable": {
                   "type": "boolean",
+                  "nullable": true,
                   "description": "Boolean values specifies whether special Bid discounts are available for the product."
                 },
                 "webDiscountsAvailable": {
                   "type": "boolean",
+                  "nullable": true,
                   "description": "Boolean values specifies whether web Discounts are available for the product."
                 }
               }
@@ -13725,43 +13921,52 @@
                       "properties": {
                         "discountType": {
                           "type": "string",
+                          "nullable": true,
                           "description": "The type of discount being given to the customer.",
                           "example": "Special Bid, Promo Discount"
                         },
                         "specialBidNumer": {
                           "type": "string",
+                          "nullable": true,
                           "description": "Pre-approved special pricing/bid number provided to the reseller by the vendor for special pricing and discounts. Used to track the bid number where different line items have different bid numbers. Line-level bid numbers take precedence over header-level bid numbers."
                         },
                         "specialPricingDiscount": {
                           "type": "number",
+                          "nullable": true,
                           "format": "decimal",
                           "description": "Special pricing discount amount given to the customer."
                         },
                         "specialPricingEffectiveDate": {
                           "type": "string",
+                          "nullable": true,
                           "format": "date",
                           "description": "The effective date of the special pricing available to the customer."
                         },
                         "specialPricingExpirationDate": {
                           "type": "string",
+                          "nullable": true,
                           "format": "date",
                           "description": "The expiration date of the special pricing available to the customer."
                         },
                         "specialPricingAvailableQuantity": {
                           "type": "integer",
+                          "nullable": true,
                           "description": "The available quantity of products with discounts."
                         },
                         "specialPricingMinQuantity": {
                           "type": "integer",
+                          "nullable": true,
                           "description": "The minimum quantity of products that have to be purchased to ensure the discount is applied."
                         },
                         "governmentDiscountType": {
                           "type": "string",
+                          "nullable": true,
                           "description": "Type of Government Discount. *Currently, this discount is only available in the USA."
                         },
                         "governmentDiscountedCustomerPrice": {
                           "type": "number",
                           "format": "decimal",
+                          "nullable": true,
                           "description": "Government Discounted Customer Price. *Currently, this discount is only available in the USA."
                         }
                       }
@@ -13775,24 +13980,29 @@
                       "properties": {
                         "conditionType": {
                           "type": "string",
+                          "nullable": true,
                           "description": "Indicates when the discount is applied after ordering the product.",
                           "example": "Total fee"
                         },
                         "currencyCode": {
                           "type": "string",
+                          "nullable": true,
                           "description": "The country-specific three digit ISO 4217 currency code for the order."
                         },
                         "currencyType": {
                           "type": "string",
+                          "nullable": true,
                           "description": "Type of currency."
                         },
                         "quantity": {
                           "type": "integer",
+                          "nullable": true,
                           "description": "The total discounted quantity of the product."
                         },
                         "amount": {
                           "type": "number",
                           "format": "decimal",
+                          "nullable": true,
                           "description": "The total price of all the discounts applied."
                         }
                       }
@@ -13815,23 +14025,28 @@
                 "properties": {
                   "conditionType": {
                     "type": "string",
+                    "nullable": true,
                     "description": "Condition Type of the service fees."
                   },
                   "description": {
                     "type": "string",
+                    "nullable": true,
                     "description": "Description of the service fees."
                   },
                   "amount": {
                     "type": "number",
                     "format": "decimal",
+                    "nullable": true,
                     "description": "Amount of the service fees."
                   },
                   "endDate": {
                     "type": "string",
+                    "nullable": true,
                     "description": "End Date of the service fees."
                   },
                   "currencyCode": {
                     "type": "string",
+                    "nullable": true,
                     "description": "Currency Code of the service fees."
                   }
                 }
@@ -13843,18 +14058,26 @@
                 "type": "object",
                 "properties": {
                   "index": {
-                    "type": "number"
+                    "type": "number",
+                    "nullable": true
                   },
                   "planId": {
                     "type": "string",
+                    "nullable": true,
                     "description": "Id of the plan."
+                  },
+                  "planUId": {
+                    "type": "string",
+                    "nullable": true
                   },
                   "planName": {
                     "type": "string",
+                    "nullable": true,
                     "description": "Name of the plan."
                   },
                   "planDescription": {
                     "type": "string",
+                    "nullable": true,
                     "description": "The description of the plan."
                   },
                   "groups": {
@@ -13864,28 +14087,29 @@
                       "properties": {
                         "groupName": {
                           "type": "string",
+                          "nullable": true,
                           "description": "The name of the group"
                         },
                         "groupDescription": {
                           "type": "string",
+                          "nullable": true,
                           "description": "The description of the group."
                         }
                       }
                     }
                   },
                   "billingPeriod": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "billingPeriodUnit": {
-                          "type": "string",
-                          "description": "The unit of the billing period."
-                        },
-                        "billingPeriod": {
-                          "type": "number",
-                          "description": "The billing period value."
-                        }
+                    "type": "object",
+                    "properties": {
+                      "billingPeriodUnit": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "The unit of the billing period."
+                      },
+                      "billingPeriod": {
+                        "type": "number",
+                        "nullable": true,
+                        "description": "The billing period value."
                       }
                     }
                   },
@@ -13896,10 +14120,12 @@
                       "properties": {
                         "subscriptionPeriodUnit": {
                           "type": "string",
+                          "nullable": true,
                           "description": "The unit of the subscription period."
                         },
                         "subscriptionPeriod": {
                           "type": "string",
+                          "nullable": true,
                           "description": "The subscription period value."
                         }
                       }
@@ -13911,36 +14137,44 @@
                       "type": "object",
                       "properties": {
                         "resourceId": {
-                          "type": "string"
+                          "type": "string",
+                          "nullable": true
                         },
                         "resourceUId": {
                           "type": "string",
+                          "nullable": true,
                           "description": "The resource id of the subscription product."
                         },
                         "resourceName": {
                           "type": "string",
+                          "nullable": true,
                           "description": "The name of the resource of the subscription product."
                         },
                         "vendorPartNumber": {
                           "type": "string",
+                          "nullable": true,
                           "description": "Vendor’s part number for the subscription product."
                         },
                         "minUnits": {
                           "type": "number",
                           "format": "decimal",
+                          "nullable": true,
                           "description": "Minimum unit needs to purchased."
                         },
                         "maxUnits": {
                           "type": "number",
                           "format": "decimal",
+                          "nullable": true,
                           "description": "Maximum unit available for a purchase."
                         },
                         "recurringpricemodel": {
                           "type": "string",
+                          "nullable": true,
                           "description": "Recurring price model"
                         },
                         "unitOfMeasure": {
                           "type": "string",
+                          "nullable": true,
                           "description": "Unit of mesaure for a subscription product."
                         },
                         "resourcePricing": {
@@ -13950,33 +14184,40 @@
                             "properties": {
                               "name": {
                                 "type": "string",
+                                "nullable": true,
                                 "description": "Name of the type of pricing."
                               },
                               "quantity": {
                                 "type": "string",
+                                "nullable": true,
                                 "description": "Quantity of the line item."
                               },
                               "msrp": {
                                 "type": "number",
                                 "format": "decimal",
+                                "nullable": true,
                                 "description": "Manufacturer Suggested Retail Price."
                               },
                               "unitPrice": {
                                 "type": "number",
                                 "format": "decimal",
+                                "nullable": true,
                                 "description": "The unit price of the line item."
                               },
                               "margin": {
                                 "type": "number",
                                 "format": "decimal",
+                                "nullable": true,
                                 "description": "Reseller’s margin percentage"
                               },
                               "currencyCode": {
                                 "type": "string",
+                                "nullable": true,
                                 "description": "The 3-digit ISO currency code."
                               },
                               "subscriptionPeriod": {
                                 "type": "string",
+                                "nullable": true,
                                 "description": "The subscription period of the line item."
                               }
                             }
@@ -13994,25 +14235,30 @@
                                   "properties": {
                                     "currencyCode": {
                                       "type": "string",
+                                      "nullable": true,
                                       "description": "The 3-digit ISO currency code."
                                     },
                                     "quantity": {
-                                      "type": "integer",
+                                      "type": "string",
+                                      "nullable": true,
                                       "description": "Quantity of the line item."
                                     },
                                     "msrp": {
                                       "type": "number",
                                       "format": "decimal",
+                                      "nullable": true,
                                       "description": "Manufacturer Suggested Retail Price."
                                     },
                                     "unitPrice": {
                                       "type": "number",
                                       "format": "decimal",
+                                      "nullable": true,
                                       "description": "The unit price of the line item."
                                     },
                                     "margin": {
                                       "type": "number",
                                       "format": "decimal",
+                                      "nullable": true,
                                       "description": "Reseller’s margin percentage"
                                     }
                                   }
@@ -14025,27 +14271,33 @@
                                   "properties": {
                                     "currencyCode": {
                                       "type": "string",
+                                      "nullable": true,
                                       "description": "The 3-digit ISO currency code."
                                     },
                                     "discount": {
                                       "type": "number",
                                       "format": "decimal",
+                                      "nullable": true,
                                       "description": "The discount for the line item."
                                     },
                                     "discountType": {
                                       "type": "string",
+                                      "nullable": true,
                                       "description": "The type of the discount"
                                     },
                                     "discountQtyLimit": {
                                       "type": "integer",
+                                      "nullable": true,
                                       "description": "The quantity available at the discounted price"
                                     },
                                     "discountExpiryDate": {
                                       "type": "string",
+                                      "nullable": true,
                                       "description": "The date when discount expires."
                                     },
                                     "vendorProgramName": {
                                       "type": "string",
+                                      "nullable": true,
                                       "description": "The vendors discount program name."
                                     }
                                   }
@@ -14062,18 +14314,22 @@
                               "price": {
                                 "type": "number",
                                 "format": "decimal",
+                                "nullable": true,
                                 "description": "Fee price of the line item."
                               },
                               "type": {
                                 "type": "string",
+                                "nullable": true,
                                 "description": "The type of the fees."
                               },
                               "msrp": {
                                 "type": "number",
-                                "format": "decimal"
+                                "format": "decimal",
+                                "nullable": true
                               },
                               "code": {
-                                "type": "string"
+                                "type": "string",
+                                "nullable": true
                               }
                             }
                           }
@@ -14298,50 +14554,62 @@
         "properties": {
           "ingramPartNumber": {
             "type": "string",
+            "nullable": true,
             "description": "Ingram Micro unique part number for the product."
           },
           "vendorPartNumber": {
             "type": "string",
+            "nullable": true,
             "description": "Vendor’s part number for the product."
           },
           "productAuthorized": {
-            "type": "boolean",
+            "type": "string",
+            "nullable": true,
             "description": "Boolean that indicates whether a product is authorized."
           },
           "description": {
             "type": "string",
+            "nullable": true,
             "description": "The description given for the product."
           },
           "upc": {
             "type": "string",
+            "nullable": true,
             "description": "The UPC code for the product. Consists of 12 numeric digits that are uniquely assigned to each trade item."
           },
           "productCategory": {
             "type": "string",
+            "nullable": true,
             "description": "The category of the product."
           },
           "productSubcategory": {
             "type": "string",
+            "nullable": true,
             "description": "The sub-category of the product."
           },
           "vendorName": {
             "type": "string",
+            "nullable": true,
             "description": "Vendor name for the order."
           },
           "vendorNumber": {
             "type": "string",
+            "nullable": true,
             "description": "Vendor number that identifies the product."
           },
           "productStatusCode": {
             "type": "string",
+            "nullable": true,
             "description": "Status code of the product."
           },
           "productClass": {
             "type": "string",
+            "nullable": true,
             "description": "Indicates whether the product is directly shipped from the vendor’s warehouse or if the product ships from Ingram Micro’s warehouse. Class Codes are Ingram classifications on how skus are stocked A = Product that is stocked usually in all IM warehouses and replenished on a regular basis. B = Product that is stocked in limited IM warehouses and replenished on a regular basis C = Product that is stocked in fewer IM warehouses and replenished on a regular basis. D = Product that Ingram Micro has elected to discontinue. E = Product that will be phased out later, according to the vendor. You may not want to replenish this product, but instead sell down what is in stock. F = Product that we carry for a specific customer or supplier under a contractual agreement. N = New Sku. Classification before first receipt O = Discontinued product to be liquidated S= Order for Specialized Demand (Order to backorder) X= direct ship from Vendor V = product that vendor has elected to discontinue."
           },
           "customerPartNumber": {
             "type": "string",
+            "nullable": true,
             "description": "Reseller / end-user’s part number for the product."
           },
           "indicators": {
@@ -14611,7 +14879,7 @@
                         "description": "Unit period of the subscription. Example, Years, Months"
                       },
                       "subscriptionPeriod": {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Length of the subscription. Example 1, 3"
                       }
                     }
@@ -14626,7 +14894,7 @@
                       "description": "Billing unit period of the subscription. Example, Years, Months"
                     },
                     "billingPeriod": {
-                      "type": "integer",
+                      "type": "string",
                       "description": "Billing period of the subscription. Example 1, 3"
                     }
                   }
@@ -14650,11 +14918,11 @@
                         "description": "Vendor’s part number for the product."
                       },
                       "minUnits": {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Minimum units must be purchased."
                       },
                       "maxUnits": {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Maximum units are available for purchase."
                       },
                       "dependsOn": {
@@ -15018,7 +15286,7 @@
                   "description": "The manufacturer's part number for the line item."
                 },
                 "quantity": {
-                  "type": "string",
+                  "type": "integer",
                   "description": "The quantity of the line item."
                 },
                 "unitPrice": {
@@ -16556,6 +16824,7 @@
           "extendedMsrpTotal": {
             "type": "number",
             "format": "decimal",
+            "nullable": true,
             "description": "Total extended MSRP for all products included in the quote"
           },
           "quantityTotal": {
@@ -17764,6 +18033,431 @@
           }
         },
         "additionalProperties": false
+      },
+      "quote_create_request": {
+        "type": "object",
+        "properties": {
+          "quoteName": {
+            "type": "string",
+            "description": "Quote Name given to quote by sales team or system generated. Generally used as a reference to identify the quote."
+          },
+          "firstname": {
+            "type": "string",
+            "description": "Logged in Users firstname"
+          },
+          "lastname": {
+            "type": "string",
+            "description": "Logged in Users Lastname"
+          },
+          "CustomerContact": {
+            "type": "string",
+            "description": "Logged in Users email address contact.",
+            "maxLength": 64,
+            "example": "MyCompany",
+            "required": true
+          },
+          "quoteExpiryDate": {
+            "type": "string",
+            "description": "The date on which a quote will expire."
+          },
+          "customerNeed": {
+            "type": "string",
+            "description": "Any special need from the customer."
+          },
+          "endUserInfo": {
+            "type": "object",
+            "properties": {
+              "companyName": {
+                "type": "string",
+                "description": "Name of the company associated with the quote."
+              },
+              "contact": {
+                "type": "string",
+                "description": "Contact name of end user associated with the quote."
+              },
+              "addressLine1": {
+                "type": "string",
+                "description": "Address line 1 for end user associated with the quote"
+              },
+              "addressLine2": {
+                "type": "string",
+                "description": "Address line 2 for end user associated with the quote"
+              },
+              "city": {
+                "type": "string",
+                "description": "City for end user associated with the quote"
+              },
+              "state": {
+                "type": "string",
+                "description": "Two letter state abbreviation for end user associated with the quote."
+              },
+              "postalCode": {
+                "type": "string",
+                "description": "Zip code of end user associated with the quote."
+              },
+              "countryCode": {
+                "type": "string",
+                "description": "Two letter Country abbreviation for end user associated with the quote."
+              },
+              "email": {
+                "type": "string",
+                "description": "Email of end-user the quote associated with the quote."
+              },
+              "phoneNumber": {
+                "type": "string",
+                "description": "Phone number of end user associated with the quote."
+              }
+            }
+          },
+          "dealId": {
+            "type": "string",
+            "description": "Price discount identifyer to specify a pricing discount that has been applied to the quote."
+          },
+          "pricingType": {
+            "type": "string",
+            "description": "Pricing type of the quote."
+          },
+          "sendQuoteCopy": {
+            "type": "string",
+            "description": "List of email addressed to whom the quote will be emailed after it's created. (Max 10 email ids)"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "customerLineNumber": {
+                  "type": "string",
+                  "description": "The reseller's line item number for reference in their system."
+                },
+                "ingramPartNumber": {
+                  "type": "string",
+                  "description": "Ingram Micro SKU (stock keeping unit). An identification, usually alphanumeric, of a particular product that allows it to be tracked for inventory purposes"
+                },
+                "vendorPartNumber": {
+                  "type": "string",
+                  "description": "Vendor Part Number"
+                },
+                "quantity": {
+                  "type": "string",
+                  "description": "Quantity of product line item quoted."
+                },
+                "specialBid": {
+                  "type": "string",
+                  "description": "Special bid associated with product line item"
+                },
+                "lineLevelNotes": {
+                  "type": "string",
+                  "description": "Product line-item comments."
+                },
+                "pricingType": {
+                  "type": "string",
+                  "description": "Pricing type of the quote"
+                }
+              }
+            }
+          }
+        }
+      },
+      "quote_create_webhook_response": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "Field for identifying whether it is a reseller or vendor event. For eg, resellers/orders"
+          },
+          "event": {
+            "type": "string",
+            "description": "The event sent in the request. For eg, im::create."
+          },
+          "eventTimeStamp": {
+            "type": "string",
+            "description": "The timestamp at which the event was sent."
+          },
+          "eventId": {
+            "type": "string",
+            "description": "A unique id used as identifier for the sepcific event and used for generating the x-hub signature."
+          },
+          "resource": {
+            "type": "object",
+            "properties": {
+              "eventType": {
+                "type": "string",
+                "description": "The event name sent in the event request."
+              },
+              "quoteName": {
+                "type": "string",
+                "description": "Quote Name given to quote by sales team or system generated. Generally used as a reference to identify the quote."
+              },
+              "quoteNumber": {
+                "type": "string",
+                "description": "Unique identifier generated by Ingram Micros CRM specific to each quote. When applying a filter to the quoteNumber and including a partial quote number in the filter, all quotes containing any information included in the filter can be retrieved as a subset of all available customer quotes."
+              },
+              "revision": {
+                "type": "string",
+                "description": "When a quote has been revised and updated, the quote number remains the same throughout the lifecycle of the quote, however, a Revision number is updated for each revision of the quote.  The revision numbers is associated with the Unique Quote Number."
+              },
+              "ingramQuoteDate": {
+                "type": "date",
+                "description": "Date the Quote was initially Created."
+              },
+              "lastModifiedDate": {
+                "type": "date",
+                "description": "Date the Quote was last updated or modified."
+              },
+              "ingramQuoteExpiryDate": {
+                "type": "string",
+                "description": "Date when the Quote Expires."
+              },
+              "specialBidExpirationDate": {
+                "type": "date",
+                "description": "If a price discount has been applied to the quote - The date the discount expires and will no longer be applicable."
+              },
+              "status": {
+                "type": "date",
+                "description": "This refers to the primary status of the quote.  API responses will return"
+              },
+              "customerNeed": {
+                "type": "string",
+                "description": "Details related to the customer's request for the quote entered by the sales representative or system generated."
+              },
+              "proposedSolution": {
+                "type": "string",
+                "description": "Ingram Micro proposed solution and summary of quote."
+              },
+              "introPreamble": {
+                "type": "string",
+                "description": "Introductory paragraph included in each quote.  Legally required - must be included when presenting the quote details."
+              },
+              "purchaseInstructions": {
+                "type": "string",
+                "description": "Purchase instructions.  Legally required - must be included when presenting the quote details."
+              },
+              "legalTerms": {
+                "type": "string",
+                "description": "Legal terms -  Legally required - must be included when presenting the quote details."
+              },
+              "resellerInfo": {
+                "type": "object",
+                "properties": {
+                  "contact": {
+                    "type": "string",
+                    "description": "Contact Name"
+                  },
+                  "companyName": {
+                    "type": "string",
+                    "description": "Ingram Micro Customer's Account Name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Account Contact Email Address"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "Account Phone Number"
+                  },
+                  "customerNumber": {
+                    "type": "string",
+                    "description": "Reseller account number"
+                  }
+                }
+              },
+              "endUserInfo": {
+                "type": "object",
+                "properties": {
+                  "contact": {
+                    "type": "string",
+                    "description": "End User Name"
+                  },
+                  "companyName": {
+                    "type": "string",
+                    "description": "Contact name  of end user associated with the quote."
+                  },
+                  "addressLine1": {
+                    "type": "string",
+                    "description": "Address line 1 for end user associated with the quote"
+                  },
+                  "addressLine2": {
+                    "type": "string",
+                    "description": "Address line 2 for end user associated with the quote."
+                  },
+                  "addressLine3": {
+                    "type": "string",
+                    "description": "Address line 3 for end user associated with the quote."
+                  },
+                  "city": {
+                    "type": "string",
+                    "description": "City for end user associated with the quote"
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "Two letter state abreviation for end user associated with the quote"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email of end user the quote associated with the quote."
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "Phone number of end user associated with the quote."
+                  },
+                  "postalCode": {
+                    "type": "string",
+                    "description": "Zip code of end user associated with the quote."
+                  },
+                  "marketSegment": {
+                    "type": "string",
+                    "description": "Market Segment of end user associated with the quote. End user market segment is included when end user is included in specific market segments like Educational, Government, Military, Medical - that may receive special pricing due to their segmentation."
+                  }
+                }
+              },
+              "products": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "quoteProductGuid": {
+                      "type": "string",
+                      "description": "Quote Product GUID  is the primary quote key in Ingram Micro's CRM - needed to retrieve quote details."
+                    },
+                    "lineNumber": {
+                      "type": "string",
+                      "description": "Line number which the product will appear in the quote.  Line number is manditory when unique configurations are included in a quote and mainting the item line order is required."
+                    },
+                    "quantity": {
+                      "type": "string",
+                      "description": "Quantity of product line item quoted."
+                    },
+                    "notes": {
+                      "type": "string",
+                      "description": "Product line item comments."
+                    },
+                    "ean": {
+                      "type": "string",
+                      "description": "EANUPC"
+                    },
+                    "coo": {
+                      "type": "string",
+                      "description": "Country of Origin."
+                    },
+                    "ingramPartNumber": {
+                      "type": "string",
+                      "description": "Ingram Micro SKU (stock keeping unit). An identification, usually alphanumeric, of a particular product that allows it to be tracked for inventory purposes"
+                    },
+                    "vendorPartNumber": {
+                      "type": "string",
+                      "description": "Vendor Part Number"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Product description.  Note - The quote view api returns only the product short description as maintained in Ingram Micro's crm system.  For long descriptions, please refer to alternative information sources."
+                    },
+                    "weight": {
+                      "type": "string",
+                      "description": "Weight is provided based on country standard.  For countries following Imperial standards - weight is presented as pounds with decimal.  In countries following metric standards, weight is provided as kilograms with decimal."
+                    },
+                    "weightUom": {
+                      "type": "string",
+                      "description": "Unit of measure"
+                    },
+                    "isSuggestionProduct": {
+                      "type": "string",
+                      "description": "Flag to indicate if a product line item is a suggested product.  The suggested product is provided in addition to the requested quoted products and a suggested option.  Suggested products are grouped together for subtotal and total calculations."
+                    },
+                    "vpnCategory": {
+                      "type": "string",
+                      "description": "Vendor product category specific to Cisco. HWDW (hardware) or service."
+                    },
+                    "quoteProductsSupplierPartAuxiliaryId": {
+                      "type": "string",
+                      "description": "Vendor product configuration ID specific to Cisco."
+                    },
+                    "vendorName": {
+                      "type": "string",
+                      "description": "Vendor name of the product"
+                    },
+                    "terms": {
+                      "type": "string",
+                      "description": "Terms of the quote"
+                    },
+                    "price": {
+                      "type": "object",
+                      "description": "",
+                      "properties": {
+                        "quotePrice": {
+                          "type": "integer",
+                          "description": "Ingram Micro quoted price specific to the reseller and quote."
+                        },
+                        "msrp": {
+                          "type": "integer",
+                          "description": "Manufacturer Suggested Retail Price"
+                        },
+                        "extendedMsrp": {
+                          "type": "integer",
+                          "description": "Extended MSRP - Manufacturer Suggested Retail Price X Quantity"
+                        },
+                        "extendedQuotePrice": {
+                          "type": "integer",
+                          "description": "Extended reseller quoted price (cost to reseller) X Quantity"
+                        },
+                        "discountOffList": {
+                          "type": "number",
+                          "format": "decimal",
+                          "description": "Discount off list percentage"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "productsCount": {
+                "type": "integer",
+                "description": "Total number of products included in the quote"
+              },
+              "extendedMsrpTotal": {
+                "type": "integer",
+                "description": "Total extended MSRP for all products included in the quote"
+              },
+              "quantityTotal": {
+                "type": "integer",
+                "description": "Total quantity of all items in the quote."
+              },
+              "extendedQuotePriceTotal": {
+                "type": "integer",
+                "description": "Total amount of quoted price for all products in the quote including both solution products and suggested products."
+              },
+              "additionalAttributes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "attributeName": {
+                      "type": "string",
+                      "description": "**estimateId -** is the identification number for an estimate provided by Cisco for a quote.\n\n**dealId -** is the identification number for the specific deal pricing related to a Cisco quote\n\n**vendorName -** Name of Vendor associated with the quote.\n\n**vendorMessage -** Vendor Message is associated with primary vendor in the quote.  In cases where a vendor requires a message be presented in the quote, the vendor name and message will be retreived and must be included in the quote vendor message fields."
+                    },
+                    "attributeValue": {
+                      "type": "string",
+                      "description": "The attribute field data."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "quote_create_response": {
+        "type": "object",
+        "properties": {
+          "quoteNumber": {
+            "type": "string",
+            "description": "A unique identifier generated by Ingram Micro's CRM specific to each quote."
+          },
+          "message": {
+            "type": "string",
+            "description": "A confirmation message."
+          }
+        }
       },
       "OrderDetailB2B": {
         "type": "object",

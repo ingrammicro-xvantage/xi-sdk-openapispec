@@ -71,7 +71,7 @@ jobs:
 
       - name: Install OpenAPI Generator
         run: |
-          npm install -g @openapitools/openapi-generator-cli@latest
+          npm install -g @openapitools/openapi-generator-cli@7.11.0
 
       - name: Generate Python SDK
         run: |

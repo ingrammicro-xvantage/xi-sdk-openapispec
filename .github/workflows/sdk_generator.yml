@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - openapispec/unified/XI-Resellers-API-Spec.yaml
+  workflow_dispatch:
 
 jobs:
   generate-csharp-sdk:

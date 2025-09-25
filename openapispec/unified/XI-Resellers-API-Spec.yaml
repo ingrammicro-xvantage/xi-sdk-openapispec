@@ -6948,6 +6948,13 @@ paths:
           schema:
             type: string
             example: '12345678'
+        - name: vendorName
+          in: query
+          description: Vendor for that bid
+          required: true
+          schema:
+            type: string
+            example: Cisco
       responses:
         '200':
           description: OK

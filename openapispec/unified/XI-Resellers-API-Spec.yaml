@@ -2044,6 +2044,196 @@ paths:
                       - traceid: '123456'
                         type: /errors/system-errors
                         message: Some unexpected error occured, please contact support team for more details
+  /resellers/v7/vendorrequiredinfo:
+    post:
+      summary: Vendor Required Info
+      tags:
+        - Orders
+      description: <p>The vendor required info API allows customers to identify all the mandatory fields that will be required to create an order before placing an order. These fields are required by the vendor to process orders. The customers can identify Vendor Required Information, aka Vendor Mandatory Fields or VMFs, using any of the following.</p><ul><li>Ingram Part Number</li><li>Vendor Part Number</li><li>Plan ID</li><li>Ingram Quote Number</li></ul><p>For the non-cloud Technology Solutions products, such as Hardware, Software, or Warranty, the VMFs will be returned in the “vmfAdditionalAttributes” object in the response, whereas for the cloud subscriptions products, the VMFs will be returned in the “vriAdditionalAttributes” object in the response.</p><p>While creating an Order Create request for the non-cloud products, such as Hardware, Software, or Warranty, pass “vmfAdditionalAttributes” object with the necessary response in the “attributeValue” field.</p><p>While creating an Order Create request, for Subscription products, pass “vriAdditionalAttributes” object with the necessary response in the “attributeValue” field and any other applicable subcomponents to create an order. </p>
+      operationId: vendor-required-info
+      security:
+        - application:
+            - read
+      parameters:
+        - name: IM-CustomerNumber
+          in: header
+          description: Your unique Ingram Micro customer number.
+          required: true
+          schema:
+            type: string
+            maxLength: 10
+            example: 20-222222
+        - name: IM-CorrelationID
+          in: header
+          description: Unique transaction number to identify each transaction across all the systems.
+          required: true
+          schema:
+            type: string
+            maxLength: 32
+            example: fbac82ba-cf0a-4bcf-fc03-0c5084
+        - name: IM-CountryCode
+          in: header
+          description: Two-character ISO country code.
+          required: true
+          schema:
+            type: string
+            maxLength: 10
+            example: US
+        - name: IM-SenderID
+          in: header
+          description: 'Unique value used to identify the sender of the transaction. '
+          required: true
+          schema:
+            type: string
+            maxLength: 32
+            example: MyCompany
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorRequiredInfoRequest'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VendorRequiredInforesponse'
+              examples:
+                SampleresponseTSProduct:
+                  value:
+                    - quoteNumber: ''
+                      ingramPartNumber: 5DV320
+                      vendorPartNumber: ''
+                      planId: ''
+                      planName: ''
+                      responseMessages: []
+                      vmfAdditionalAttributes:
+                        - vendorName: OMNISSA  WS1
+                          additionalAttributes:
+                            - attributeName: HEADER_ENDUSER
+                              attributeValue: ''
+                              attributeDescription: HeaderEndUser
+                              choices: []
+                            - attributeName: VEUD_AUTH_NBR_FLG
+                              attributeValue: ''
+                              attributeDescription: Authorization Number
+                              choices: []
+                      vriAdditionalAttributes: []
+                SampleresponseCloudsubscriptionProduct:
+                  value:
+                    - quoteNumber: ''
+                      ingramPartNumber: ''
+                      vendorPartNumber: ''
+                      planId: '438308'
+                      planName: Microsoft 365 F3 (NCE COM MTH)
+                      responseMessages: []
+                      vmfAdditionalAttributes: []
+                      vriAdditionalAttributes:
+                        - vendorName: Microsoft
+                          productId: PRD-814-505-018
+                          additionalAttributes:
+                            - attributeName: tier1_mpn
+                              attributeValue: '5068860'
+                              attributeDescription: Microsoft Partner Number
+                              choices: []
+                            - attributeName: tenant_preference
+                              attributeValue: new,existing
+                              attributeDescription: Please select the desired option for the CSP account
+                              choices:
+                                - attributeValue: new
+                                  attributeDescription: Create new Microsoft CSP end customer account
+                                  choices:
+                                    - attributeName: microsoft_domain
+                                      attributeValue: onmicrosoft.com
+                                      attributeDescription: Microsoft Domain Name
+                                      attributeHint: Up to 27 characters long
+                                      choices: []
+                                    - attributeName: effective_address
+                                      attributeValue: ''
+                                      attributeDescription: Address Line 1
+                                      choices: []
+                                    - attributeName: effective_city
+                                      attributeValue: ''
+                                      attributeDescription: City
+                                      choices: []
+                                    - attributeName: effective_state
+                                      attributeValue: ''
+                                      attributeDescription: State or Province or Region
+                                      choices: []
+                                    - attributeName: effective_postal_code
+                                      attributeValue: ''
+                                      attributeDescription: ZIP or Postal Code
+                                      choices: []
+                                    - attributeName: effective_country
+                                      attributeValue: ''
+                                      attributeDescription: Country
+                                      choices: []
+                                    - attributeName: mca_acceptance
+                                      attributeValue: yes,no
+                                      attributeDescription: MCA Acceptance
+                                      attributeHint: ''
+                                      choices: []
+                                    - attributeName: first_name_agreement
+                                      attributeValue: ''
+                                      attributeDescription: Customer first name for Agreement
+                                      attributeHint: Please specify a valid Customer first name for the Agreement
+                                      choices: []
+                                    - attributeName: last_name_agreement
+                                      attributeValue: ''
+                                      attributeDescription: Customer last name for Agreement
+                                      attributeHint: Please specify a valid Customer Last Name for the Agreement.
+                                      choices: []
+                                    - attributeName: email_address_agreement
+                                      attributeValue: ''
+                                      attributeDescription: Email Address
+                                      attributeHint: ''
+                                      choices: []
+                                    - attributeName: agreement_date
+                                      attributeValue: ''
+                                      attributeDescription: Microsoft Customer Agreement Date
+                                      attributeHint: Please add the date when the Microsoft Customer Agreement was accepted. (MM-DD-YYYY)
+                                      choices: []
+                                    - attributeName: effective_phonenumber
+                                      attributeValue: ''
+                                      attributeDescription: Phone Number
+                                      attributeHint: ''
+                                      choices: []
+                                    - attributeName: partner_on_record_attestation_accepted
+                                      attributeValue: attestation_accepted
+                                      attributeDescription: Partner on Record Attestation
+                                      choices: []
+                                    - attributeName: special_qualifications
+                                      attributeValue: None,StateOwnedEntity
+                                      attributeDescription: State Owned Entity Attestation
+                                      attributeHint: Please choose the customer's eligible qualification.
+                                      choices: []
+                                    - attributeName: address_approved_by_user
+                                      attributeValue: approved
+                                      attributeDescription: Address Approved by User
+                                      choices: []
+                                - attributeValue: existing
+                                  attributeDescription: Use an existing Microsoft CSP end customer account
+                                  choices:
+                                    - attributeName: microsoft_domain
+                                      attributeValue: onmicrosoft.com
+                                      attributeDescription: Microsoft Domain Name
+                                      attributeHint: Up to 27 characters long
+                                      choices: []
+                                    - attributeName: relationship_url
+                                      attributeValue: yes,no
+                                      attributeDescription: Confirm if the customer-partner authorization is done.
+                                      attributeHint: ''
+                                      choices: []
+                                    - attributeName: partner_on_record_attestation_accepted
+                                      attributeValue: attestation_accepted
+                                      attributeDescription: Partner on Record Attestation
+                                      choices: []
+                            - attributeName: indirect_reseller_domain
+                              attributeValue: devtestpablogarcia.onmicrosoft.com
+                              attributeDescription: Indirect Reseller Domain
+                              attributeHint: MyBusinessName.onmicrosoft.com
+                              choices: []
   /resellers/v6/orders:
     post:
       summary: Create your Order
@@ -12593,6 +12783,124 @@ components:
                     message:
                       type: string
                       description: Gives the description of the field message.
+    VendorRequiredInfoRequest:
+      type: object
+      properties:
+        quoteNumber:
+          type: string
+          description: A unique identifier generated by Ingram Micro's CRM specific to each quote.
+          example: QUO-14551943-D2Y9L9
+        products:
+          type: array
+          items:
+            properties:
+              ingramPartNumber:
+                type: string
+                description: Ingram Micro unique part number for the product.
+              vendorPartNumber:
+                type: string
+                description: Vendor’s part number for the product. It can be either TS Product or Cloud Product vendorpartnumber.
+              planID:
+                type: integer
+                description: The ID of the subscription plan.
+    VendorRequiredInforesponse:
+      type: object
+      properties:
+        quoteNumber:
+          type: string
+          description: A unique identifier generated by Ingram Micro's CRM specific to each quote.
+          example: quoteNumber=QUO-14551943-D2Y9L9
+        ingramPartNumber:
+          type: string
+          maxLength: 18
+          description: The unique IngramMicro part number.
+        vendorPartNumber:
+          type: string
+          description: The vendor's part number for the line item.
+        planId:
+          type: integer
+          description: ID of the subscription plan
+        planName:
+          type: string
+          description: Name of the subscription plan
+        responseMessages:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique ID to identify the error.
+              traceId:
+                type: string
+                description: A unique trace id to identify the issue.
+              type:
+                type: string
+                description: Type of the error message.
+              message:
+                type: string
+                description: A detailed error message.
+        vmfAdditionalAttributes:
+          type: array
+          items:
+            type: object
+            properties:
+              vendorName:
+                type: string
+                description: The name of vendor.
+              productId:
+                type: string
+                description: The ID of product.
+              additionalAttributes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    attributeName:
+                      type: string
+                      description: The name of the vendor mandatory field.
+                    attributeValue:
+                      type: string
+                      description: The value of the vendor mandatory field.
+                    attributeDescription:
+                      type: string
+                      description: The description of the vendor mandatory field.
+                    attributeHint:
+                      type: string
+                      description: The hint of the vendor mandatory field.
+                    choices:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          string:
+                            type: string
+                            description: The value of the vendor mandatory field choices.
+        vriAdditionalAttributes:
+          type: array
+          items:
+            type: object
+            properties:
+              attributeName:
+                type: string
+                description: The name of the vendor mandatory field.
+              attributeValue:
+                type: string
+                description: The value of the vendor mandatory field.
+              attributeDescription:
+                type: string
+                description: The description of the vendor mandatory field.
+              attributeHint:
+                type: string
+                description: The hint of the vendor mandatory field.
+              choices:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    string:
+                      type: string
+                      description: The value of the vendor mandatory field choices.                  
     OrderCreateV7Response201:
       type: object
       properties:

@@ -12797,6 +12797,7 @@ components:
         products:
           type: array
           items:
+            type: object
             properties:
               ingramPartNumber:
                 type: string

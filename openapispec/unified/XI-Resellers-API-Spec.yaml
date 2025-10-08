@@ -10632,9 +10632,13 @@ components:
               description: Cisco global list price
         warrantyInformation:
           type: array
-          description: Warranty information related to the product.
+          description: Warranty codes related to the product.
           items:
-            type: object
+            type: string
+          example:
+            - "01XL55"
+            - "07ZL02"
+            - "08UC41"
         additionalInformation:
           type: object
           description: Additional Information related to the product.

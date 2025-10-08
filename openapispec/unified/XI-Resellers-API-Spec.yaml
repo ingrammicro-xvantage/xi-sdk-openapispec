@@ -12806,7 +12806,7 @@ components:
                 type: string
                 description: Vendor’s part number for the product. It can be either TS Product or Cloud Product vendorpartnumber.
               planID:
-                type: integer
+                type: string
                 description: The ID of the subscription plan.
     VendorRequiredInforesponse:
       type: object
@@ -12817,13 +12817,12 @@ components:
           example: quoteNumber=QUO-14551943-D2Y9L9
         ingramPartNumber:
           type: string
-          maxLength: 18
           description: The unique IngramMicro part number.
         vendorPartNumber:
           type: string
           description: The vendor's part number for the line item.
         planId:
-          type: integer
+          type: string
           description: ID of the subscription plan
         planName:
           type: string

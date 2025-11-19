@@ -5,13 +5,13 @@ info:
   title: XI Sdk Resellers
 
   description: |-
-    For Resellers seeking to innovate with Ingram Micro API solutions, automate your eCommerce experience with our array of API's and webhooks to craft a seamless journey for your customers.
+    For Resellers seeking to innovate with Ingram Micro APIs solutions, automate your eCommerce experience with our array of API's and webhooks to craft a seamless journey for your customers.
 tags:
   - name: Product Catalog
     description: |-
 
       The Ingram Micro Product Catalog v6 API endpoints enable users to:
-        - Search products by SKU or additional criteria.
+        - Search products by SKU or additional criterias.
         - Find price and availability for up to 50 SKUs at one time.
         - View inventory by location in the product catalog.
         

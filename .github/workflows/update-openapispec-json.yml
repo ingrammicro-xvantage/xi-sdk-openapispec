@@ -1,0 +1,29 @@
+name: Update the OpenAPI Specification JSON File
+# This workflow automatically converts the OpenAPI YAML file to JSON whenever the YAML is updated
+# or when manually triggered via workflow_dispatch.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - openapispec/unified/XI-Resellers-API-Spec.yaml
+  workflow_dispatch:
+
+jobs:
+  convert_openapi:
+    name: Convert OpenAPI YAML → JSON
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # Ensures we have access to the latest code
+
+      - name: Convert OpenAPI YAML to JSON
+        uses: dprakash2101/openapi-yaml-json-converter@v1
+        with:
+          yaml_path: openapispec/unified/XI-Resellers-API-Spec.yaml
+          json_path: openapispec/unified/XI-Resellers-API-Spec.json
+          git_username: ${{ secrets.ADMIN_USERNAME }}
+          git_email: ${{ secrets.ADMIN_EMAIL }}
+          commit_message: "Update OpenAPI JSON from YAML"
+        # This step runs the reusable action to convert YAML → JSON and commit changes

@@ -2,25 +2,39 @@ name: Generate SDKs and Push to Repositories
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
       - openapispec/unified/XI-Resellers-API-Spec.yaml
+  workflow_dispatch:
 
 jobs:
-  generate_and_push_sdks:
+  # ---------------------------------------------------------------------
+  # COMMON STEP: Checkout & install generator (reusable via "needs")
+  # ---------------------------------------------------------------------
+  prepare:
     runs-on: ubuntu-latest
-
+    outputs:
+      sha: ${{ steps.get-sha.outputs.sha }}
     steps:
-      - name: Checkout Source Repository
+      - name: Checkout repo
         uses: actions/checkout@v4
+
+      - id: get-sha
+        run: echo "sha=${{ github.sha }}" >> $GITHUB_OUTPUT
 
       - name: Install OpenAPI Generator
         run: npm install -g @openapitools/openapi-generator-cli@latest
 
-      ###############################################################
-      # C# SDK
-      ###############################################################
+
+  # =====================================================================
+  # C# SDK (Parallel Job)
+  # =====================================================================
+  csharp_sdk:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Generate C# SDK
         run: |
           openapi-generator-cli generate \
@@ -58,9 +72,15 @@ jobs:
           user_name: ${{ secrets.ORG_NAME }}
           api_token: ${{ secrets.WORKFLOW_TOKEN }}
 
-      ###############################################################
-      # PYTHON SDK
-      ###############################################################
+  # =====================================================================
+  # PYTHON SDK
+  # =====================================================================
+  python_sdk:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Generate Python SDK
         run: |
           openapi-generator-cli generate \
@@ -80,7 +100,7 @@ jobs:
           mkdir -p pythonsdk/.github/workflows
           mkdir -p pythonsdk/assets/images
           cp python-old/setup.py pythonsdk/
-          cp python-old/pyproject.toml pythonsdk/    # ← NEW FIX
+          cp python-old/pyproject.toml pythonsdk/
           cp -r python-old/.github/workflows/* pythonsdk/.github/workflows || true
           cp python-old/LICENCE pythonsdk/
           cp python-old/getting-started.md pythonsdk/
@@ -96,9 +116,15 @@ jobs:
           user_name: ${{ secrets.ORG_NAME }}
           api_token: ${{ secrets.WORKFLOW_TOKEN }}
 
-      ###############################################################
-      # NODE.JS SDK
-      ###############################################################
+  # =====================================================================
+  # NODE JS SDK
+  # =====================================================================
+  node_sdk:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Generate Node.js SDK
         run: |
           openapi-generator-cli generate \
@@ -123,7 +149,7 @@ jobs:
           cp node-old/getting-started.md javascriptsdk/
           cp -r node-old/assets/images/* javascriptsdk/assets/images || true
 
-      - name: Push Node.js SDK
+      - name: Push Node SDK
         uses: dprakash2101/push-to-other-repo@v0.0.1
         with:
           source_directory: javascriptsdk
@@ -133,9 +159,15 @@ jobs:
           user_name: ${{ secrets.ORG_NAME }}
           api_token: ${{ secrets.WORKFLOW_TOKEN }}
 
-      ###############################################################
-      # JAVA SDK
-      ###############################################################
+  # =====================================================================
+  # JAVA SDK
+  # =====================================================================
+  java_sdk:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Generate Java SDK
         run: |
           openapi-generator-cli generate \
@@ -173,9 +205,15 @@ jobs:
           user_name: ${{ secrets.ORG_NAME }}
           api_token: ${{ secrets.WORKFLOW_TOKEN }}
 
-      ###############################################################
-      # GO SDK
-      ###############################################################
+  # =====================================================================
+  # GO SDK
+  # =====================================================================
+  go_sdk:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Generate Go SDK
         run: |
           openapi-generator-cli generate \

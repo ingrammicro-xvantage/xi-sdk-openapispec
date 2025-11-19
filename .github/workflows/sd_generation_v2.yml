@@ -49,7 +49,7 @@ jobs:
           cp -r csharp-old/assets/images/* csharpsdk/assets/images || true
 
       - name: Push C# SDK
-        uses: dprakash2101/push-to-other-repo@latest
+        uses: dprakash2101/push-to-other-repo@v0.0.1
         with:
           source_directory: csharpsdk
           destination_repository: ingrammicro-xvantage/xi-sdk-resellers-csharp
@@ -87,7 +87,7 @@ jobs:
           cp -r python-old/assets/images/* pythonsdk/assets/images || true
 
       - name: Push Python SDK
-        uses: dprakash2101/push-to-other-repo@latest
+        uses: dprakash2101/push-to-other-repo@v0.0.1
         with:
           source_directory: pythonsdk
           destination_repository: ingrammicro-xvantage/xi-sdk-resellers-python
@@ -124,7 +124,7 @@ jobs:
           cp -r node-old/assets/images/* javascriptsdk/assets/images || true
 
       - name: Push Node.js SDK
-        uses: dprakash2101/push-to-other-repo@latest
+        uses: dprakash2101/push-to-other-repo@v0.0.1
         with:
           source_directory: javascriptsdk
           destination_repository: ingrammicro-xvantage/xi-sdk-resellers-node
@@ -164,7 +164,7 @@ jobs:
           cp java-old/LICENSE javasdk/
 
       - name: Push Java SDK
-        uses: dprakash2101/push-to-other-repo@latest
+        uses: dprakash2101/push-to-other-repo@v0.0.1
         with:
           source_directory: javasdk
           destination_repository: ingrammicro-xvantage/xi-sdk-resellers-java
@@ -201,7 +201,7 @@ jobs:
           cp go-old/LICENSE gosdk/
 
       - name: Push Go SDK
-        uses: dprakash2101/push-to-other-repo@latest
+        uses: dprakash2101/push-to-other-repo@v0.0.1
         with:
           source_directory: gosdk
           destination_repository: ingrammicro-xvantage/xi-sdk-resellers-go

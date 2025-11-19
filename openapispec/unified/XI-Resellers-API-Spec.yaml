@@ -7014,7 +7014,7 @@ paths:
                         dealExpiryDate: '2023-07-31T00:00:00'
                         links:
                           topic: Deals
-                          href: /resellers/v6/deals/TEST-RESEU DISC2
+                          href: /resellers/v6/deals/TEST-RESEU DISC2?vendorName=TestVendor
                           type: GET
                     nextPage: /bids/v1/special-bidsB2B?Size=25&Page=2
                     previousPage: null
@@ -8764,20 +8764,124 @@ components:
                 description: The attribute field data.
         vmfAdditionalAttributes:
           type: array
-          nullable: true
-          description: The object containing the list of fields required at a header level by the vendor.
+          description: The object containing the list of fields required at a header level by the vendor.<br> This a <code>Deprecated</code> object. Kindly use <b>vmfVendorAdditionalAttributes</b> object
           items:
             type: object
-            nullable: true
             properties:
               attributeName:
                 type: string
-                nullable: true
                 description: The name of the header level field.
               attributeValue:
                 type: string
-                nullable: true
                 description: The value of the header level field.
+        vmfVendorAdditionalAttributes:
+          type: array
+          description: The object containing the list of Vendor Mandatory Fields required by the vendor for the Hardware products.
+          items:
+            type: object
+            properties:
+              vendorName:
+                type: string
+                description: The name of the vendor
+              productId:
+                type: string
+                description: The Product ID from the vendor
+              additionalAttributes:
+                type: array
+                description: ''
+                items:
+                  type: object
+                  properties:
+                    attributeName:
+                      type: string
+                      description: The name of the vendor mandatory field
+                    attributeValue:
+                      type: string
+                      description: The value of the vendor mandatory field
+                    attributeDescription:
+                      type: string
+                      description: The description of the vendor mandatory field
+                    attributeHint:
+                      type: string
+                      description: The hint of the vendor mandatory field.
+                    choices:
+                      type: array
+                      description: ''
+                      items:
+                        type: object
+                        properties:
+                          attributeValue:
+                            type: string
+                            description: 'The description of the vendor mandatory '
+                          attributeDescription:
+                            type: string
+                            description: The description of the vendor mandatory
+                          choices:
+                            type: array
+                            description: ''
+                            items:
+                              type: object
+                              properties:
+                                attributename:
+                                  type: string
+                                  description: The name of the vendor mandatory field
+                                attributeValue:
+                                  type: string
+                                  description: The value of the vendor mandatory field
+        vriAdditionalAttributes:
+          type: array
+          description: 'The object containing the list of Vendor Mandatory Fields required by the vendor for the subscription products.<br> Use this object ONLY when using a full quote ordering for a subsciption product. For line-level ordering use <b>vriAdditionalAttributes</b> object inside the line object. '
+          items:
+            type: object
+            properties:
+              vendorName:
+                type: string
+                description: The name of the vendor
+              productId:
+                type: string
+                description: The Product ID from the vendor
+              additionalAttributes:
+                type: array
+                description: ''
+                items:
+                  type: object
+                  properties:
+                    attributeName:
+                      type: string
+                      description: The name of the vendor mandatory field
+                    attributeValue:
+                      type: string
+                      description: The value of the vendor mandatory field
+                    attributeDescription:
+                      type: string
+                      description: The description of the vendor mandatory field
+                    attributeHint:
+                      type: string
+                      description: The hint of the vendor mandatory field.
+                    choices:
+                      type: array
+                      description: ''
+                      items:
+                        type: object
+                        properties:
+                          attributeValue:
+                            type: string
+                            description: 'The description of the vendor mandatory '
+                          attributeDescription:
+                            type: string
+                            description: The description of the vendor mandatory
+                          choices:
+                            type: array
+                            description: ''
+                            items:
+                              type: object
+                              properties:
+                                attributename:
+                                  type: string
+                                  description: The name of the vendor mandatory field
+                                attributeValue:
+                                  type: string
+                                  description: The value of the vendor mandatory field
         lines:
           type: array
           items:
@@ -8789,12 +8893,10 @@ components:
                 maxLength: 3
               ingramPartNumber:
                 type: string
-                nullable: true
                 description: The unique IngramMicro part number.
                 maxLength: 18
               vendorPartNumber:
                 type: string
-                nullable: true
                 description: The vendor's part number for the line item.
               quantity:
                 type: integer
@@ -8802,25 +8904,121 @@ components:
               unitPrice:
                 type: number
                 format: decimal
-                nullable: true
                 description: The reseller-requested unit price for the line item. The unit price is not guaranteed.
               specialBidNumber:
                 type: string
-                nullable: true
                 description: The line-level bid number provided to the reseller by the vendor for special pricing and discounts. Used to track the bid number in the case of split orders or where different line items have different bid numbers. Line-level bid number take precedence over header-level bid numbers.
                 maxLength: 36
               endUserPrice:
                 type: number
                 format: decimal
-                nullable: true
                 description: The end-user price. Required for Export Orders.
               notes:
                 type: string
-                nullable: true
                 description: The attribute field data.
+              resourceId:
+                type: string
+                description: The resource id of the subscription
+              planid:
+                type: string
+                description: ID of the subscription plan
+              subscriptionPeriod:
+                type: array
+                description: The object containing the list of options related to the subscription period.
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      description: Unit period of the subscription. Example, Years, Months
+                    duration:
+                      type: integer
+                      description: Length of the subscription. Example 1, 3
+                    startDate:
+                      type: string
+                      description: The date on which subscription will start.
+                    endDateAlignmentType:
+                      type: string
+                      description: Subscription period end date alignment. ENUM -- 'MATCH_END_OF_CALENDAR_MONTH', 'CO_TERM_ON_SUBSCRIPTION'
+                    subscriptionId:
+                      type: string
+                      description: The ID of an existing active subscription.
+              billingPeriod:
+                type: array
+                description: The object containing the list of options related to the billing period.
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      description: Billing period of the subscription. Example, Years, Months
+                    duration:
+                      type: integer
+                      description: Length of the billing period. Example 1, 3
+              margin:
+                type: number
+                format: decimal
+                description: Line-level margin requested by customer
+              endCustomerPrice:
+                type: number
+                format: decimal
+                description: Line-level end-customer price requsted by customer
+              vriAdditionalAttributes:
+                type: array
+                description: The object containing the list of Vendor Mandatory Fields required by the vendor for the subscription products.
+                items:
+                  type: object
+                  properties:
+                    vendorName:
+                      type: string
+                      description: The name of the vendor
+                    productId:
+                      type: string
+                      description: The Product ID from the vendor
+                    additionalAttributes:
+                      type: array
+                      description: ''
+                      items:
+                        type: object
+                        properties:
+                          attributeName:
+                            type: string
+                            description: The name of the vendor mandatory field
+                          attributeValue:
+                            type: string
+                            description: The value of the vendor mandatory field
+                          attributeDescription:
+                            type: string
+                            description: The description of the vendor mandatory field
+                          attributeHint:
+                            type: string
+                            description: The hint of the vendor mandatory field.
+                          choices:
+                            type: array
+                            description: ''
+                            items:
+                              type: object
+                              properties:
+                                attributeValue:
+                                  type: string
+                                  description: 'The description of the vendor mandatory '
+                                attributeDescription:
+                                  type: string
+                                  description: The description of the vendor mandatory
+                                choices:
+                                  type: array
+                                  description: ''
+                                  items:
+                                    type: object
+                                    properties:
+                                      attributename:
+                                        type: string
+                                        description: The name of the vendor mandatory field
+                                      attributeValue:
+                                        type: string
+                                        description: The value of the vendor mandatory field
               endUserInfo:
                 type: array
-                nullable: true
                 items:
                   type: object
                   properties:
@@ -8874,11 +9072,44 @@ components:
                     attributeValue:
                       type: string
                       description: TLine-level additional attributes.
+              warrantyInfo:
+                type: object
+                properties:
+                  hardwareLineLink:
+                    type: string
+                    description: Customer line number of the warranty product in this request for linkage, either hardwareLineLink or warrantyLineLink can be used in a line
+                  warrantyLineLink:
+                    type: string
+                    description: Customer line number of the hardware product in this request for linkage, either hardwareLineLink or warrantyLineLink can be used in a line.
+                  directLineLink:
+                    type: string
+                    description: Unique value to link hardware and warranty lines. Should be used only when products are purchased from both Ingram and/or vendor but the warranty is purchased through Ingram for them.
+                    maxLength: 25
+                  serialInfo:
+                    type: array
+                    items:
+                      type: object
+                      description: Serial information of the hardware to be associated with the warranty, applicable on post sale orders.
+                      properties:
+                        dateOfPurchase:
+                          type: string
+                          description: Date of purchase of the hardware.
+                          maxLength: 8
+                        shipDate:
+                          type: string
+                          description: Vendor specific mandatory field, date of hardware/product shipment from vendor.
+                          maxLength: 8
+                        primarySerialNumber:
+                          type: string
+                          description: Serial number of the hardware/product.
+                        secondarySerialNumber:
+                          type: string
+                          description: Serial number of accessory associated with the above hardware/product.
               vmfAdditionalAttributesLines:
                 type: array
+                description: The object containing the list of fields required at a line level by the vendor.<br> This a <code>Deprecated</code> object. Kindly use <b>vmfVendorAdditionalAttributes</b> object
                 items:
                   type: object
-                  description: The object containing the list of fields required at a line level by the vendor.
                   properties:
                     attributeName:
                       type: string

@@ -1,0 +1,211 @@
+name: Generate SDKs and Push to Repositories
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - openapispec/unified/XI-Resellers-API-Spec.yaml
+
+jobs:
+  generate_and_push_sdks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Repository
+        uses: actions/checkout@v4
+
+      - name: Install OpenAPI Generator
+        run: npm install -g @openapitools/openapi-generator-cli@latest
+
+      ###############################################################
+      # C# SDK
+      ###############################################################
+      - name: Generate C# SDK
+        run: |
+          openapi-generator-cli generate \
+            -i openapispec/unified/XI-Resellers-API-Spec.yaml \
+            -g csharp \
+            -o csharpsdk \
+            --package-name xi.sdk.resellers \
+            --library httpclient \
+            --additional-properties=nullableReferenceTypes=true
+
+      - name: Clone C# Destination Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ingrammicro-xvantage/xi-sdk-resellers-csharp
+          path: csharp-old
+
+      - name: Copy required template files
+        run: |
+          mkdir -p csharpsdk/.github/workflows
+          mkdir -p csharpsdk/assets/images
+          cp -r csharp-old/.github/workflows/* csharpsdk/.github/workflows || true
+          cp -r csharp-old/src/xi.sdk.resellers/xi.sdk.resellers.csproj csharpsdk/src/xi.sdk.resellers/
+          cp -r csharp-old/src/xi.sdk.resellers.Test/xi.sdk.resellers.Test.csproj csharpsdk/src/xi.sdk.resellers.Test/
+          cp -r csharp-old/LICENCE csharpsdk/
+          cp -r csharp-old/getting-started.md csharpsdk/
+          cp -r csharp-old/assets/images/* csharpsdk/assets/images || true
+
+      - name: Push C# SDK
+        uses: dprakash2101/push-to-other-repo@latest
+        with:
+          source_directory: csharpsdk
+          destination_repository: ingrammicro-xvantage/xi-sdk-resellers-csharp
+          target_branch: feature
+          user_email: ${{ secrets.ADMIN_EMAIL }}
+          user_name: ${{ secrets.ORG_NAME }}
+          api_token: ${{ secrets.WORKFLOW_TOKEN }}
+
+      ###############################################################
+      # PYTHON SDK
+      ###############################################################
+      - name: Generate Python SDK
+        run: |
+          openapi-generator-cli generate \
+            -i openapispec/unified/XI-Resellers-API-Spec.yaml \
+            -g python \
+            -o pythonsdk \
+            --package-name xi.sdk.resellers
+
+      - name: Clone Python Destination Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ingrammicro-xvantage/xi-sdk-resellers-python
+          path: python-old
+
+      - name: Copy required template files
+        run: |
+          mkdir -p pythonsdk/.github/workflows
+          mkdir -p pythonsdk/assets/images
+          cp python-old/setup.py pythonsdk/
+          cp python-old/pyproject.toml pythonsdk/    # ← NEW FIX
+          cp -r python-old/.github/workflows/* pythonsdk/.github/workflows || true
+          cp python-old/LICENCE pythonsdk/
+          cp python-old/getting-started.md pythonsdk/
+          cp -r python-old/assets/images/* pythonsdk/assets/images || true
+
+      - name: Push Python SDK
+        uses: dprakash2101/push-to-other-repo@latest
+        with:
+          source_directory: pythonsdk
+          destination_repository: ingrammicro-xvantage/xi-sdk-resellers-python
+          target_branch: feature
+          user_email: ${{ secrets.ADMIN_EMAIL }}
+          user_name: ${{ secrets.ORG_NAME }}
+          api_token: ${{ secrets.WORKFLOW_TOKEN }}
+
+      ###############################################################
+      # NODE.JS SDK
+      ###############################################################
+      - name: Generate Node.js SDK
+        run: |
+          openapi-generator-cli generate \
+            -i openapispec/unified/XI-Resellers-API-Spec.yaml \
+            -g javascript \
+            -o javascriptsdk \
+            --package-name xi.sdk.resellers
+
+      - name: Clone Node.js Destination Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ingrammicro-xvantage/xi-sdk-resellers-node
+          path: node-old
+
+      - name: Copy required template files
+        run: |
+          mkdir -p javascriptsdk/.github/workflows
+          mkdir -p javascriptsdk/assets/images
+          cp node-old/package.json javascriptsdk/
+          cp -r node-old/.github/workflows/* javascriptsdk/.github/workflows || true
+          cp node-old/LICENCE javascriptsdk/
+          cp node-old/getting-started.md javascriptsdk/
+          cp -r node-old/assets/images/* javascriptsdk/assets/images || true
+
+      - name: Push Node.js SDK
+        uses: dprakash2101/push-to-other-repo@latest
+        with:
+          source_directory: javascriptsdk
+          destination_repository: ingrammicro-xvantage/xi-sdk-resellers-node
+          target_branch: feature
+          user_email: ${{ secrets.ADMIN_EMAIL }}
+          user_name: ${{ secrets.ORG_NAME }}
+          api_token: ${{ secrets.WORKFLOW_TOKEN }}
+
+      ###############################################################
+      # JAVA SDK
+      ###############################################################
+      - name: Generate Java SDK
+        run: |
+          openapi-generator-cli generate \
+            -i openapispec/unified/XI-Resellers-API-Spec.yaml \
+            -g java \
+            -o javasdk \
+            --artifact-id xi.sdk.resellers \
+            --group-id xi.sdk.resellers \
+            --api-package xiresellers.client.api \
+            --model-package xiresellers.client.model
+
+      - name: Clone Java Destination Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ingrammicro-xvantage/xi-sdk-resellers-java
+          path: java-old
+
+      - name: Copy required template files
+        run: |
+          mkdir -p javasdk/.github/workflows
+          mkdir -p javasdk/assets/images
+          cp java-old/pom.xml javasdk/
+          cp -r java-old/.github/workflows/* javasdk/.github/workflows || true
+          cp -r java-old/assets/images/* javasdk/assets/images || true
+          cp java-old/getting-started.md javasdk/
+          cp java-old/LICENSE javasdk/
+
+      - name: Push Java SDK
+        uses: dprakash2101/push-to-other-repo@latest
+        with:
+          source_directory: javasdk
+          destination_repository: ingrammicro-xvantage/xi-sdk-resellers-java
+          target_branch: feature
+          user_email: ${{ secrets.ADMIN_EMAIL }}
+          user_name: ${{ secrets.ORG_NAME }}
+          api_token: ${{ secrets.WORKFLOW_TOKEN }}
+
+      ###############################################################
+      # GO SDK
+      ###############################################################
+      - name: Generate Go SDK
+        run: |
+          openapi-generator-cli generate \
+            -i openapispec/unified/XI-Resellers-API-Spec.yaml \
+            -g go \
+            -o gosdk \
+            --package-name xi_sdk_resellers
+
+      - name: Clone Go Destination Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ingrammicro-xvantage/xi-sdk-resellers-go
+          path: go-old
+
+      - name: Copy required template files
+        run: |
+          mkdir -p gosdk/.github/workflows
+          mkdir -p gosdk/assets/images
+          cp go-old/go.mod gosdk/
+          cp -r go-old/.github/workflows/* gosdk/.github/workflows || true
+          cp -r go-old/assets/images/* gosdk/assets/images || true
+          cp go-old/getting-started.md gosdk/
+          cp go-old/LICENSE gosdk/
+
+      - name: Push Go SDK
+        uses: dprakash2101/push-to-other-repo@latest
+        with:
+          source_directory: gosdk
+          destination_repository: ingrammicro-xvantage/xi-sdk-resellers-go
+          target_branch: feature
+          user_email: ${{ secrets.ADMIN_EMAIL }}
+          user_name: ${{ secrets.ORG_NAME }}
+          api_token: ${{ secrets.WORKFLOW_TOKEN }}

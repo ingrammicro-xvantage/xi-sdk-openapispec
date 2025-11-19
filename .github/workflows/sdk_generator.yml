@@ -1,13 +1,7 @@
 name: Generate SDKs and Push to Respective Repositories
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - openapispec/unified/XI-Resellers-API-Spec.yaml
   workflow_dispatch:
-
 jobs:
   generate-csharp-sdk:
     runs-on: ubuntu-latest

@@ -8,30 +8,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  # ---------------------------------------------------------------------
-  # COMMON STEP: Checkout & capture SHA
-  # ---------------------------------------------------------------------
-  prepare:
-    runs-on: ubuntu-latest
-    outputs:
-      sha: ${{ steps.get-sha.outputs.sha }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - id: get-sha
-        run: echo "sha=${{ github.sha }}" >> $GITHUB_OUTPUT
-
-      - name: Install OpenAPI Generator
-        run: npm install -g @openapitools/openapi-generator-cli@latest
-
-
   # =====================================================================
   # C# SDK
   # =====================================================================
   csharp_sdk:
     runs-on: ubuntu-latest
-    needs: prepare
     steps:
       - uses: actions/checkout@v4
 
@@ -75,13 +56,11 @@ jobs:
           user_name: ${{ secrets.ORG_NAME }}
           api_token: ${{ secrets.WORKFLOW_TOKEN }}
 
-
   # =====================================================================
   # PYTHON SDK
   # =====================================================================
   python_sdk:
     runs-on: ubuntu-latest
-    needs: prepare
     steps:
       - uses: actions/checkout@v4
 
@@ -123,13 +102,11 @@ jobs:
           user_name: ${{ secrets.ORG_NAME }}
           api_token: ${{ secrets.WORKFLOW_TOKEN }}
 
-
   # =====================================================================
   # NODE JS SDK
   # =====================================================================
   node_sdk:
     runs-on: ubuntu-latest
-    needs: prepare
     steps:
       - uses: actions/checkout@v4
 
@@ -170,13 +147,11 @@ jobs:
           user_name: ${{ secrets.ORG_NAME }}
           api_token: ${{ secrets.WORKFLOW_TOKEN }}
 
-
   # =====================================================================
   # JAVA SDK
   # =====================================================================
   java_sdk:
     runs-on: ubuntu-latest
-    needs: prepare
     steps:
       - uses: actions/checkout@v4
 
@@ -220,13 +195,11 @@ jobs:
           user_name: ${{ secrets.ORG_NAME }}
           api_token: ${{ secrets.WORKFLOW_TOKEN }}
 
-
   # =====================================================================
   # GO SDK
   # =====================================================================
   go_sdk:
     runs-on: ubuntu-latest
-    needs: prepare
     steps:
       - uses: actions/checkout@v4
 

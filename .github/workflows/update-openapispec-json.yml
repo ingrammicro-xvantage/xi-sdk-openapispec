@@ -26,3 +26,4 @@ jobs:
           git_username: ${{secrets.ORG_NAME}}
           git_email: ${{secrets.ADMIN_EMAIL}}
           commit_message: "Update OpenAPI JSON from YAML"
+          token: ${{ secrets.WORKFLOW_TOKEN }}

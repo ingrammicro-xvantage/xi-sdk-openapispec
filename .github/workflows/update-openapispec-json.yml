@@ -19,7 +19,7 @@ jobs:
         # Ensures we have access to the latest code
 
       - name: Convert OpenAPI YAML to JSON
-        uses: dprakash2101/openapi-yaml-json-converter@v1
+        uses: dprakash2101/openapi-yaml-json-converter@v1.0.0
         with:
           yaml_path: openapispec/unified/XI-Resellers-API-Spec.yaml
           json_path: openapispec/unified/XI-Resellers-API-Spec.json

@@ -1,10 +1,10 @@
-name: Generate SDK and Push SDK to its respective repository
+name: Generate SDKs and Push to Respective Repositories
+
 on:
   workflow_dispatch:
 jobs:
-  push_to_another_repo:
+  generate-csharp-sdk:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -12,11 +12,12 @@ jobs:
       - name: Install OpenAPI Generator
         run: |
           npm install -g @openapitools/openapi-generator-cli@latest
+
       - name: Generate C# SDK
         run: |
           openapi-generator-cli generate -i openapispec/unified/XI-Resellers-API-Spec.yaml -g csharp -o ${{ github.workspace }}/csharpsdk --package-name xi.sdk.resellers --library httpclient --additional-properties=nullableReferenceTypes=true
 
-      - name: Configure Git for C# SDK
+      - name: Configure Git
         run: |
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
           git config --local user.name ${{secrets.ORG_NAME}}
@@ -26,7 +27,7 @@ jobs:
         with:
           repository: ingrammicro-xvantage/xi-sdk-resellers-csharp
           path: destination-repo
-        
+
       - name: Create .github/workflows directory if not exists
         run: |
           mkdir -p ${{ github.workspace }}/csharpsdk/.github/workflows
@@ -35,39 +36,45 @@ jobs:
         run: |
           mkdir -p ${{ github.workspace }}/csharpsdk/assets/images
 
-
-      - name: Copy workflow and Cs.proj files to generated CSharp SDK 
+      - name: Copy workflow and project files to generated C# SDK
         run: |
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/csharpsdk/.github/workflows
           cp -r destination-repo/src/xi.sdk.resellers/xi.sdk.resellers.csproj ${{ github.workspace }}/csharpsdk/src/xi.sdk.resellers/
           cp -r destination-repo/src/xi.sdk.resellers.Test/xi.sdk.resellers.Test.csproj ${{ github.workspace }}/csharpsdk/src/xi.sdk.resellers.Test/
           cp -r destination-repo/LICENCE ${{ github.workspace }}/csharpsdk/
           cp -r destination-repo/getting-started.md ${{ github.workspace }}/csharpsdk/
-          cp -r destination-repo/assets/images* ${{ github.workspace }}/csharpsdk/assets/images
-          
+          cp -r destination-repo/assets/images/* ${{ github.workspace }}/csharpsdk/assets/images
 
       - name: Push C# SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
         with:
-          source-directory: 'csharpsdk'
+          source-directory: csharpsdk
           destination-github-username: ${{secrets.ORG_NAME}}
-          destination-repository-name: 'xi-sdk-resellers-csharp'
+          destination-repository-name: xi-sdk-resellers-csharp
           user-email: ${{secrets.ADMIN_EMAIL}}
-          target-branch: 'feature'
+          target-branch: feature
           create-target-branch-if-needed: true
 
+  generate-python-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install OpenAPI Generator
+        run: |
+          npm install -g @openapitools/openapi-generator-cli@latest
 
       - name: Generate Python SDK
         run: |
           openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g python -o ${{ github.workspace }}/pythonsdk --package-name xi.sdk.resellers
 
-
-      - name: Configure Git for Python SDK
+      - name: Configure Git
         run: |
-            git config --local user.email ${{secrets.ADMIN_EMAIL}}
-            git config --local user.name ${{secrets.ORG_NAME}}
+          git config --local user.email ${{secrets.ADMIN_EMAIL}}
+          git config --local user.name ${{secrets.ORG_NAME}}
 
       - name: Clone Destination Repository
         uses: actions/checkout@v4
@@ -79,12 +86,12 @@ jobs:
         run: |
           mkdir -p ${{ github.workspace }}/pythonsdk/assets/images
 
-      - name: Copy worflow and setup.py files to generated Python SDK
+      - name: Copy workflow and setup.py files to generated Python SDK
         run: |
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/pythonsdk/.github/workflows
           cp -r destination-repo/setup.py ${{ github.workspace }}/pythonsdk/
           cp -r destination-repo/LICENCE ${{ github.workspace }}/pythonsdk/
-          cp -r destination-repo/assets/images* ${{ github.workspace }}/pythonsdk/assets/images
+          cp -r destination-repo/assets/images/* ${{ github.workspace }}/pythonsdk/assets/images
           cp -r destination-repo/getting-started.md ${{ github.workspace }}/pythonsdk/
 
       - name: Push Python SDK to Another Repository
@@ -92,22 +99,28 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
         with:
-          source-directory: 'pythonsdk'
+          source-directory: pythonsdk
           destination-github-username: ${{secrets.ORG_NAME}}
-          destination-repository-name: 'xi-sdk-resellers-python'
+          destination-repository-name: xi-sdk-resellers-python
           user-email: ${{secrets.ADMIN_EMAIL}}
-          target-branch: 'feature'
+          target-branch: feature
           create-target-branch-if-needed: true
-          
 
- 
+  generate-nodejs-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Generate Node.Js SDK
+      - name: Install OpenAPI Generator
+        run: |
+          npm install -g @openapitools/openapi-generator-cli@latest
+
+      - name: Generate Node.js SDK
         run: |
           openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g javascript -o ${{ github.workspace }}/javascriptsdk --package-name xi.sdk.resellers
 
-
-      - name: Configure Git for Node.Js SDK
+      - name: Configure Git
         run: |
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
           git config --local user.name ${{secrets.ORG_NAME}}
@@ -121,38 +134,46 @@ jobs:
       - name: Create .github/workflows directory if not exists
         run: |
           mkdir -p ${{ github.workspace }}/javascriptsdk/.github/workflows
-      
+
       - name: Create assets/images directory if not exists
         run: |
           mkdir -p ${{ github.workspace }}/javascriptsdk/assets/images
 
-
-      - name: Copy workflow and package.json files to generated Javascript SDK
+      - name: Copy workflow and package.json files to generated Node.js SDK
         run: |
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/javascriptsdk/.github/workflows
           cp -r destination-repo/package.json ${{ github.workspace }}/javascriptsdk/
           cp -r destination-repo/LICENCE ${{ github.workspace }}/javascriptsdk/
-          cp -r destination-repo/assets/images* ${{ github.workspace }}/javascriptsdk/assets/images
+          cp -r destination-repo/assets/images/* ${{ github.workspace }}/javascriptsdk/assets/images
           cp -r destination-repo/getting-started.md ${{ github.workspace }}/javascriptsdk/
 
-      - name: Push Node.Js SDK to Another Repository
+      - name: Push Node.js SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
         with:
-          source-directory: 'javascriptsdk'
+          source-directory: javascriptsdk
           destination-github-username: ${{secrets.ORG_NAME}}
-          destination-repository-name: 'xi-sdk-resellers-node'
+          destination-repository-name: xi-sdk-resellers-node
           user-email: ${{secrets.ADMIN_EMAIL}}
-          target-branch: 'feature'
+          target-branch: feature
           create-target-branch-if-needed: true
-          
+
+  generate-java-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install OpenAPI Generator
+        run: |
+          npm install -g @openapitools/openapi-generator-cli@latest
 
       - name: Generate Java SDK
         run: |
           openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g java -o ${{ github.workspace }}/javasdk --artifact-id xi.sdk.resellers --group-id xi.sdk.resellers --api-package xiresellers.client.api --model-package xiresellers.client.model
 
-      - name: Configure Git for Java SDK
+      - name: Configure Git
         run: |
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
           git config --local user.name ${{secrets.ORG_NAME}}
@@ -171,41 +192,51 @@ jobs:
         run: |
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/javasdk/.github/workflows
           cp -r destination-repo/pom.xml ${{ github.workspace }}/javasdk/
-          cp -r destination-repo/assets/images* ${{ github.workspace }}/javasdk/assets/images
+          cp -r destination-repo/assets/images/* ${{ github.workspace }}/javasdk/assets/images
           cp -r destination-repo/getting-started.md ${{ github.workspace }}/javasdk/
           cp -r destination-repo/LICENSE ${{ github.workspace }}/javasdk/
-  
+
       - name: Push Java SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
         with:
-          source-directory: 'javasdk'
+          source-directory: javasdk
           destination-github-username: ${{secrets.ORG_NAME}}
-          destination-repository-name: 'xi-sdk-resellers-java'
+          destination-repository-name: xi-sdk-resellers-java
           user-email: ${{secrets.ADMIN_EMAIL}}
-          target-branch: 'feature'
+          target-branch: feature
           create-target-branch-if-needed: true
 
+  generate-go-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install OpenAPI Generator
+        run: |
+          npm install -g @openapitools/openapi-generator-cli@latest
 
       - name: Generate Go SDK
         run: |
           openapi-generator-cli generate --verbose -i openapispec/unified/XI-Resellers-API-Spec.yaml -g go -o ${{ github.workspace }}/gosdk --package-name xi_sdk_resellers
-    
-      - name: Configure Git for Go SDK
+
+      - name: Configure Git
         run: |
           git config --local user.email ${{secrets.ADMIN_EMAIL}}
           git config --local user.name ${{secrets.ORG_NAME}}
-
 
       - name: Clone Destination Repository
         uses: actions/checkout@v4
         with:
           repository: ingrammicro-xvantage/xi-sdk-resellers-go
           path: destination-repo
+
       - name: Create .github/workflows directory if not exists
         run: |
           mkdir -p ${{ github.workspace }}/gosdk/.github/workflows
+
       - name: Create assets/images directory if not exists
         run: |
           mkdir -p ${{ github.workspace }}/gosdk/assets/images
@@ -215,20 +246,17 @@ jobs:
           cp -r destination-repo/.github/workflows/* ${{ github.workspace }}/gosdk/.github/workflows
           cp -r destination-repo/go.mod ${{ github.workspace }}/gosdk/
           cp -r destination-repo/LICENSE ${{ github.workspace }}/gosdk/
-          cp -r destination-repo/assets/images* ${{ github.workspace }}/gosdk/assets/
+          cp -r destination-repo/assets/images/* ${{ github.workspace }}/gosdk/assets/images
           cp -r destination-repo/getting-started.md ${{ github.workspace }}/gosdk/
-        
-  
-    
+
       - name: Push Go SDK to Another Repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.WORKFLOW_TOKEN }}
         with:
-          source-directory: 'gosdk'
+          source-directory: gosdk
           destination-github-username: ${{secrets.ORG_NAME}}
-          destination-repository-name: 'xi-sdk-resellers-go'
+          destination-repository-name: xi-sdk-resellers-go
           user-email: ${{secrets.ADMIN_EMAIL}}
-          target-branch: 'feature'
+          target-branch: feature
           create-target-branch-if-needed: true
-      

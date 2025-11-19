@@ -52,7 +52,7 @@ jobs:
         uses: dprakash2101/push-to-other-repo@v0.0.1
         with:
           source_directory: csharpsdk
-          destination_repository: ingrammicro-xvantage/xi-sdk-resellers-csharp
+          destination_repository: xi-sdk-resellers-csharp
           target_branch: feature
           user_email: ${{ secrets.ADMIN_EMAIL }}
           user_name: ${{ secrets.ORG_NAME }}
@@ -90,7 +90,7 @@ jobs:
         uses: dprakash2101/push-to-other-repo@v0.0.1
         with:
           source_directory: pythonsdk
-          destination_repository: ingrammicro-xvantage/xi-sdk-resellers-python
+          destination_repository: xi-sdk-resellers-python
           target_branch: feature
           user_email: ${{ secrets.ADMIN_EMAIL }}
           user_name: ${{ secrets.ORG_NAME }}
@@ -127,7 +127,7 @@ jobs:
         uses: dprakash2101/push-to-other-repo@v0.0.1
         with:
           source_directory: javascriptsdk
-          destination_repository: ingrammicro-xvantage/xi-sdk-resellers-node
+          destination_repository: xi-sdk-resellers-node
           target_branch: feature
           user_email: ${{ secrets.ADMIN_EMAIL }}
           user_name: ${{ secrets.ORG_NAME }}
@@ -167,7 +167,7 @@ jobs:
         uses: dprakash2101/push-to-other-repo@v0.0.1
         with:
           source_directory: javasdk
-          destination_repository: ingrammicro-xvantage/xi-sdk-resellers-java
+          destination_repository: xi-sdk-resellers-java
           target_branch: feature
           user_email: ${{ secrets.ADMIN_EMAIL }}
           user_name: ${{ secrets.ORG_NAME }}
@@ -204,7 +204,7 @@ jobs:
         uses: dprakash2101/push-to-other-repo@v0.0.1
         with:
           source_directory: gosdk
-          destination_repository: ingrammicro-xvantage/xi-sdk-resellers-go
+          destination_repository: xi-sdk-resellers-go
           target_branch: feature
           user_email: ${{ secrets.ADMIN_EMAIL }}
           user_name: ${{ secrets.ORG_NAME }}

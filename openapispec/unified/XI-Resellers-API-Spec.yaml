@@ -11,7 +11,7 @@ tags:
     description: |-
 
       The Ingram Micro Product Catalog v6 API endpoints enable users to:
-        - Search products by SKU or additional criteria.
+        - Search products by SKU or additional criterias.
         - Find price and availability for up to 50 SKUs at one time.
         - View inventory by location in the product catalog.
         

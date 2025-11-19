@@ -18,12 +18,11 @@ jobs:
         uses: actions/checkout@v4
         # Ensures we have access to the latest code
 
-      - name: Convert OpenAPI YAML to JSON
+      - name: Update OpenAPI JSON
         uses: dprakash2101/openapi-yaml-json-converter@v1.0.0
         with:
           yaml_path: openapispec/unified/XI-Resellers-API-Spec.yaml
           json_path: openapispec/unified/XI-Resellers-API-Spec.json
-          git_username: ${{ secrets.ADMIN_USERNAME }}
-          git_email: ${{ secrets.ADMIN_EMAIL }}
+          git_username: ${{secrets.ORG_NAME}}
+          git_email: ${{secrets.ADMIN_EMAIL}}
           commit_message: "Update OpenAPI JSON from YAML"
-        # This step runs the reusable action to convert YAML → JSON and commit changes

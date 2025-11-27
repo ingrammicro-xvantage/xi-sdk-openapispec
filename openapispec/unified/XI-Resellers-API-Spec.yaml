@@ -13061,9 +13061,9 @@ components:
           type: array
           description: A list of possible choices for the attribute.
           items:
-            $ref: '#/components/schemas/AdditionalAttribute' # Corrected for recursive structure
+            $ref: '#/components/schemas/AdditionalAttribute' 
     
-    VmfVriAdditionalAttributeContainer: # Naming this to represent the structure used by both VMF and VRI lists in the response object
+    VmfVriAdditionalAttributeContainer: 
       type: object
       properties:
         vendorName:
@@ -13120,7 +13120,7 @@ components:
           vmfAdditionalAttributes:
             type: array
             items:
-              $ref: '#/components/schemas/VmfVriAdditionalAttributeContainer' # Replaced inline schema with reference
+              $ref: '#/components/schemas/VmfVriAdditionalAttributeContainer' 
           vriAdditionalAttributes:
             type: array
             items:

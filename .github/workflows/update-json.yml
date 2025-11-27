@@ -38,7 +38,9 @@ jobs:
       run: |
         git config --global user.name ${{secrets.ORG_NAME}}
         git config --global user.email ${{secrets.ADMIN_EMAIL}}
+        git stash --include-untracked # Stash any unstaged changes
         git pull --rebase origin $(git rev-parse --abbrev-ref HEAD)
+        git stash pop || echo "No changes to apply" # Reapply stashed changes
         git add openapispec/unified/XI-Resellers-API-Spec.json
         git commit -m 'Update JSON file based on OpenAPI spec changes' || echo "No changes to commit"
         git push origin $(git rev-parse --abbrev-ref HEAD)
